@@ -57,4 +57,7 @@ The MCP server exposes two tools:
 ### File Naming
 - **Strict Kebab-Case**: ALL files in the project (`components/`, `views/`, `hooks/`, `types/`, `store/`, `utils/`) MUST use **kebab-case** (e.g., `claims-table.tsx`, `agent-card.tsx`, `use-claims.ts`, `lic-parser.ts`).
 - Do NOT use PascalCase (e.g. `ClaimsTable.tsx`) or camelCase for any source file names.
+
+### Code Style & Comments
+- **No JSDoc Comments**: NEVER write JSDoc comments (`/** ... */`), `@fileoverview` header blocks, or redundant type comments unless explicitly requested. Write clean, self-explanatory TypeScript code without comment clutter.
 <!-- CODING_CONVENTIONS:END -->
