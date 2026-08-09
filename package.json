@@ -8,9 +8,13 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "oxlint",
-    "fmt": "oxfmt"
+    "fmt": "oxfmt",
+    "astryx": "node node_modules/@astryxdesign/cli/clients/cli/bin/astryx.mjs"
   },
   "dependencies": {
+    "@astryxdesign/cli": "^0.3.0",
+    "@astryxdesign/core": "^0.3.0",
+    "@astryxdesign/theme-matcha": "^0.3.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },
