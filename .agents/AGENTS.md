@@ -50,3 +50,11 @@ The MCP server exposes two tools:
 `docs <topic>` -> color, elevation, icons, illustrations, internationalization, layout, migration, motion, principles, shape, spacing, styling, theme, tokens, typography
 `upgrade --apply` -> run after any @astryxdesign/core bump
 <!-- ASTRYX:END -->
+
+<!-- CODING_CONVENTIONS:START -->
+## Project Conventions & Guidelines
+
+### File Naming
+- **Strict Kebab-Case**: ALL files in the project (`components/`, `views/`, `hooks/`, `types/`, `store/`, `utils/`) MUST use **kebab-case** (e.g., `claims-table.tsx`, `agent-card.tsx`, `use-claims.ts`, `lic-parser.ts`).
+- Do NOT use PascalCase (e.g. `ClaimsTable.tsx`) or camelCase for any source file names.
+<!-- CODING_CONVENTIONS:END -->
