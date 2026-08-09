@@ -2,7 +2,8 @@ import stylex from "@stylexjs/unplugin";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [stylex.unplugin.vite(), react()],
+  // @ts-expect-error stylex.vite is the correct path
+  plugins: [stylex.vite(), react()],
+  resolve: { tsconfigPaths: true },
 });

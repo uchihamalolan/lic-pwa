@@ -2,6 +2,9 @@
   "mcpServers": {
     "xds": {
       "serverUrl": "https://astryx.atmeta.com/mcp"
+    },
+    "zod": {
+      "serverUrl": "https://mcp.inkeep.com/zod/mcp"
     }
   }
 }
