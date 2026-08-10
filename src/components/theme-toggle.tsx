@@ -1,51 +1,35 @@
-import type { ThemeMode } from "@astryxdesign/core";
-import { DropdownMenu, DropdownMenuItem } from "@astryxdesign/core/DropdownMenu";
-import { Text } from "@astryxdesign/core/Text";
+import { IconButton } from "@astryxdesign/core/IconButton";
 import { Laptop, Moon, Sun } from "lucide-react";
 import { useMemo } from "react";
 
-import { useAppTheme } from "@/app-provider.tsx";
-
-const options: Array<{ mode: ThemeMode; label: string; icon: typeof Sun }> = [
-  { mode: "system", label: "System Mode", icon: Laptop },
-  { mode: "light", label: "Light Mode", icon: Sun },
-  { mode: "dark", label: "Dark Mode", icon: Moon },
-];
+import { useAppTheme } from "@/store/app-state";
 
 export function ThemeToggle() {
   const { mode, setMode } = useAppTheme();
 
-  const activeIcon = useMemo(() => {
-    switch (mode) {
-      case "light":
-        return <Sun />;
-      case "dark":
-        return <Moon />;
-      case "system":
-      default:
-        return <Laptop />;
+  const handleCycleTheme = () => {
+    if (mode === "system") return setMode("light");
+    if (mode === "light") return setMode("dark");
+    return setMode("system");
+  };
+
+  const { label, icon } = useMemo(() => {
+    if (mode === "light") {
+      return { label: "Theme: Light (click for Dark)", icon: <Sun size={18} /> };
     }
+    if (mode === "dark") {
+      return { label: "Theme: Dark (click for System)", icon: <Moon size={18} /> };
+    }
+    return { label: "Theme: System (click for Light)", icon: <Laptop size={18} /> };
   }, [mode]);
 
   return (
-    <DropdownMenu
-      button={{
-        label: "Theme Selector",
-        icon: activeIcon,
-        isIconOnly: true,
-      }}
-      hasChevron={false}
-      placement="below"
-      alignment="end"
-    >
-      {options.map((opt) => (
-        <DropdownMenuItem
-          key={opt.mode}
-          icon={opt.icon}
-          label={<Text color={mode === opt.mode ? "accent" : undefined}>{opt.label}</Text>}
-          onClick={() => setMode(opt.mode)}
-        />
-      ))}
-    </DropdownMenu>
+    <IconButton
+      label={label}
+      icon={icon}
+      variant="ghost"
+      tooltip={label}
+      onClick={handleCycleTheme}
+    />
   );
 }

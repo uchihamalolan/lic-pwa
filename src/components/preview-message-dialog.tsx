@@ -24,6 +24,7 @@ export function PreviewMessageDialog() {
       isOpen={previewPayload !== null}
       onOpenChange={(isOpen) => !isOpen && handleClose()}
       purpose="info"
+      aria-label="Message Preview"
     >
       <VStack gap={3}>
         <HStack align="center" justify="between">
