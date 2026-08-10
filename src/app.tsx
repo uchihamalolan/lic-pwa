@@ -1,20 +1,36 @@
-import { Router, Route, Switch } from "wouter";
+import { useLiveQuery } from "dexie-react-hooks";
+import { Redirect, Route, Switch } from "wouter";
 
 import { AppProvider } from "@/app-provider.tsx";
+import { AppLayout } from "@/components/app-layout.tsx";
+import { db } from "@/store/db.ts";
+import { AgentsListView } from "@/views/agents-list-view.tsx";
+import { EmptyStateView } from "@/views/empty-state-view.tsx";
 
-function Dummy() {
-  return <div>Hey</div>;
+function RootRedirect() {
+  const claimsCount = useLiveQuery(() => db.claims.count());
+
+  if (claimsCount === undefined) {
+    return null;
+  }
+
+  if (claimsCount === 0) {
+    return <Redirect to="/import" replace />;
+  }
+
+  return <Redirect to="/agents" replace />;
 }
 
 export function App() {
   return (
     <AppProvider>
-      <Router>
-        {/* Fixed Components */}
+      <AppLayout>
         <Switch>
-          <Route path="/" component={Dummy} />
+          <Route path="/" component={RootRedirect} />
+          <Route path="/import" component={EmptyStateView} />
+          <Route path="/agents" component={AgentsListView} />
         </Switch>
-      </Router>
+      </AppLayout>
     </AppProvider>
   );
 }

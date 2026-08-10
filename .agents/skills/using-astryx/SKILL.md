@@ -5,7 +5,7 @@ description: Use when creating React components or page layouts in lic-pwa with 
 
 # Using Astryx & StyleX in React SPA+PWA (`lic-pwa`)
 
-This skill defines the idiomatic principles, rules, and layout constraints for building React SPA+PWA interfaces using **Astryx UI components** (`@astryxdesign/core`), **StyleX** (`@stylexjs/stylex`), and the **Matcha Theme** (`@astryxdesign/theme-matcha`).
+This skill defines the idiomatic principles, rules, and layout constraints for building React SPA+PWA interfaces using **Astryx UI components** (`@astryxdesign/core`), **StyleX** (`@stylexjs/stylex`), and the **Themes** (`@astryxdesign/theme-{variant}`).
 
 ---
 
@@ -35,7 +35,7 @@ For specific topics, refer to the following guide documents:
 - **[Frame-First Layout](layout.md)**: Shell selection (`AppShell` vs `Layout`), region pixel budgeting, App Archetypes, dense data rows vs cards, and master-detail inspectors.
 - **[Core Principles & Anti-Patterns](principles.md)**: Design philosophy, 8 core rules, and the complete Don'ts vs Astryx Alternatives matrix.
 - **[StyleX & Component Styling](styling.md)**: `xstyle` usage, hover media guards `@media (hover: hover)`, compound component patterns, data-attribute CSS selectors, and non-CSS processing (`useTheme`).
-- **[Theme & Matcha Setup](theme.md)**: Setting up `matchaTheme` from `@astryxdesign/theme-matcha/built`, system light/dark mode handling, and `useTheme()`.
+- **[Theme](theme.md)**: Setting up `theme` from `@astryxdesign/theme-{variant}/built`, system light/dark mode handling, and `useTheme()`.
 - **[Color Foundations](color.md)**: Semantic token philosophy and surface depth hierarchy ($\text{body} \to \text{surface} \to \text{card} \to \text{popover}$).
 - **[Elevation & Shadows](elevation.md)**: Stacking depth hierarchy (`elevation="none | low | med | high"`) and `shadowVars`.
 - **[Icon Usage](icons.md)**: Semantic icon registry names vs custom SVG components (`lucide-react`).

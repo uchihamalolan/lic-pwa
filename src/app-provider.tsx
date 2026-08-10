@@ -1,13 +1,37 @@
-import { Theme } from "@astryxdesign/core";
+import { Theme, type ThemeMode } from "@astryxdesign/core";
+import { InternationalizationProvider } from "@astryxdesign/core/i18n";
 import { matchaTheme } from "@astryxdesign/theme-matcha/built";
-import type { ReactNode } from "react";
+import { useLocalStorage } from "@uidotdev/usehooks";
+import { createContext, useContext, type ReactNode } from "react";
 
-import "@astryxdesign/theme-matcha/theme.css";
+interface ThemeContextType {
+  mode: ThemeMode;
+  setMode: (mode: ThemeMode) => void;
+}
+
+const ThemeContext = createContext<ThemeContextType>({
+  mode: "system",
+  setMode: () => {},
+});
+
+export function useAppTheme() {
+  return useContext(ThemeContext);
+}
 
 interface AppProviderProps {
   children: ReactNode;
 }
 
 export function AppProvider({ children }: AppProviderProps) {
-  return <Theme theme={matchaTheme}>{children}</Theme>;
+  const [mode = "system", setMode] = useLocalStorage<ThemeMode | undefined>("lic-theme-mode");
+
+  return (
+    <ThemeContext.Provider value={{ mode, setMode }}>
+      <InternationalizationProvider locale="en">
+        <Theme theme={matchaTheme} mode={mode}>
+          {children}
+        </Theme>
+      </InternationalizationProvider>
+    </ThemeContext.Provider>
+  );
 }

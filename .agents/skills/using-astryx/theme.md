@@ -1,12 +1,12 @@
-# Theme Setup in Astryx (Matcha Theme)
+# Theme Setup in Astryx
 
 ## Overview
 
-In this application, we use the official **Matcha Theme** (`@astryxdesign/theme-matcha`) as our primary design system theme. We do not author custom themes or use `defineTheme`. All theming is handled via the `<Theme>` provider and `@astryxdesign/theme-matcha`.
+In this application, we use the official **Theme** (`@astryxdesign/theme-{variant}`) as our primary design system theme. We do not author custom themes or use `defineTheme`. All theming is handled via the `<Theme>` provider and `@astryxdesign/theme-{variant}`.
 
 ---
 
-## 1. Matcha Theme Provider Setup
+## 1. Theme Provider Setup
 
 ### Production / Built Import (Recommended)
 
@@ -14,12 +14,12 @@ Use the pre-compiled `/built` theme import for zero-runtime CSS on first paint:
 
 ```tsx
 import { Theme } from "@astryxdesign/core";
-import { matchaTheme } from "@astryxdesign/theme-matcha/built";
-import "@astryxdesign/theme-matcha/theme.css";
+import { variantTheme } from "@astryxdesign/theme-{variant}/built";
+import "@astryxdesign/theme-{variant}/theme.css";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   return (
-    <Theme theme={matchaTheme} mode="system">
+    <Theme theme={variantTheme} mode="system">
       {children}
     </Theme>
   );
@@ -30,11 +30,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
 ```tsx
 import { Theme } from "@astryxdesign/core";
-import { matchaTheme } from "@astryxdesign/theme-matcha";
+import { variantTheme } from "@astryxdesign/theme-{variant}";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   return (
-    <Theme theme={matchaTheme} mode="system">
+    <Theme theme={variantTheme} mode="system">
       {children}
     </Theme>
   );
@@ -69,6 +69,6 @@ export function ThemeStatus() {
 
 ## Core Rules & Constraints
 
-1. **Use Matcha Theme directly**: Always import `matchaTheme` from `@astryxdesign/theme-matcha/built` (or `@astryxdesign/theme-matcha`).
+1. **Use Theme directly**: Always import `{variant}Theme` from `@astryxdesign/theme-{variant}/built` (or `@astryxdesign/theme-{variant}`).
 2. **No `defineTheme` or custom theme building**: Do not create custom theme objects or run `astryx theme build`.
 3. **No manual dark mode classes**: Let `<Theme mode="system" />` or `<Theme mode="dark" />` own color mode switching on the `<html>` element.

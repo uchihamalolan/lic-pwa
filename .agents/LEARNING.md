@@ -4,6 +4,14 @@ This file is an open chronological log recording past mistakes, missteps, correc
 
 ---
 
+### [2026-08-10] Redundant CSS theme imports in TypeScript components
+
+- **Mistake**: Imported `import "@astryxdesign/theme-matcha/theme.css";` in `src/app-provider.tsx`.
+- **Why it was wrong**: `@astryxdesign/theme-matcha/theme.css` is already imported globally in `src/index.css`. Re-importing theme CSS inside TypeScript components adds redundant import statements.
+- **Correct Behavior**: Never import theme `.css` files in TypeScript components when they are already declared at the global stylesheet level (`index.css`).
+
+---
+
 ### [2026-08-10] Making architectural decisions/reversions without asking the user
 
 - **Mistake**: Unilaterally reverted from CSF Next back to CSF 3 instead of explaining the TypeScript error and giving the user the choice to debug CSF Next or switch.

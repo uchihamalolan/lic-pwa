@@ -70,6 +70,11 @@ Before writing code or designing UI components, ALWAYS review [LEARNING.md](file
 
 - **No Illustrations or Decorative Frills**: NEVER generate or add image illustrations, marketing hero cards, or decorative graphics. This is a functional internal utility tool — keep all UI minimal, dense, fast, and straight to the point.
 
+### Communication Tone
+
+- **Zero Fluff or Validation Statements**: Never use self-congratulatory or validating filler phrases (e.g., "rendering perfectly", "100% compliant", "looks awesome").
+- **No Exclamation Points or Emotion**: Maintain a direct, neutral, matter-of-fact communication tone. Focus purely on technical facts and actions taken.
+
 <!-- CODING_CONVENTIONS:END -->
 
 <!-- STORYBOOK:START -->

@@ -1,6 +1,13 @@
 import Dexie, { type Table } from "dexie";
+import { z } from "zod";
 
-import type { Agent, Claim } from "@/types/schema.ts";
+import {
+  agentSchema,
+  claimSchema,
+  type Agent,
+  type Claim,
+  type NotificationChannel,
+} from "@/types/schema.ts";
 
 export class LicDatabase extends Dexie {
   agents!: Table<Agent, string>;
@@ -17,11 +24,19 @@ export class LicDatabase extends Dexie {
 
 export const db = new LicDatabase();
 
-export async function upsertClaimsPreservingStatus(incomingClaims: Claim[]) {
+export async function importAgents(rawAgents: unknown[]): Promise<number> {
+  const validatedAgents = z.array(agentSchema).parse(rawAgents);
+  await db.agents.bulkPut(validatedAgents);
+  return validatedAgents.length;
+}
+
+export async function importClaims(rawClaims: unknown[]): Promise<number> {
+  const validatedClaims = z.array(claimSchema).parse(rawClaims);
+
   await db.transaction("rw", db.claims, async () => {
     const existingClaims = await db.claims
       .where("policy_no")
-      .anyOf(incomingClaims.map((c) => c.policy_no))
+      .anyOf(validatedClaims.map((c) => c.policy_no))
       .toArray();
 
     const statusMap = new Map(
@@ -31,7 +46,7 @@ export async function upsertClaimsPreservingStatus(incomingClaims: Claim[]) {
       ]),
     );
 
-    const mergedClaims = incomingClaims.map((claim) => {
+    const mergedClaims = validatedClaims.map((claim) => {
       const existing = statusMap.get(claim.policy_no);
       return {
         ...claim,
@@ -41,5 +56,15 @@ export async function upsertClaimsPreservingStatus(incomingClaims: Claim[]) {
     });
 
     await db.claims.bulkPut(mergedClaims);
+  });
+
+  return validatedClaims.length;
+}
+
+export async function markClaimNotified(policyNo: string, via: NotificationChannel): Promise<void> {
+  const isoNow = new Date().toISOString();
+  await db.claims.update(policyNo, {
+    notified_via: via,
+    notified_at: isoNow,
   });
 }

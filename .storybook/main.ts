@@ -4,6 +4,6 @@ export default defineMain({
   framework: "@storybook/react-vite",
   stories: ["../src/**/*.stories.tsx"],
   staticDirs: ["../public"],
-  addons: ["@storybook/addon-a11y", "@storybook/addon-mcp"],
+  addons: ["@storybook/addon-a11y"],
   core: { disableTelemetry: true },
 });
