@@ -795,9 +795,7 @@ export const MyComponent = ({ isVisible }) => {
 
   return (
     <AnimatePresence>
-      {isMatch && (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} />
-      )}
+      {isMatch && <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} />}
     </AnimatePresence>
   );
 };

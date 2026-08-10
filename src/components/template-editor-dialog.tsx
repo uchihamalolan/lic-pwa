@@ -2,13 +2,7 @@ import { Button } from "@astryxdesign/core/Button";
 import { CodeBlock } from "@astryxdesign/core/CodeBlock";
 import { Dialog } from "@astryxdesign/core/Dialog";
 import { HStack } from "@astryxdesign/core/HStack";
-import {
-  Layout,
-  LayoutContent,
-  LayoutFooter,
-  LayoutHeader,
-  VStack,
-} from "@astryxdesign/core/Layout";
+import { Layout, LayoutContent, LayoutFooter, LayoutHeader, VStack } from "@astryxdesign/core/Layout";
 import { TextArea } from "@astryxdesign/core/TextArea";
 import { useState } from "react";
 

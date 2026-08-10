@@ -19,6 +19,12 @@ export const useIsTemplateEditorOpen = () => useStore($isTemplateEditorOpen);
 export const openTemplateEditor = () => $isTemplateEditorOpen.set(true);
 export const closeTemplateEditor = () => $isTemplateEditorOpen.set(false);
 
+// Dispatch Stats Dialog state
+const $isStatsOpen = atom<boolean>(false);
+export const useIsStatsOpen = () => useStore($isStatsOpen);
+export const openStats = () => $isStatsOpen.set(true);
+export const closeStats = () => $isStatsOpen.set(false);
+
 // App Theme State
 const $themeMode = persistentAtom<ThemeMode>("lic-theme-mode", "system");
 export function useAppTheme() {
@@ -33,8 +39,7 @@ export type PreviewMessagePayload = { agent: Agent; claims: Claim[] };
 const $previewPayload = atom<PreviewMessagePayload | null>(null);
 export const usePreviewPayload = () => useStore($previewPayload);
 export const closePreviewMessage = () => $previewPayload.set(null);
-export const openPreviewMessage = (agent: Agent, claims: Claim[]) =>
-  $previewPayload.set({ agent, claims });
+export const openPreviewMessage = (agent: Agent, claims: Claim[]) => $previewPayload.set({ agent, claims });
 
 // Filter atoms (1 atom per filter criteria)
 export type DispatchStatus = "all" | "pending" | "notified";

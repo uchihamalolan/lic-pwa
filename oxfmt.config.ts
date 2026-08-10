@@ -2,7 +2,7 @@ import { defineConfig } from "oxfmt";
 
 export default defineConfig({
   semi: true,
-  printWidth: 100,
+  printWidth: 110,
   sortImports: true,
   sortTailwindcss: true,
   ignorePatterns: [],

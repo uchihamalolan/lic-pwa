@@ -15,7 +15,5 @@ export function useClaimsCount() {
 }
 
 export function useClaimsForAgent(agentCode: string) {
-  return (
-    useLiveQuery(() => db.claims.where("agent_code").equals(agentCode).toArray(), [agentCode]) ?? []
-  );
+  return useLiveQuery(() => db.claims.where("agent_code").equals(agentCode).toArray(), [agentCode]) ?? [];
 }

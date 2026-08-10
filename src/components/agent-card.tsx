@@ -12,6 +12,7 @@ import { Eye, MessageSquare, Send } from "lucide-react";
 import { openPreviewMessage, useMessageTemplate } from "@/store/app-state.ts";
 import { updateAgentClaimsStatus } from "@/store/db.ts";
 import type { Agent, Claim } from "@/types/schema.ts";
+import { getClaimCountBucket } from "@/utils/format-utils.ts";
 import { buildMessage } from "@/utils/message-builder.ts";
 
 interface AgentCardProps {
@@ -27,20 +28,21 @@ export function AgentCard({ agent, claims, index }: AgentCardProps) {
   const notifiedCount = claims.filter((c) => c.notified_via !== null).length;
   const totalClaims = claims.length;
 
-  const statusVariant =
-    notifiedCount === totalClaims && totalClaims > 0
-      ? "success"
-      : notifiedCount > 0
-        ? "warning"
-        : "blue";
+  const statusVariant = (() => {
+    if (totalClaims === 0) return "red";
+    if (notifiedCount === 0) return "teal";
+    if (notifiedCount === totalClaims) return "green";
+    return "cyan";
+  })();
 
-  const statusLabel =
-    notifiedCount === totalClaims && totalClaims > 0
-      ? `Notified (${notifiedCount}/${totalClaims})`
-      : notifiedCount > 0
-        ? `Partial (${notifiedCount}/${totalClaims})`
-        : "Pending";
+  const statusLabel = (() => {
+    if (totalClaims === 0) return "No claims due";
+    if (notifiedCount === 0) return "Pending";
+    if (totalClaims === notifiedCount) return "Done";
+    return `Notified (${notifiedCount}/${totalClaims})`;
+  })();
 
+  const claimBucket = getClaimCountBucket(totalClaims);
   const messageText = buildMessage(claims, template);
 
   const handleDispatchWhatsApp = async () => {
@@ -70,13 +72,9 @@ export function AgentCard({ agent, claims, index }: AgentCardProps) {
         </HStack>
 
         <HStack gap={2} align="center" wrap="wrap">
-          <Token label={agent.agent_code} size="sm" />
-          {hasPhone ? (
-            <Token label={agent.phone!} size="sm" />
-          ) : (
-            <Badge variant="error" label="No Mobile Number" />
-          )}
-          <Badge variant="neutral" label={`${totalClaims} claim${totalClaims === 1 ? "" : "s"}`} />
+          <Token label={agent.agent_code} />
+          {hasPhone ? <Token label={agent.phone!} /> : <Token isDisabled label="No Mobile Number" />}
+          <Token color={claimBucket} label={`${totalClaims} claim${totalClaims === 1 ? "" : "s"}`} />
         </HStack>
 
         <HStack gap={2} align="center">

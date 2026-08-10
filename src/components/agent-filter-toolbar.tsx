@@ -45,16 +45,8 @@ export function AgentSearch() {
 }
 
 export function AgentFilterToolbar() {
-  const {
-    dispatchStatus,
-    setDispatchStatus,
-    dueFrom,
-    setDueFrom,
-    dueTill,
-    setDueTill,
-    sortBy,
-    setSortBy,
-  } = useAgentFilters();
+  const { dispatchStatus, setDispatchStatus, dueFrom, setDueFrom, dueTill, setDueTill, sortBy, setSortBy } =
+    useAgentFilters();
 
   return (
     <HStack gap={2} align="center" isScrollable={true} xstyle={styles.filterStrip}>

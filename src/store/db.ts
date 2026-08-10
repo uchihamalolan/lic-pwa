@@ -40,10 +40,7 @@ export async function importClaims(rawClaims: unknown[]): Promise<number> {
       .toArray();
 
     const statusMap = new Map(
-      existingClaims.map((c) => [
-        c.policy_no,
-        { notified_via: c.notified_via, notified_at: c.notified_at },
-      ]),
+      existingClaims.map((c) => [c.policy_no, { notified_via: c.notified_via, notified_at: c.notified_at }]),
     );
 
     const mergedClaims = validatedClaims.map((claim) => {
@@ -69,10 +66,7 @@ export async function markClaimNotified(policyNo: string, via: NotificationChann
   });
 }
 
-export async function updateAgentClaimsStatus(
-  agentCode: string,
-  via: NotificationChannel,
-): Promise<void> {
+export async function updateAgentClaimsStatus(agentCode: string, via: NotificationChannel): Promise<void> {
   const agentClaims = await db.claims.where("agent_code").equals(agentCode).toArray();
   const isoNow = via ? new Date().toISOString() : null;
 

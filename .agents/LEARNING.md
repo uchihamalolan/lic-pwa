@@ -85,3 +85,11 @@ This file is an open chronological log recording past mistakes, missteps, correc
 - **Mistake**: Added `/** ... */` JSDoc comments above functions in `src/store/db.ts`.
 - **Why it was wrong**: Adds comment clutter to self-explanatory TypeScript code.
 - **Correct Behavior**: Write clean TypeScript code with zero JSDoc blocks unless explicitly requested.
+
+---
+
+### [2026-08-10] Misusing `MetadataList` for top-level stats & KPIs
+
+- **Mistake**: Blindly agreeing to use `MetadataList` for dashboard KPI statistics.
+- **Why it was wrong**: `MetadataList` is designed for low-emphasis key-value details in record inspectors (e.g. `Created Date`, `File Size`). Using it for KPI metrics renders high-priority numbers (`₹4,50,000`, `142 Claims`) as quiet plain text rows lacking visual hierarchy.
+- **Correct Behavior**: Use KPI Stat Cards (`<Card variant="muted">` with `<Heading level={2}>`) or `<ProgressBar>` for dashboard statistics and metric overlays. Reserve `MetadataList` strictly for secondary key-value inspector panels.

@@ -20,12 +20,5 @@ export function ThemeToggle() {
     return { label: "Theme: System (click for Light)", icon: Laptop };
   }, [mode]);
 
-  return (
-    <IconButton
-      label={label}
-      icon={<Icon icon={icon} />}
-      tooltip={label}
-      onClick={handleCycleTheme}
-    />
-  );
+  return <IconButton label={label} icon={<Icon icon={icon} />} tooltip={label} onClick={handleCycleTheme} />;
 }

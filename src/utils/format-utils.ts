@@ -34,12 +34,17 @@ export function formatReadableDate(isoDateStr: string): string {
   return readableDateFormatter.format(date);
 }
 
-export function isWithinDateRange(
-  isoDateStr: string,
-  fromDateISO?: string,
-  toDateISO?: string,
-): boolean {
+export function isWithinDateRange(isoDateStr: string, fromDateISO?: string, toDateISO?: string): boolean {
   if (fromDateISO && isoDateStr < fromDateISO) return false;
   if (toDateISO && isoDateStr > toDateISO) return false;
   return true;
+}
+
+export type ClaimCountBucket = "green" | "yellow" | "orange" | "red";
+
+export function getClaimCountBucket(count: number): ClaimCountBucket {
+  if (count <= 3) return "green";
+  if (count <= 8) return "yellow";
+  if (count <= 15) return "orange";
+  return "red";
 }

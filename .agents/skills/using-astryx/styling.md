@@ -181,10 +181,7 @@ function AnalyticsChart({ data }: { data: Array<{ x: string; y: number }> }) {
       textColor: tokens["--color-text-primary"],
       mutedTextColor: tokens["--color-text-secondary"],
       gridColor: tokens["--color-border"],
-      seriesColors: [
-        tokens["--color-data-categorical-blue"],
-        tokens["--color-data-categorical-orange"],
-      ],
+      seriesColors: [tokens["--color-data-categorical-blue"], tokens["--color-data-categorical-orange"]],
     }),
     [mode, tokens],
   );
