@@ -1,13 +1,11 @@
-import type { Preview } from "@storybook/react-vite";
+import { definePreview } from "@storybook/react-vite";
 
-import { AppProvider } from "../src/app-provider.tsx";
+import { AppProvider } from "../src/app-provider";
 
-const preview: Preview = {
-  parameters: {
-    controls: {
-      matchers: {},
-    },
-  },
+export default definePreview({
+  // 👇 Add your addons here
+  addons: [],
+  parameters: {},
   decorators: [
     (Story) => (
       <AppProvider>
@@ -15,6 +13,4 @@ const preview: Preview = {
       </AppProvider>
     ),
   ],
-};
-
-export default preview;
+});

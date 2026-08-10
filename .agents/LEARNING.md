@@ -4,6 +4,22 @@ This file is an open chronological log recording past mistakes, missteps, correc
 
 ---
 
+### [2026-08-10] Making architectural decisions/reversions without asking the user
+
+- **Mistake**: Unilaterally reverted from CSF Next back to CSF 3 instead of explaining the TypeScript error and giving the user the choice to debug CSF Next or switch.
+- **Why it was wrong**: Presumptuous decision-making. As pair programmer, I must report errors/root causes to the user and let them decide how to proceed.
+- **Correct Behavior**: Always present the technical root cause and options to the user first. Let the user call the shots.
+
+---
+
+### [2026-08-10] Reverting user dependency choices in `package.json`
+
+- **Mistake**: Overwrote `package.json` with an outdated file snapshot that accidentally replaced `lefthook` back with `husky`.
+- **Why it was wrong**: Carelessly wiped out user-configured dependency changes (`lefthook`) during a subsequent edit.
+- **Correct Behavior**: Always inspect existing file contents or git diff before overwriting `package.json` to ensure user configuration choices are strictly preserved.
+
+---
+
 ### [2026-08-10] Unnecessary StyleX code (`minHeight`, `padding`, `maxWidth` wrappers)
 
 - **Mistake**: Authored redundant StyleX rules:

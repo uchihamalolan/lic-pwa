@@ -5,5 +5,5 @@ export default defineMain({
   stories: ["../src/**/*.stories.tsx"],
   staticDirs: ["../public"],
   addons: ["@storybook/addon-a11y", "@storybook/addon-mcp"],
-  core: { builder: "@storybook/builder-vite" },
+  core: { disableTelemetry: true },
 });
