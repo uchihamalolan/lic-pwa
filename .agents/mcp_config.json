@@ -5,6 +5,9 @@
     },
     "zod": {
       "serverUrl": "https://mcp.inkeep.com/zod/mcp"
+    },
+    "storybook": {
+      "serverUrl": "http://localhost:6006/mcp"
     }
   }
 }

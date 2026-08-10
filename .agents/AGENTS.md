@@ -52,17 +52,37 @@ The MCP server exposes two tools:
 <!-- ASTRYX:END -->
 
 <!-- CODING_CONVENTIONS:START -->
+
 ## Project Conventions & Guidelines
 
 Before writing code or designing UI components, ALWAYS review [LEARNING.md](file:///Users/malolan/Projects/lic-pwa/.agents/LEARNING.md) to recall past coding corrections and avoid repeating previous mistakes.
 
 ### File Naming
+
 - **Strict Kebab-Case**: ALL files in the project (`components/`, `views/`, `hooks/`, `types/`, `store/`, `utils/`) MUST use **kebab-case** (e.g., `claims-table.tsx`, `agent-card.tsx`, `use-claims.ts`, `lic-parser.ts`).
 - Do NOT use PascalCase (e.g. `ClaimsTable.tsx`) or camelCase for any source file names.
 
 ### Code Style & Comments
+
 - **No JSDoc Comments**: NEVER write JSDoc comments (`/** ... */`), `@fileoverview` header blocks, or redundant type comments unless explicitly requested. Write clean, self-explanatory TypeScript code without comment clutter.
 
 ### Internal Tool Pragmatism
+
 - **No Illustrations or Decorative Frills**: NEVER generate or add image illustrations, marketing hero cards, or decorative graphics. This is a functional internal utility tool — keep all UI minimal, dense, fast, and straight to the point.
+
 <!-- CODING_CONVENTIONS:END -->
+
+<!-- STORYBOOK:START -->
+
+When working on UI components, always use the `storybook` MCP tools to access Storybook's component and documentation knowledge before answering or taking any action.
+
+- **CRITICAL: Never hallucinate component properties!** Before using ANY property on a component from a design system (including common-sounding ones like `shadow`, etc.), you MUST use the MCP tools to check if the property is actually documented for that component.
+- Query `list-all-documentation` to get a list of all components
+- Query `get-documentation` for that component to see all available properties and examples
+- Only use properties that are explicitly documented or shown in example stories
+- If a property isn't documented, do not assume properties based on naming conventions or common patterns from other libraries. Check back with the user in these cases.
+- Use the `get-storybook-story-instructions` tool to fetch the latest instructions for creating or updating stories. This will ensure you follow current conventions and recommendations.
+- Check your work by running `run-story-tests`.
+
+Remember: A story name might not reflect the property name correctly, so always verify properties through documentation or example stories before using them.
+<!-- STORYBOOK:END -->
