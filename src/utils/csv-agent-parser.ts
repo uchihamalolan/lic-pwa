@@ -58,7 +58,7 @@ function detectColumnIndices(firstRow: string[]): { colIdx: ColumnMapping; hasHe
 
 export function parseAgentCsv(csvText: string): Agent[] {
   const cleanCsvText = csvText.replace(/^\uFEFF/, "");
-  const rawRows = parse(cleanCsvText) as string[][];
+  const rawRows: string[][] = parse(cleanCsvText);
   const validRows = rawRows.filter((r) => r.some((cell) => cell.trim().length > 0));
 
   if (validRows.length === 0) return [];
