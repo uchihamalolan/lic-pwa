@@ -3,6 +3,7 @@
 ## Core Philosophy: Semantic Geometric Type Scale
 
 Typography in Astryx is built on a geometric type scale: $\text{base size} \times \text{ratio}^{\text{step}}$ (default: 14px base $\times$ 1.2 ratio).
+
 - **Never set `fontSize` or `lineHeight` manually** in StyleX or inline styles.
 - Components (`<Heading>`, `<Text>`) handle font size, weight, line height, and 4px baseline grid snapping automatically.
 - Font roles: `body` (UI text), `heading` (titles), and `code` (monospace).
@@ -58,13 +59,13 @@ import { Text } from '@astryxdesign/core';
 When typography MUST be applied inside a StyleX definition (such as custom canvas SVG text or pseudo-elements), reference typed tokens from `@astryxdesign/core/theme/tokens.stylex`:
 
 ```tsx
-import * as stylex from '@stylexjs/stylex';
-import { fontVars } from '@astryxdesign/core/theme/tokens.stylex';
+import * as stylex from "@stylexjs/stylex";
+import { fontVars } from "@astryxdesign/core/theme/tokens.stylex";
 
 const styles = stylex.create({
   customMonospace: {
-    fontFamily: fontVars['--font-family-code'],
-    fontWeight: fontVars['--font-weight-medium'],
+    fontFamily: fontVars["--font-family-code"],
+    fontWeight: fontVars["--font-weight-medium"],
   },
 });
 ```
@@ -73,11 +74,11 @@ const styles = stylex.create({
 
 ## Do's and Don'ts Matrix
 
-| Guidance | DO | DON'T |
-| :--- | :--- | :--- |
-| **Component Usage** | Use `<Heading>` for document titles and `<Text>` for all UI copy. | Write raw `<h1-h6>` or `<p>` tags with custom font sizes. |
-| **Font Size & Line Height** | Let Astryx components handle size, weight, and line-height grid alignment. | Hand-write `fontSize: 18` or `lineHeight: '24px'` in StyleX or inline styles. |
-| **Display Headings** | Use `<Heading level={1} type="display-1">` for hero titles. | Use `type="display-1"` for standard in-page body sections. |
-| **Accessibility Hierarchy** | Use `accessibilityLevel` when visual styling differs from document outline order. | Skip heading levels (e.g. `h1` directly to `h3`) in document structure. |
-| **Secondary Metadata** | Use `<Text type="supporting">` for captions, timestamps, and helper text. | Use reduced `opacity` or hardcoded grey colors on body text for captions. |
-| **Font Weights** | Reference semantic weight tokens (`normal`, `medium`, `semibold`, `bold`). | Hardcode raw numeric weights (`400`, `600`) in custom CSS. |
+| Guidance                    | DO                                                                                | DON'T                                                                         |
+| :-------------------------- | :-------------------------------------------------------------------------------- | :---------------------------------------------------------------------------- |
+| **Component Usage**         | Use `<Heading>` for document titles and `<Text>` for all UI copy.                 | Write raw `<h1-h6>` or `<p>` tags with custom font sizes.                     |
+| **Font Size & Line Height** | Let Astryx components handle size, weight, and line-height grid alignment.        | Hand-write `fontSize: 18` or `lineHeight: '24px'` in StyleX or inline styles. |
+| **Display Headings**        | Use `<Heading level={1} type="display-1">` for hero titles.                       | Use `type="display-1"` for standard in-page body sections.                    |
+| **Accessibility Hierarchy** | Use `accessibilityLevel` when visual styling differs from document outline order. | Skip heading levels (e.g. `h1` directly to `h3`) in document structure.       |
+| **Secondary Metadata**      | Use `<Text type="supporting">` for captions, timestamps, and helper text.         | Use reduced `opacity` or hardcoded grey colors on body text for captions.     |
+| **Font Weights**            | Reference semantic weight tokens (`normal`, `medium`, `semibold`, `bold`).        | Hardcode raw numeric weights (`400`, `600`) in custom CSS.                    |

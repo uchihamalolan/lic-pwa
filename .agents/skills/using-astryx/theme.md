@@ -9,12 +9,13 @@ In this application, we use the official **Matcha Theme** (`@astryxdesign/theme-
 ## 1. Matcha Theme Provider Setup
 
 ### Production / Built Import (Recommended)
+
 Use the pre-compiled `/built` theme import for zero-runtime CSS on first paint:
 
 ```tsx
-import { Theme } from '@astryxdesign/core';
-import { matchaTheme } from '@astryxdesign/theme-matcha/built';
-import '@astryxdesign/theme-matcha/theme.css';
+import { Theme } from "@astryxdesign/core";
+import { matchaTheme } from "@astryxdesign/theme-matcha/built";
+import "@astryxdesign/theme-matcha/theme.css";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   return (
@@ -26,9 +27,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 ```
 
 ### Runtime Import (Development fallback)
+
 ```tsx
-import { Theme } from '@astryxdesign/core';
-import { matchaTheme } from '@astryxdesign/theme-matcha';
+import { Theme } from "@astryxdesign/core";
+import { matchaTheme } from "@astryxdesign/theme-matcha";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   return (
@@ -55,7 +57,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 Use the read-only `useTheme()` hook inside React components to inspect the current active mode (`light` | `dark`) or resolved tokens when needed for non-CSS APIs (such as charts or canvas contexts):
 
 ```tsx
-import { useTheme } from '@astryxdesign/core/theme';
+import { useTheme } from "@astryxdesign/core/theme";
 
 export function ThemeStatus() {
   const { mode, tokens } = useTheme();

@@ -1,6 +1,7 @@
 # Core Principles & Anti-Patterns in Astryx
 
 ## Core Design Philosophy
+
 - **Components over Primitives**: Always use Astryx UI components for everything they cover before reaching for raw HTML elements (`<div>`, `<span>`, `<button>`, etc.).
 - **No Swizzled Components**: Use Astryx components directly from `@astryxdesign/core`. Do NOT swizzle (`astryx swizzle <Name>`) or copy internal component code into the application tree. Customize via props, compound composition, and `xstyle`.
 - **Semantic Tokens over Hardcoded Values**: Colors, spacing, radii, typography, and shadows are named by purpose, not appearance.
@@ -27,13 +28,13 @@
 
 ## Anti-Patterns ("Don'ts")
 
-| Guidance | Practice to Avoid | Correct Astryx Alternative |
-| :--- | :--- | :--- |
-| **Don't** | Swizzling component source code (`astryx swizzle <Name>`). | Import directly from `@astryxdesign/core`; customize via props, compound composition, and `xstyle`. |
-| **Don't** | Inline `style={{...}}` on raw elements. | Use StyleX (`xstyle` prop or `{...stylex.props(...)}`). |
-| **Don't** | Hardcoded color values (`#ffffff`, `#1a1a1a`). | Use CSS design token properties (`var(--color-background-surface)`, `var(--color-text-primary)`). |
-| **Don't** | Hardcoded spacing values (`16px`). | Use spacing tokens (`var(--spacing-4)`). |
-| **Don't** | Hardcoded `<a>` elements for router navigation. | Use `useLinkComponent()` so consumers can swap in framework routers via `LinkProvider`. |
-| **Don't** | Wrapping every list item or section in a `Card` ("Card soup"). | Frame-first layout; dense data renders in edge-to-edge rows (`Table` or `List`/`Item`). |
-| **Don't** | Using `Badge` as plain visual decoration. | Reserve `Badge` for counts and enumerated states; use `StatusDot` or `Token` for status and metadata. |
-| **Don't** | Inventing unbacked component props. | Always check component docs or CLI metadata (`astryx component <Name>`) before usage. |
+| Guidance  | Practice to Avoid                                              | Correct Astryx Alternative                                                                            |
+| :-------- | :------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------- |
+| **Don't** | Swizzling component source code (`astryx swizzle <Name>`).     | Import directly from `@astryxdesign/core`; customize via props, compound composition, and `xstyle`.   |
+| **Don't** | Inline `style={{...}}` on raw elements.                        | Use StyleX (`xstyle` prop or `{...stylex.props(...)}`).                                               |
+| **Don't** | Hardcoded color values (`#ffffff`, `#1a1a1a`).                 | Use CSS design token properties (`var(--color-background-surface)`, `var(--color-text-primary)`).     |
+| **Don't** | Hardcoded spacing values (`16px`).                             | Use spacing tokens (`var(--spacing-4)`).                                                              |
+| **Don't** | Hardcoded `<a>` elements for router navigation.                | Use `useLinkComponent()` so consumers can swap in framework routers via `LinkProvider`.               |
+| **Don't** | Wrapping every list item or section in a `Card` ("Card soup"). | Frame-first layout; dense data renders in edge-to-edge rows (`Table` or `List`/`Item`).               |
+| **Don't** | Using `Badge` as plain visual decoration.                      | Reserve `Badge` for counts and enumerated states; use `StatusDot` or `Token` for status and metadata. |
+| **Don't** | Inventing unbacked component props.                            | Always check component docs or CLI metadata (`astryx component <Name>`) before usage.                 |

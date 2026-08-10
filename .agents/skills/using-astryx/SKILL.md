@@ -50,6 +50,7 @@ For specific topics, refer to the following guide documents:
 ## 3. Completion Checklist / Self-Check
 
 Before submitting or completing any UI component in `lic-pwa`:
+
 - [ ] Are all components imported directly from `@astryxdesign/core` without swizzling?
 - [ ] Is layout framed top-down (`AppShell` / `Layout`) before writing content?
 - [ ] Are dense scannable data items rendered as rows (`Table` / `List`) instead of wrapped in `Card` ("card soup")?
