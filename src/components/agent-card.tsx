@@ -2,6 +2,7 @@ import { Badge } from "@astryxdesign/core/Badge";
 import { Button } from "@astryxdesign/core/Button";
 import { Card } from "@astryxdesign/core/Card";
 import { Heading } from "@astryxdesign/core/Heading";
+import { Icon } from "@astryxdesign/core/Icon";
 import { IconButton } from "@astryxdesign/core/IconButton";
 import { HStack, StackItem } from "@astryxdesign/core/Stack";
 import { Token } from "@astryxdesign/core/Token";
@@ -80,23 +81,21 @@ export function AgentCard({ agent, claims, index }: AgentCardProps) {
         <HStack gap={2} align="center">
           <Button
             label="WA"
-            variant="secondary"
-            icon={<Send size={16} />}
+            icon={<Icon icon={Send} />}
             isDisabled={!hasPhone}
             width="100%"
             onClick={handleDispatchWhatsApp}
           />
           <Button
             label="SMS"
-            variant="secondary"
-            icon={<MessageSquare size={16} />}
+            icon={<Icon icon={MessageSquare} />}
             isDisabled={!hasPhone}
             width="100%"
             onClick={handleDispatchSms}
           />
           <IconButton
             label="Preview Message"
-            icon={<Eye size={16} />}
+            icon={<Icon icon={Eye} />}
             onClick={() => openPreviewMessage(agent, claims)}
           />
         </HStack>

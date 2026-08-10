@@ -1,10 +1,10 @@
-import { Button } from "@astryxdesign/core/Button";
 import { CodeBlock } from "@astryxdesign/core/CodeBlock";
 import { Dialog } from "@astryxdesign/core/Dialog";
 import { Heading } from "@astryxdesign/core/Heading";
 import { HStack } from "@astryxdesign/core/HStack";
+import { Icon } from "@astryxdesign/core/Icon";
+import { IconButton } from "@astryxdesign/core/IconButton";
 import { VStack } from "@astryxdesign/core/VStack";
-import { X } from "lucide-react";
 
 import { closePreviewMessage, usePreviewPayload } from "@/store/app-state.ts";
 import { buildMessage } from "@/utils/message-builder.ts";
@@ -29,7 +29,7 @@ export function PreviewMessageDialog() {
       <VStack gap={3}>
         <HStack align="center" justify="between">
           <Heading level={3}>Message Preview</Heading>
-          <Button label="Close" icon={<X size={16} />} isIconOnly={true} onClick={handleClose} />
+          <IconButton label="close" icon={<Icon icon="close" />} onClick={handleClose} />
         </HStack>
         <CodeBlock
           code={messageText}

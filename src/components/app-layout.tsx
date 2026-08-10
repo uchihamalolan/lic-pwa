@@ -10,14 +10,12 @@ interface AppLayoutProps {
 }
 
 export function AppLayout({ children }: AppLayoutProps) {
+  const topnav = (
+    <TopNav heading={<Heading level={2}>LIC Dispatch</Heading>} endContent={<ThemeToggle />} />
+  );
+
   return (
-    <AppShell
-      height="fill"
-      contentPadding={4}
-      topNav={
-        <TopNav heading={<Heading level={2}>LIC Dispatch</Heading>} endContent={<ThemeToggle />} />
-      }
-    >
+    <AppShell height="fill" contentPadding={4} topNav={topnav}>
       {children}
     </AppShell>
   );

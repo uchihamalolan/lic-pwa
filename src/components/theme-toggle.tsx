@@ -1,3 +1,4 @@
+import { Icon } from "@astryxdesign/core/Icon";
 import { IconButton } from "@astryxdesign/core/IconButton";
 import { Laptop, Moon, Sun } from "lucide-react";
 import { useMemo } from "react";
@@ -14,20 +15,15 @@ export function ThemeToggle() {
   };
 
   const { label, icon } = useMemo(() => {
-    if (mode === "light") {
-      return { label: "Theme: Light (click for Dark)", icon: <Sun size={18} /> };
-    }
-    if (mode === "dark") {
-      return { label: "Theme: Dark (click for System)", icon: <Moon size={18} /> };
-    }
-    return { label: "Theme: System (click for Light)", icon: <Laptop size={18} /> };
+    if (mode === "light") return { label: "Theme: Light (click for Dark)", icon: Sun };
+    if (mode === "dark") return { label: "Theme: Dark (click for System)", icon: Moon };
+    return { label: "Theme: System (click for Light)", icon: Laptop };
   }, [mode]);
 
   return (
     <IconButton
       label={label}
-      icon={icon}
-      variant="ghost"
+      icon={<Icon icon={icon} />}
       tooltip={label}
       onClick={handleCycleTheme}
     />
