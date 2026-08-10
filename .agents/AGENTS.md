@@ -54,10 +54,15 @@ The MCP server exposes two tools:
 <!-- CODING_CONVENTIONS:START -->
 ## Project Conventions & Guidelines
 
+Before writing code or designing UI components, ALWAYS review [LEARNING.md](file:///Users/malolan/Projects/lic-pwa/.agents/LEARNING.md) to recall past coding corrections and avoid repeating previous mistakes.
+
 ### File Naming
 - **Strict Kebab-Case**: ALL files in the project (`components/`, `views/`, `hooks/`, `types/`, `store/`, `utils/`) MUST use **kebab-case** (e.g., `claims-table.tsx`, `agent-card.tsx`, `use-claims.ts`, `lic-parser.ts`).
 - Do NOT use PascalCase (e.g. `ClaimsTable.tsx`) or camelCase for any source file names.
 
 ### Code Style & Comments
 - **No JSDoc Comments**: NEVER write JSDoc comments (`/** ... */`), `@fileoverview` header blocks, or redundant type comments unless explicitly requested. Write clean, self-explanatory TypeScript code without comment clutter.
+
+### Internal Tool Pragmatism
+- **No Illustrations or Decorative Frills**: NEVER generate or add image illustrations, marketing hero cards, or decorative graphics. This is a functional internal utility tool — keep all UI minimal, dense, fast, and straight to the point.
 <!-- CODING_CONVENTIONS:END -->
