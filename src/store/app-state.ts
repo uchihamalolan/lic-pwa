@@ -41,7 +41,7 @@ export const usePreviewPayload = () => useStore($previewPayload);
 export const closePreviewMessage = () => $previewPayload.set(null);
 export const openPreviewMessage = (agent: Agent, claims: Claim[]) => $previewPayload.set({ agent, claims });
 
-// Filter atoms (1 atom per filter criteria)
+// Filter types
 export type DispatchStatus = "all" | "pending" | "notified";
 const dispatchStatuses = ["all", "pending", "notified"];
 const isDispatchStatus = (val: string): val is DispatchStatus => dispatchStatuses.includes(val);
@@ -50,11 +50,24 @@ export type SortBy = "name" | "most_claims" | "most_pending";
 const sortBys = ["name", "most_claims", "most_pending"];
 const isSortBy = (val: string): val is SortBy => sortBys.includes(val);
 
+// Filter atoms (searchQuery remains transient atom, others use persistentAtom)
 const $searchQuery = atom<string>("");
-const $dueFrom = atom<ISODateString | undefined>(undefined);
-const $dueTill = atom<ISODateString | undefined>(undefined);
-const $dispatchStatus = atom<DispatchStatus>("all");
-const $sortBy = atom<SortBy>("most_claims");
+
+const encodeDate = (val: ISODateString | undefined) => val ?? "";
+const decodeDate = (val: string): ISODateString | undefined => (val ? (val as ISODateString) : undefined);
+
+const $dueFrom = persistentAtom<ISODateString | undefined>("lic-filter-due-from", undefined, {
+  encode: encodeDate,
+  decode: decodeDate,
+});
+
+const $dueTill = persistentAtom<ISODateString | undefined>("lic-filter-due-till", undefined, {
+  encode: encodeDate,
+  decode: decodeDate,
+});
+
+const $dispatchStatus = persistentAtom<DispatchStatus>("lic-filter-dispatch-status", "all");
+const $sortBy = persistentAtom<SortBy>("lic-filter-sort-by", "most_claims");
 
 export const resetAgentFilters = () => {
   $searchQuery.set("");

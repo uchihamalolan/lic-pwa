@@ -7,8 +7,9 @@ import { IconButton } from "@astryxdesign/core/IconButton";
 import { HStack, StackItem } from "@astryxdesign/core/Stack";
 import { Token } from "@astryxdesign/core/Token";
 import { VStack } from "@astryxdesign/core/VStack";
-import { Eye, MessageSquare, Send } from "lucide-react";
+import { Eye, MessageSquareText } from "lucide-react";
 
+import { WhatsAppIcon } from "@/assets/icons";
 import { openPreviewMessage, useMessageTemplate } from "@/store/app-state.ts";
 import { updateAgentClaimsStatus } from "@/store/db.ts";
 import type { Agent, Claim } from "@/types/schema.ts";
@@ -79,15 +80,15 @@ export function AgentCard({ agent, claims, index }: AgentCardProps) {
 
         <HStack gap={2} align="center">
           <Button
-            label="WA"
-            icon={<Icon icon={Send} />}
+            label="WhatsApp"
+            icon={<Icon icon={WhatsAppIcon} />}
             isDisabled={!hasPhone}
             width="100%"
             onClick={handleDispatchWhatsApp}
           />
           <Button
             label="SMS"
-            icon={<Icon icon={MessageSquare} />}
+            icon={<Icon icon={MessageSquareText} />}
             isDisabled={!hasPhone}
             width="100%"
             onClick={handleDispatchSms}
