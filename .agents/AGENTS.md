@@ -57,6 +57,10 @@ The MCP server exposes two tools:
 
 Before writing code or designing UI components, ALWAYS review [LEARNING.md](file:///Users/malolan/Projects/lic-pwa/.agents/LEARNING.md) to recall past coding corrections and avoid repeating previous mistakes.
 
+### Verification & Formatting Workflow
+
+- **Linting & Formatting**: After making code edits, verify using `pnpm run lint` and `pnpm run fmt` directly. Do NOT run `pnpm exec lefthook` manually.
+
 ### File Naming
 
 - **Strict Kebab-Case**: ALL files in the project (`components/`, `views/`, `hooks/`, `types/`, `store/`, `utils/`) MUST use **kebab-case** (e.g., `claims-table.tsx`, `agent-card.tsx`, `use-claims.ts`, `lic-parser.ts`).

@@ -62,9 +62,26 @@ export async function importClaims(rawClaims: unknown[]): Promise<number> {
 }
 
 export async function markClaimNotified(policyNo: string, via: NotificationChannel): Promise<void> {
-  const isoNow = new Date().toISOString();
+  const isoNow = via ? new Date().toISOString() : null;
   await db.claims.update(policyNo, {
     notified_via: via,
     notified_at: isoNow,
+  });
+}
+
+export async function updateAgentClaimsStatus(
+  agentCode: string,
+  via: NotificationChannel,
+): Promise<void> {
+  const agentClaims = await db.claims.where("agent_code").equals(agentCode).toArray();
+  const isoNow = via ? new Date().toISOString() : null;
+
+  await db.transaction("rw", db.claims, async () => {
+    for (const claim of agentClaims) {
+      await db.claims.update(claim.policy_no, {
+        notified_via: via,
+        notified_at: isoNow,
+      });
+    }
   });
 }

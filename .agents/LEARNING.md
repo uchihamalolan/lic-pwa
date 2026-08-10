@@ -4,6 +4,14 @@ This file is an open chronological log recording past mistakes, missteps, correc
 
 ---
 
+### [2026-08-10] Running `lefthook` directly during verification
+
+- **Mistake**: Ran `pnpm exec lefthook run pre-commit` to verify code formatting and linting.
+- **Why it was wrong**: Unnecessary execution of full pre-commit hook runner during turn-by-turn verification.
+- **Correct Behavior**: For verification after making code changes, run `pnpm run lint` and `pnpm run fmt` directly. Do not invoke `pnpm exec lefthook`.
+
+---
+
 ### [2026-08-10] Redundant CSS theme imports in TypeScript components
 
 - **Mistake**: Imported `import "@astryxdesign/theme-matcha/theme.css";` in `src/app-provider.tsx`.

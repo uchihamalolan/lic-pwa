@@ -17,6 +17,9 @@ importers:
       '@astryxdesign/theme-matcha':
         specifier: ^0.3.0
         version: 0.3.0(@astryxdesign/core@0.3.0(@stylexjs/stylex@0.19.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)
+      '@nanostores/react':
+        specifier: ^1.1.0
+        version: 1.1.0(nanostores@1.4.2)(react@19.2.8)
       '@std/csv':
         specifier: jsr:^1.0.6
         version: '@jsr/std__csv@1.0.6'
@@ -35,6 +38,9 @@ importers:
       lucide-react:
         specifier: ^1.30.0
         version: 1.30.0(react@19.2.8)
+      nanostores:
+        specifier: ^1.4.2
+        version: 1.4.2
       react:
         specifier: ^19.2.8
         version: 19.2.8
@@ -909,6 +915,13 @@ packages:
 
   '@jsr/std__streams@1.1.2':
     resolution: {integrity: sha512-TNg+Mr/vE2Wg+JDdZpVj9umEyzcmSAOtcp0ildlyVCjHy0/fJ2BJZgO8PQXA/SwJOchvKLaMafZzfFkm9PO13A==, tarball: https://npm.jsr.io/~/11/@jsr/std__streams/1.1.2.tgz}
+
+  '@nanostores/react@1.1.0':
+    resolution: {integrity: sha512-MbH35fjhcf7LAubYX5vhOChYUfTLzNLqH/mBGLVsHkcvjy0F8crO1WQwdmQ2xKbAmtpalDa2zBt3Hlg5kqr8iw==}
+    engines: {node: ^20.0.0 || >=22.0.0}
+    peerDependencies:
+      nanostores: ^1.2.0
+      react: '>=18.0.0'
 
   '@napi-rs/lzma-linux-x64-gnu@1.5.1':
     resolution: {integrity: sha512-oTXEIha4SsuXdTA4Iyskj0kpdx2yVXdhd75c2v3xGrHFfVMsbhTPZU/nMPL4sWKo4pBHm3aucLaqGlF696dTyQ==}
@@ -2741,6 +2754,10 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
+  nanostores@1.4.2:
+    resolution: {integrity: sha512-Wxv8Roefr2nqtiRG0bnaFlpYqpIVtOEeJZHaH+4nGgOK1/7n6OHOuHCb/bhqrNQgZM8fyd0s1PqhdrJc9Ib44g==}
+    engines: {node: ^20.0.0 || >=22.0.0}
+
   neo-async@2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
 
@@ -4319,6 +4336,11 @@ snapshots:
     dependencies:
       '@jsr/std__bytes': 1.0.6
 
+  '@nanostores/react@1.1.0(nanostores@1.4.2)(react@19.2.8)':
+    dependencies:
+      nanostores: 1.4.2
+      react: 19.2.8
+
   '@napi-rs/lzma-linux-x64-gnu@1.5.1':
     optional: true
 
@@ -5854,6 +5876,8 @@ snapshots:
   ms@2.1.3: {}
 
   nanoid@3.3.18: {}
+
+  nanostores@1.4.2: {}
 
   neo-async@2.6.2: {}
 
