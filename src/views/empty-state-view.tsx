@@ -12,7 +12,7 @@ export function EmptyStateView() {
   };
 
   return (
-    <VStack gap={4} width="100%">
+    <VStack gap={4}>
       <EmptyState
         title="No Claims Loaded"
         description="Import your LIC Claim Due report (.txt) and Agent Roster (.csv) to begin."

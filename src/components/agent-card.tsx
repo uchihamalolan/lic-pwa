@@ -9,7 +9,7 @@ import { Token } from "@astryxdesign/core/Token";
 import { VStack } from "@astryxdesign/core/VStack";
 import { Eye, MessageSquare, Send } from "lucide-react";
 
-import { openPreviewMessage } from "@/store/app-state.ts";
+import { openPreviewMessage, useMessageTemplate } from "@/store/app-state.ts";
 import { updateAgentClaimsStatus } from "@/store/db.ts";
 import type { Agent, Claim } from "@/types/schema.ts";
 import { buildMessage } from "@/utils/message-builder.ts";
@@ -22,6 +22,7 @@ interface AgentCardProps {
 
 export function AgentCard({ agent, claims, index }: AgentCardProps) {
   const hasPhone = Boolean(agent.phone && agent.phone.trim().length > 0);
+  const template = useMessageTemplate();
 
   const notifiedCount = claims.filter((c) => c.notified_via !== null).length;
   const totalClaims = claims.length;
@@ -40,7 +41,7 @@ export function AgentCard({ agent, claims, index }: AgentCardProps) {
         ? `Partial (${notifiedCount}/${totalClaims})`
         : "Pending";
 
-  const messageText = buildMessage(claims);
+  const messageText = buildMessage(claims, template);
 
   const handleDispatchWhatsApp = async () => {
     if (!hasPhone) return;

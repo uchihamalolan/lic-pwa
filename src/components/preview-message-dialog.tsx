@@ -1,21 +1,20 @@
 import { CodeBlock } from "@astryxdesign/core/CodeBlock";
 import { Dialog } from "@astryxdesign/core/Dialog";
-import { Heading } from "@astryxdesign/core/Heading";
-import { HStack } from "@astryxdesign/core/HStack";
-import { Icon } from "@astryxdesign/core/Icon";
-import { IconButton } from "@astryxdesign/core/IconButton";
 import { VStack } from "@astryxdesign/core/VStack";
 
-import { closePreviewMessage, usePreviewPayload } from "@/store/app-state.ts";
+import { closePreviewMessage, useMessageTemplate, usePreviewPayload } from "@/store/app-state.ts";
 import { buildMessage } from "@/utils/message-builder.ts";
+
+import { AppDialogHeader } from "./app-dialog-header";
 
 export function PreviewMessageDialog() {
   const previewPayload = usePreviewPayload();
+  const template = useMessageTemplate();
 
   if (!previewPayload) return null;
 
   const { agent, claims } = previewPayload;
-  const messageText = buildMessage(claims);
+  const messageText = buildMessage(claims, template);
 
   const handleClose = () => closePreviewMessage();
 
@@ -27,10 +26,7 @@ export function PreviewMessageDialog() {
       aria-label="Message Preview"
     >
       <VStack gap={3}>
-        <HStack align="center" justify="between">
-          <Heading level={3}>Message Preview</Heading>
-          <IconButton label="close" icon={<Icon icon="close" />} onClick={handleClose} />
-        </HStack>
+        <AppDialogHeader title="Message Preview" onClose={handleClose} />
         <CodeBlock
           code={messageText}
           hasLanguageLabel={false}
