@@ -5,7 +5,7 @@ import { TextInput } from "@astryxdesign/core/TextInput";
 import { spacingVars } from "@astryxdesign/core/theme/tokens.stylex";
 import * as stylex from "@stylexjs/stylex";
 
-import { useAgentFilters, type DispatchStatus, type SortBy } from "@/store/app-state.ts";
+import { useAgentFilters, type DispatchStatus, type SortBy } from "@/store/app-filters.ts";
 
 type DispatchStatusOption = { value: DispatchStatus; label: string };
 const statusOptions: DispatchStatusOption[] = [

@@ -1,10 +1,10 @@
-import { ProgressBar } from "@astryxdesign/core";
 import { Card } from "@astryxdesign/core/Card";
 import { Grid } from "@astryxdesign/core/Grid";
 import { Heading } from "@astryxdesign/core/Heading";
 import { HStack } from "@astryxdesign/core/HStack";
 import { Icon, type IconType } from "@astryxdesign/core/Icon";
 import { Layout, LayoutContent } from "@astryxdesign/core/Layout";
+import { ProgressBar } from "@astryxdesign/core/ProgressBar";
 import { SegmentedControl, SegmentedControlItem } from "@astryxdesign/core/SegmentedControl";
 import { Text } from "@astryxdesign/core/Text";
 import { VStack } from "@astryxdesign/core/VStack";

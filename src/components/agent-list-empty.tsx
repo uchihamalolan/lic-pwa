@@ -3,7 +3,7 @@ import { EmptyState } from "@astryxdesign/core/EmptyState";
 import { Icon } from "@astryxdesign/core/Icon";
 import { SearchX } from "lucide-react";
 
-import { resetAgentFilters, useAgentFilters } from "@/store/app-state.ts";
+import { resetAgentFilters, useAgentFilters } from "@/store/app-filters.ts";
 
 export function AgentListEmpty() {
   const { searchQuery, dueFrom, dueTill, dispatchStatus } = useAgentFilters();

@@ -25,11 +25,13 @@
     "nanostores": "^1.4.2",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
+    "react-window": "^2.3.0",
     "wouter": "^3.10.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
     "@astryxdesign/cli": "^0.3.0",
+    "@astryxdesign/theme-matcha": "^0.3.0",
     "@astryxdesign/theme-y2k": "^0.3.0",
     "@storybook/addon-a11y": "^10.5.7",
     "@storybook/react-vite": "^10.5.7",

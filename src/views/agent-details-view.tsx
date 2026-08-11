@@ -1,6 +1,7 @@
-import { Badge, Skeleton } from "@astryxdesign/core";
+import { Badge } from "@astryxdesign/core/Badge";
 import { HStack } from "@astryxdesign/core/HStack";
 import { Layout, LayoutContent } from "@astryxdesign/core/Layout";
+import { Skeleton } from "@astryxdesign/core/Skeleton";
 import { Token } from "@astryxdesign/core/Token";
 import { VStack } from "@astryxdesign/core/VStack";
 

@@ -1,4 +1,7 @@
-import { HStack, Heading, Icon, IconButton } from "@astryxdesign/core";
+import { Heading } from "@astryxdesign/core/Heading";
+import { HStack } from "@astryxdesign/core/HStack";
+import { Icon } from "@astryxdesign/core/Icon";
+import { IconButton } from "@astryxdesign/core/IconButton";
 import type { ReactNode } from "react";
 
 interface DialogHeaderProps {

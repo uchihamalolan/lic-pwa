@@ -9,8 +9,8 @@ import { MessageSquareText } from "lucide-react";
 import { useCallback, useMemo } from "react";
 
 import { WhatsAppIcon } from "@/assets/icons.tsx";
+import { useOptimisticClaims } from "@/hooks/use-optimistic-claims.ts";
 import { useMessageTemplate } from "@/store/app-state.ts";
-import { markClaimNotified } from "@/store/db.ts";
 import type { Claim } from "@/types/schema.ts";
 import { formatDisplayDate } from "@/utils/format-utils.ts";
 import { buildSingleClaimMessage } from "@/utils/message-builder.ts";
@@ -22,40 +22,39 @@ interface ClaimsTableProps {
 
 const DISPATCH_OPTIONS = ["NA", "WA", "SMS"];
 
-export function ClaimsTable({ claims, agentPhone }: ClaimsTableProps) {
+export function ClaimsTable({ claims: initialClaims, agentPhone }: ClaimsTableProps) {
+  const { claims, dispatchClaimNotified } = useOptimisticClaims(initialClaims);
   const template = useMessageTemplate();
   const hasPhone = Boolean(agentPhone && agentPhone.trim().length > 0);
 
-  const handleStatusChange = useCallback(async (policyNo: string, value: string) => {
-    if (value === "WA") {
-      await markClaimNotified(policyNo, "whatsapp");
-    } else if (value === "SMS") {
-      await markClaimNotified(policyNo, "sms");
-    } else {
-      await markClaimNotified(policyNo, null);
-    }
-  }, []);
+  const handleStatusChange = useCallback(
+    (policyNo: string, value: string) => {
+      const channel = value === "WA" ? "whatsapp" : value === "SMS" ? "sms" : null;
+      dispatchClaimNotified(policyNo, channel);
+    },
+    [dispatchClaimNotified],
+  );
 
   const handleSendClaimWhatsApp = useCallback(
-    async (claim: Claim) => {
+    (claim: Claim) => {
       if (!hasPhone) return;
-      await markClaimNotified(claim.policy_no, "whatsapp");
+      dispatchClaimNotified(claim.policy_no, "whatsapp");
       const cleanPhone = agentPhone?.replace(/\D/g, "");
       const msg = buildSingleClaimMessage(claim, template);
       window.open(`https://wa.me/91${cleanPhone}?text=${encodeURIComponent(msg)}`, "_blank");
     },
-    [agentPhone, hasPhone, template],
+    [agentPhone, dispatchClaimNotified, hasPhone, template],
   );
 
   const handleSendClaimSms = useCallback(
-    async (claim: Claim) => {
+    (claim: Claim) => {
       if (!hasPhone) return;
-      await markClaimNotified(claim.policy_no, "sms");
+      dispatchClaimNotified(claim.policy_no, "sms");
       const cleanPhone = agentPhone?.replace(/\D/g, "");
       const msg = buildSingleClaimMessage(claim, template);
       window.open(`sms:+91${cleanPhone}?body=${encodeURIComponent(msg)}`, "_blank");
     },
-    [agentPhone, hasPhone, template],
+    [agentPhone, dispatchClaimNotified, hasPhone, template],
   );
 
   const columns: TableColumn<Claim>[] = useMemo(
@@ -94,7 +93,7 @@ export function ClaimsTable({ claims, agentPhone }: ClaimsTableProps) {
               size="sm"
               value={val}
               width={100}
-              onChange={(newVal) => void handleStatusChange(claim.policy_no, newVal)}
+              onChange={(newVal) => handleStatusChange(claim.policy_no, newVal)}
             />
           );
         },
@@ -111,13 +110,13 @@ export function ClaimsTable({ claims, agentPhone }: ClaimsTableProps) {
                 isDisabled={!hasPhone}
                 icon={<Icon icon={WhatsAppIcon} />}
                 label="Send via WhatsApp"
-                onClick={() => void handleSendClaimWhatsApp(claim)}
+                onClick={() => handleSendClaimWhatsApp(claim)}
               />
               <IconButton
                 isDisabled={!hasPhone}
                 icon={<Icon icon={MessageSquareText} />}
                 label="Send via SMS"
-                onClick={() => void handleSendClaimSms(claim)}
+                onClick={() => handleSendClaimSms(claim)}
               />
             </HStack>
           );

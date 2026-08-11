@@ -1,8 +1,8 @@
 import type { ISODateString } from "@astryxdesign/core/Calendar";
-import { useMemo } from "react";
+import { useDeferredValue, useMemo } from "react";
 
 import { useAgents, useClaims } from "@/hooks/use-db.ts";
-import { useAgentFilters, type DispatchStatus } from "@/store/app-state.ts";
+import { useAgentFilters, type DispatchStatus } from "@/store/app-filters.ts";
 import type { Agent, Claim } from "@/types/schema.ts";
 
 const queryMatch = (agent: Agent, query: string) => {
@@ -44,6 +44,8 @@ export function useFilteredAgents() {
 
   const { searchQuery, dueFrom, dueTill, dispatchStatus, sortBy } = useAgentFilters();
 
+  const deferredSearchQuery = useDeferredValue(searchQuery);
+
   const filteredClaimsByAgent = useMemo(() => {
     if (claims === undefined) {
       return undefined;
@@ -82,7 +84,7 @@ export function useFilteredAgents() {
     return agents
       .filter((agent) => {
         // Search query filter
-        if (!queryMatch(agent, searchQuery)) return false;
+        if (!queryMatch(agent, deferredSearchQuery)) return false;
 
         // Keep agent only if they have matching claims under current filters
         const agentClaims = filteredClaimsByAgent.get(agent.agent_code) ?? [];
@@ -108,7 +110,7 @@ export function useFilteredAgents() {
 
         return 0;
       });
-  }, [agents, searchQuery, filteredClaimsByAgent, sortBy]);
+  }, [agents, deferredSearchQuery, filteredClaimsByAgent, sortBy]);
 
   return {
     filteredAgents,

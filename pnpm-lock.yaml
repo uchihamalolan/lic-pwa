@@ -41,6 +41,9 @@ importers:
       react-dom:
         specifier: ^19.2.8
         version: 19.2.8(react@19.2.8)
+      react-window:
+        specifier: ^2.3.0
+        version: 2.3.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       wouter:
         specifier: ^3.10.0
         version: 3.10.0(react@19.2.8)
@@ -51,6 +54,9 @@ importers:
       '@astryxdesign/cli':
         specifier: ^0.3.0
         version: 0.3.0(@astryxdesign/core@0.3.0(@stylexjs/stylex@0.19.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(@astryxdesign/theme-neutral@0.3.0(@astryxdesign/core@0.3.0(@stylexjs/stylex@0.19.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8))(@babel/preset-env@7.29.7(@babel/core@7.29.7))(gpt-tokenizer@3.4.0)
+      '@astryxdesign/theme-matcha':
+        specifier: ^0.3.0
+        version: 0.3.0(@astryxdesign/core@0.3.0(@stylexjs/stylex@0.19.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)
       '@astryxdesign/theme-y2k':
         specifier: ^0.3.0
         version: 0.3.0(@astryxdesign/core@0.3.0(@stylexjs/stylex@0.19.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)
@@ -133,6 +139,12 @@ packages:
       '@stylexjs/stylex': ^0.19.0
       react: '>=19.0.0'
       react-dom: '>=19.0.0'
+
+  '@astryxdesign/theme-matcha@0.3.0':
+    resolution: {integrity: sha512-9GBAhtrcCqaOCpJhkdaWN5vR2hd2u9JOKqx7JRfqzDPoDsEBi7gNJu1E+zccHZgGNA8OxFRTqpcgTLyluEtYvQ==}
+    peerDependencies:
+      '@astryxdesign/core': 0.3.0
+      react: '>=19'
 
   '@astryxdesign/theme-neutral@0.3.0':
     resolution: {integrity: sha512-CeKRfmTEtww60WZK4pSlW7bheBNyVPpgEliiXXUHRStXgcXOhwiUA3D/cXhMJlEx+VRgVxnzl0hMbWIr42RaVQ==}
@@ -2916,6 +2928,12 @@ packages:
   react-is@17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
 
+  react-window@2.3.0:
+    resolution: {integrity: sha512-FW6TIpaOH646k51X7yE+LSCWGkt5Pfsnc1fVyq/sCI9h0pTqmMiBXM04pzFKg3Bt7NGkeV6kqbU8d/QjmFS7Ug==}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
+
   react@19.2.8:
     resolution: {integrity: sha512-PWaYA1L/q9u2u7xYQi+Y3L3Yfnie7XyLeaJICV1MGD6LprsBxcAqGjYyr0eY3p+QdsA+x/Irkt4Qif8D63+Sbw==}
     engines: {node: '>=0.10.0'}
@@ -3449,6 +3467,12 @@ snapshots:
       intl-messageformat: 11.2.13
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
+
+  '@astryxdesign/theme-matcha@0.3.0(@astryxdesign/core@0.3.0(@stylexjs/stylex@0.19.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)':
+    dependencies:
+      '@astryxdesign/core': 0.3.0(@stylexjs/stylex@0.19.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      lucide-react: 1.30.0(react@19.2.8)
+      react: 19.2.8
 
   '@astryxdesign/theme-neutral@0.3.0(@astryxdesign/core@0.3.0(@stylexjs/stylex@0.19.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)':
     dependencies:
@@ -6097,6 +6121,11 @@ snapshots:
       scheduler: 0.27.0
 
   react-is@17.0.2: {}
+
+  react-window@2.3.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
+    dependencies:
+      react: 19.2.8
+      react-dom: 19.2.8(react@19.2.8)
 
   react@19.2.8: {}
 

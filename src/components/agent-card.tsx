@@ -11,8 +11,8 @@ import { Eye, MessageSquareText } from "lucide-react";
 
 import { WhatsAppIcon } from "@/assets/icons";
 import { useNavigate } from "@/hooks/use-navigate.ts";
+import { useOptimisticClaims } from "@/hooks/use-optimistic-claims.ts";
 import { openPreviewMessage, useMessageTemplate } from "@/store/app-state.ts";
-import { updateAgentClaimsStatus } from "@/store/db.ts";
 import type { Agent, Claim } from "@/types/schema.ts";
 import { getClaimCountBucket } from "@/utils/format-utils.ts";
 import { buildMessage } from "@/utils/message-builder.ts";
@@ -23,7 +23,8 @@ interface AgentCardProps {
   index: number;
 }
 
-export function AgentCard({ agent, claims, index }: AgentCardProps) {
+export function AgentCard({ agent, claims: initialClaims, index }: AgentCardProps) {
+  const { claims, dispatchAgentClaimsStatus } = useOptimisticClaims(initialClaims);
   const navigate = useNavigate();
   const hasPhone = Boolean(agent.phone && agent.phone.trim().length > 0);
   const template = useMessageTemplate();
@@ -50,17 +51,17 @@ export function AgentCard({ agent, claims, index }: AgentCardProps) {
 
   const navigateToDetails = () => navigate(`/agents/${agent.agent_code}`, { direction: "forward" });
 
-  const handleDispatchWhatsApp = async () => {
+  const handleDispatchWhatsApp = () => {
     if (!hasPhone) return;
-    await updateAgentClaimsStatus(agent.agent_code, "whatsapp");
+    dispatchAgentClaimsStatus(agent.agent_code, "whatsapp");
     const cleanPhone = agent.phone?.replace(/\D/g, "");
     const waUrl = `https://wa.me/91${cleanPhone}?text=${encodeURIComponent(messageText)}`;
     window.open(waUrl, "_blank");
   };
 
-  const handleDispatchSms = async () => {
+  const handleDispatchSms = () => {
     if (!hasPhone) return;
-    await updateAgentClaimsStatus(agent.agent_code, "sms");
+    dispatchAgentClaimsStatus(agent.agent_code, "sms");
     const cleanPhone = agent.phone?.replace(/\D/g, "");
     const smsUrl = `sms:+91${cleanPhone}?body=${encodeURIComponent(messageText)}`;
     window.open(smsUrl, "_blank");

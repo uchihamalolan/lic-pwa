@@ -1,6 +1,6 @@
-import { Theme } from "@astryxdesign/core";
 import { InternationalizationProvider } from "@astryxdesign/core/i18n";
-import { y2kTheme as theme } from "@astryxdesign/theme-y2k/built";
+import { Theme } from "@astryxdesign/core/theme";
+import { matchaTheme as theme } from "@astryxdesign/theme-matcha/built";
 import type { ReactNode } from "react";
 
 import { useAppTheme } from "@/store/app-state.ts";
