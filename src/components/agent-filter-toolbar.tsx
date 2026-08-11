@@ -83,6 +83,7 @@ export function AgentFilterToolbar() {
       <Selector
         label="Sort order"
         isLabelHidden={true}
+        placeholder="Sort by"
         options={sortOptions}
         value={sortBy}
         hasClear

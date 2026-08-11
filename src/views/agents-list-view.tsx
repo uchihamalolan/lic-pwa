@@ -1,48 +1,74 @@
-import { Card, Layout, LayoutContent, LayoutHeader } from "@astryxdesign/core/Layout";
+import { Layout, LayoutContent, LayoutHeader } from "@astryxdesign/core/Layout";
 import { Skeleton } from "@astryxdesign/core/Skeleton";
+import { colorVars } from "@astryxdesign/core/theme/tokens.stylex";
 import { VStack } from "@astryxdesign/core/VStack";
-import type { RowComponentProps } from "react-window";
-import { List, useDynamicRowHeight } from "react-window";
+import * as stylex from "@stylexjs/stylex";
+import { useCallback, useEffect, useRef } from "react";
+import type { VListHandle, VListProps } from "virtua";
+import { VList } from "virtua";
 
 import { AgentCard } from "@/components/agent-card.tsx";
 import { AgentFilterToolbar, AgentSearch } from "@/components/agent-filter-toolbar.tsx";
 import { AgentListEmpty } from "@/components/agent-list-empty.tsx";
 import { PreviewMessageDialog } from "@/components/preview-message-dialog.tsx";
 import { useFilteredAgents } from "@/hooks/use-filtered-agents.ts";
-import type { Agent, Claim } from "@/types/schema.ts";
+import { useNavigate } from "@/hooks/use-navigate.ts";
+import { $agentsListCache, $agentsListScrollOffset } from "@/store/app-filters.ts";
 
-type RowCustomProps = {
-  agents: Agent[];
-  claimsByAgent: Map<string, Claim[]>;
-};
-
-function AgentRow({ index, style, agents, claimsByAgent }: RowComponentProps<RowCustomProps>) {
-  const agent = agents[index];
-  if (!agent) return null;
-
-  const claims = claimsByAgent.get(agent.agent_code) ?? [];
-
-  return (
-    <div style={{ ...style, paddingBottom: 12 }}>
-      <AgentCard agent={agent} claims={claims} index={index + 1} />
-    </div>
-  );
-}
+const styles = stylex.create({
+  header: {
+    backgroundColor: colorVars["--color-background-muted"],
+  },
+});
 
 export function AgentsListView() {
+  const navigate = useNavigate();
   const { filteredAgents, claimsByAgent } = useFilteredAgents();
 
   const isLoading = filteredAgents === undefined || claimsByAgent === undefined;
-  const dynamicRowHeight = useDynamicRowHeight({ defaultRowHeight: 200 });
+  const vlistRef = useRef<VListHandle>(null);
+
+  const handleScroll = useCallback((offset: number) => {
+    $agentsListScrollOffset.set(offset);
+  }, []);
+
+  // Restore scroll position on initial load / view mount
+  useEffect(() => {
+    if (!isLoading && vlistRef.current) {
+      const savedOffset = $agentsListScrollOffset.get();
+      if (savedOffset > 0) {
+        vlistRef.current.scrollTo(savedOffset);
+      }
+    }
+  }, [isLoading]);
+
+  // Listen for filter/search resets and scroll VList to top when offset becomes 0 while mounted
+  useEffect(() => {
+    const unbind = $agentsListScrollOffset.listen((offset) => {
+      if (offset === 0 && vlistRef.current) {
+        vlistRef.current.scrollTo(0);
+      }
+    });
+    return unbind;
+  }, []);
+
+  const handleNavigate = useCallback(
+    (agentCode: string) => {
+      if (vlistRef.current) {
+        $agentsListScrollOffset.set(vlistRef.current.scrollOffset);
+        $agentsListCache.set(vlistRef.current.cache);
+      }
+      navigate(`/agents/${agentCode}`, { direction: "forward" });
+    },
+    [navigate],
+  );
 
   const layoutHeader = (
-    <LayoutHeader>
-      <Card variant="muted">
-        <VStack gap={3}>
-          <AgentSearch />
-          <AgentFilterToolbar />
-        </VStack>
-      </Card>
+    <LayoutHeader hasDivider xstyle={styles.header}>
+      <VStack gap={3}>
+        <AgentSearch />
+        <AgentFilterToolbar />
+      </VStack>
     </LayoutHeader>
   );
 
@@ -54,6 +80,8 @@ export function AgentsListView() {
     </VStack>
   );
 
+  const listCache = $agentsListCache.get() as VListProps["cache"];
+
   const layoutContent = (
     <LayoutContent isScrollable={true}>
       {isLoading ? (
@@ -61,13 +89,22 @@ export function AgentsListView() {
       ) : filteredAgents.length === 0 ? (
         <AgentListEmpty />
       ) : (
-        <List
-          rowCount={filteredAgents.length}
-          rowHeight={dynamicRowHeight}
-          rowComponent={AgentRow}
-          rowProps={{ agents: filteredAgents, claimsByAgent }}
-          style={{ height: "100%", width: "100%" }}
-        />
+        <VList
+          ref={vlistRef}
+          cache={listCache}
+          data={filteredAgents}
+          onScroll={handleScroll}
+          style={{ height: "100%" }}
+        >
+          {(agent, index) => {
+            const claims = claimsByAgent.get(agent.agent_code) ?? [];
+            return (
+              <div key={agent.agent_code} style={{ paddingBottom: 12 }}>
+                <AgentCard agent={agent} claims={claims} index={index + 1} onNavigate={handleNavigate} />
+              </div>
+            );
+          }}
+        </VList>
       )}
     </LayoutContent>
   );

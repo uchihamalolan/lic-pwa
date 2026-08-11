@@ -10,7 +10,6 @@ import { VStack } from "@astryxdesign/core/VStack";
 import { Eye, MessageSquareText } from "lucide-react";
 
 import { WhatsAppIcon } from "@/assets/icons";
-import { useNavigate } from "@/hooks/use-navigate.ts";
 import { useOptimisticClaims } from "@/hooks/use-optimistic-claims.ts";
 import { openPreviewMessage, useMessageTemplate } from "@/store/app-state.ts";
 import type { Agent, Claim } from "@/types/schema.ts";
@@ -21,11 +20,11 @@ interface AgentCardProps {
   agent: Agent;
   claims: Claim[];
   index: number;
+  onNavigate: (agentCode: string) => void;
 }
 
-export function AgentCard({ agent, claims: initialClaims, index }: AgentCardProps) {
+export function AgentCard({ agent, claims: initialClaims, index, onNavigate }: AgentCardProps) {
   const { claims, dispatchAgentClaimsStatus } = useOptimisticClaims(initialClaims);
-  const navigate = useNavigate();
   const hasPhone = Boolean(agent.phone && agent.phone.trim().length > 0);
   const template = useMessageTemplate();
 
@@ -49,8 +48,6 @@ export function AgentCard({ agent, claims: initialClaims, index }: AgentCardProp
   const claimBucket = getClaimCountBucket(totalClaims);
   const messageText = buildMessage(claims, template);
 
-  const navigateToDetails = () => navigate(`/agents/${agent.agent_code}`, { direction: "forward" });
-
   const handleDispatchWhatsApp = () => {
     if (!hasPhone) return;
     dispatchAgentClaimsStatus(agent.agent_code, "whatsapp");
@@ -67,12 +64,12 @@ export function AgentCard({ agent, claims: initialClaims, index }: AgentCardProp
     window.open(smsUrl, "_blank");
   };
 
-  const handlePreview = () => {
-    openPreviewMessage(agent, claims);
-  };
+  const handlePreview = () => openPreviewMessage(agent, claims);
+
+  const handleNavigate = () => onNavigate(agent.agent_code);
 
   return (
-    <ClickableCard label={`View details for ${agent.name}`} onClick={navigateToDetails}>
+    <ClickableCard label={`View details for ${agent.name}`} onClick={handleNavigate}>
       <VStack gap={3}>
         <HStack align="center" gap={2}>
           <Badge variant="neutral" label={`#${index}`} />

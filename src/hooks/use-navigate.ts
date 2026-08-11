@@ -53,7 +53,7 @@ export function useNavigate() {
       ];
 
       const animationOptions: KeyframeAnimationOptions = {
-        duration: 380,
+        duration: 310,
         easing: "cubic-bezier(0.24, 1, 0.4, 1)",
         fill: "both",
       };

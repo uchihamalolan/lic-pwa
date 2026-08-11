@@ -30,10 +30,23 @@ const $searchQuery = atom<string>("");
 
 export const $agentFilters = persistentJSON<AgentFiltersState>("lic-agent-filters", DEFAULT_FILTERS);
 
+export const $agentsListScrollOffset = atom<number>(0);
+export const $agentsListCache = atom<unknown>(undefined);
+
+const resetScrollPosition = () => {
+  $agentsListScrollOffset.set(0);
+  $agentsListCache.set(undefined);
+};
+
+$searchQuery.listen(resetScrollPosition);
+$agentFilters.listen(resetScrollPosition);
+
 export const resetAgentFilters = () => {
   startTransition(() => {
     $searchQuery.set("");
     $agentFilters.set(DEFAULT_FILTERS);
+    $agentsListScrollOffset.set(0);
+    $agentsListCache.set(undefined);
   });
 };
 

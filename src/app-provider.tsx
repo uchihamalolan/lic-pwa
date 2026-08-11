@@ -1,9 +1,9 @@
 import { InternationalizationProvider } from "@astryxdesign/core/i18n";
 import { Theme } from "@astryxdesign/core/theme";
-import { matchaTheme as theme } from "@astryxdesign/theme-matcha/built";
 import type { ReactNode } from "react";
 
 import { useAppTheme } from "@/store/app-state.ts";
+import { catppuccinMatchaTheme } from "@/themes/catppuccin-matcha.js";
 
 interface AppProviderProps {
   children: ReactNode;
@@ -14,7 +14,7 @@ export function AppProvider({ children }: AppProviderProps) {
 
   return (
     <InternationalizationProvider locale="en">
-      <Theme theme={theme} mode={mode}>
+      <Theme theme={catppuccinMatchaTheme} mode={mode}>
         {children}
       </Theme>
     </InternationalizationProvider>

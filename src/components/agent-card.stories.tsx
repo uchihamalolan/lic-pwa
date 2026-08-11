@@ -33,6 +33,7 @@ const meta = preview.meta({
     agent: mockAgent,
     claims: mockClaims,
     index: 1,
+    onNavigate: () => {},
   },
 });
 

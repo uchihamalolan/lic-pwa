@@ -1,16 +1,39 @@
 @import "@astryxdesign/core/reset.css";
 @import "@astryxdesign/core/astryx.css";
-@import "@astryxdesign/theme-matcha/theme.css";
 
-/* html,
-body {
-  overflow-x: hidden;
-  max-width: 100vw;
-} */
+@import "./themes/catppuccin-matcha.css";
 
 /* Disable cross-fade animation on the persistent AppShell topNav so it stays completely static */
 ::view-transition-group(app-top-nav),
 ::view-transition-old(app-top-nav),
 ::view-transition-new(app-top-nav) {
   animation: none;
+}
+
+/* Astryx Motion System for View Transitions */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--duration-medium-min);
+  animation-timing-function: var(--ease-standard);
+}
+
+html,
+::view-transition {
+  background-color: var(--color-background-surface);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}
+
+.brand-top-nav {
+  background-color: light-dark(#dc8a78, #dc8a78);
+
+  & h2,
+  button {
+    color: light-dark(#313244, #11111b);
+  }
 }
