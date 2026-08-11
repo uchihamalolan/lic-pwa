@@ -1,6 +1,6 @@
 import { Theme } from "@astryxdesign/core";
 import { InternationalizationProvider } from "@astryxdesign/core/i18n";
-import { matchaTheme } from "@astryxdesign/theme-matcha/built";
+import { y2kTheme as theme } from "@astryxdesign/theme-y2k/built";
 import type { ReactNode } from "react";
 
 import { useAppTheme } from "@/store/app-state.ts";
@@ -14,7 +14,7 @@ export function AppProvider({ children }: AppProviderProps) {
 
   return (
     <InternationalizationProvider locale="en">
-      <Theme theme={matchaTheme} mode={mode}>
+      <Theme theme={theme} mode={mode}>
         {children}
       </Theme>
     </InternationalizationProvider>

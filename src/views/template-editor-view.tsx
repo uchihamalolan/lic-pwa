@@ -64,7 +64,6 @@ export function TemplateEditorView() {
           hasCopyButton={false}
           maxHeight={300}
           title="Preview"
-          size="sm"
         />
       </VStack>
     </LayoutContent>

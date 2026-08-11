@@ -1,6 +1,6 @@
 @import "@astryxdesign/core/reset.css";
 @import "@astryxdesign/core/astryx.css";
-@import "@astryxdesign/theme-matcha/theme.css";
+@import "@astryxdesign/theme-y2k/theme.css";
 
 /* Disable cross-fade animation on the persistent AppShell topNav so it stays completely static */
 ::view-transition-group(app-top-nav),

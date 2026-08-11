@@ -18,19 +18,15 @@ type StatCardProps = {
   icon: IconType;
   title: string;
   count: string;
-  unit?: string;
 };
-const StatCard = ({ icon, title, count, unit }: StatCardProps) => (
+const StatCard = ({ icon, title, count }: StatCardProps) => (
   <Card variant="muted">
     <VStack gap={2}>
       <HStack align="center" gap={2}>
-        <Icon icon={icon} size="sm" />
-        <Text type="supporting">{title}</Text>
+        <Icon icon={icon} />
+        <Text>{title}</Text>
       </HStack>
-      <HStack align="end" gap={1}>
-        <Heading level={2}>{count}</Heading>
-        {unit ? <Text type="supporting">{unit}</Text> : null}
-      </HStack>
+      <Heading level={2}>{count}</Heading>
     </VStack>
   </Card>
 );
@@ -57,8 +53,8 @@ export function StatsView() {
           <SegmentedControlItem label="Filtered" value="filtered" />
         </SegmentedControl>
 
-        <Card variant="gray">
-          <VStack gap={3}>
+        <Card>
+          <VStack gap={6}>
             <ProgressBar
               formatValueLabel={() => `${stats.agents.notified}/${stats.agents.total}`}
               hasValueLabel
@@ -77,17 +73,12 @@ export function StatsView() {
         </Card>
 
         <Grid columns={2} gap={2}>
-          <StatCard count={`${stats.agents.total}`} icon={Users} title="Matched Agents" unit="agents" />
-          <StatCard count={`${stats.agents.pending}`} icon={Hourglass} title="Pending Agents" unit="agents" />
-          <StatCard count={`${stats.claims.total}`} icon={CheckCircle2} title="Total Claims" unit="claims" />
+          <StatCard count={`${stats.agents.total}`} icon={Users} title="Matched Agents" />
+          <StatCard count={`${stats.agents.pending}`} icon={Hourglass} title="Pending Agents" />
+          <StatCard count={`${stats.claims.total}`} icon={CheckCircle2} title="Total Claims" />
           <StatCard count={`${stats.claims.percentage}%`} icon={Activity} title="Completion Rate" />
-          <StatCard count={`${stats.claims.dispatched.wa}`} icon={Send} title="WhatsApp Sent" unit="claims" />
-          <StatCard
-            count={`${stats.claims.dispatched.sms}`}
-            icon={MessageSquare}
-            title="SMS Sent"
-            unit="claims"
-          />
+          <StatCard count={`${stats.claims.dispatched.wa}`} icon={Send} title="WhatsApp Sent" />
+          <StatCard count={`${stats.claims.dispatched.sms}`} icon={MessageSquare} title="SMS Sent" />
         </Grid>
       </VStack>
     </LayoutContent>

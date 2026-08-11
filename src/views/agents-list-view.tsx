@@ -1,8 +1,6 @@
-import { Layout, LayoutContent, LayoutHeader } from "@astryxdesign/core/Layout";
+import { Card, Layout, LayoutContent, LayoutHeader } from "@astryxdesign/core/Layout";
 import { Skeleton } from "@astryxdesign/core/Skeleton";
-import { colorVars } from "@astryxdesign/core/theme/tokens.stylex";
 import { VStack } from "@astryxdesign/core/VStack";
-import * as stylex from "@stylexjs/stylex";
 
 import { AgentCard } from "@/components/agent-card.tsx";
 import { AgentFilterToolbar, AgentSearch } from "@/components/agent-filter-toolbar.tsx";
@@ -10,23 +8,19 @@ import { AgentListEmpty } from "@/components/agent-list-empty.tsx";
 import { PreviewMessageDialog } from "@/components/preview-message-dialog.tsx";
 import { useFilteredAgents } from "@/hooks/use-filtered-agents.ts";
 
-const styles = stylex.create({
-  header: {
-    backgroundColor: colorVars["--color-background-gray"],
-  },
-});
-
 export function AgentsListView() {
   const { filteredAgents, claimsByAgent } = useFilteredAgents();
 
   const isLoading = filteredAgents === undefined || claimsByAgent === undefined;
 
   const layoutHeader = (
-    <LayoutHeader hasDivider={true} padding={3} xstyle={styles.header}>
-      <VStack gap={3}>
-        <AgentSearch />
-        <AgentFilterToolbar />
-      </VStack>
+    <LayoutHeader>
+      <Card variant="muted">
+        <VStack gap={3}>
+          <AgentSearch />
+          <AgentFilterToolbar />
+        </VStack>
+      </Card>
     </LayoutHeader>
   );
 
@@ -39,7 +33,7 @@ export function AgentsListView() {
   );
 
   const layoutContent = (
-    <LayoutContent isScrollable={true} padding={3}>
+    <LayoutContent isScrollable={true}>
       {isLoading ? (
         <>{loadingContent}</>
       ) : filteredAgents.length === 0 ? (
@@ -61,7 +55,7 @@ export function AgentsListView() {
 
   return (
     <>
-      <Layout header={layoutHeader} content={layoutContent} />
+      <Layout header={layoutHeader} content={layoutContent} padding={3} />
       <PreviewMessageDialog />
     </>
   );

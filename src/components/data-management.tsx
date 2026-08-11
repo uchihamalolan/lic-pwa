@@ -214,7 +214,7 @@ export function DestroyDataCard() {
   };
 
   return (
-    <Card variant="gray">
+    <Card variant="muted">
       <Stack direction="vertical" gap={1}>
         <HStack align="center" gap={2}>
           <Icon icon={AlertTriangle} size="sm" />
