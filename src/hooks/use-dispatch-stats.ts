@@ -82,18 +82,21 @@ const calculateMetrics = (agents: Agent[], claims: Claim[]): StatMetrics => {
   };
 };
 
-export function useDispatchStats(scope: StatsScope) {
-  const allAgents = useAgents();
-  const allClaims = useClaims();
+export function useDispatchStats(scope: StatsScope): StatMetrics | undefined {
+  const agents = useAgents();
+  const claims = useClaims();
   const { filteredAgents, claimsByAgent } = useFilteredAgents();
 
   return useMemo(() => {
     if (scope === "all") {
-      return calculateMetrics(allAgents, allClaims);
+      if (!agents || !claims) return undefined;
+      return calculateMetrics(agents, claims);
     }
+
+    if (!filteredAgents || !claimsByAgent) return undefined;
 
     const filteredClaimsList = filteredAgents.flatMap((agent) => claimsByAgent.get(agent.agent_code) ?? []);
 
     return calculateMetrics(filteredAgents, filteredClaimsList);
-  }, [scope, allAgents, allClaims, filteredAgents, claimsByAgent]);
+  }, [scope, agents, claims, filteredAgents, claimsByAgent]);
 }

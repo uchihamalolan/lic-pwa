@@ -31,7 +31,7 @@ const StatCard = ({ icon, title, count, unit }: StatCardProps) => (
         <Icon icon={icon} size="sm" />
         <Text type="supporting">{title}</Text>
       </HStack>
-      <HStack gap={1} align="end">
+      <HStack align="end" gap={1}>
         <Heading level={2}>{count}</Heading>
         {unit ? <Text type="supporting">{unit}</Text> : null}
       </HStack>
@@ -45,7 +45,7 @@ export function DispatchStatsDialog() {
 
   const stats = useDispatchStats(scope);
 
-  if (!isOpen) return null;
+  if (!isOpen || !stats) return null;
 
   const layoutHeader = (
     <LayoutHeader>
@@ -58,43 +58,43 @@ export function DispatchStatsDialog() {
       <VStack gap={2}>
         <SegmentedControl
           label="Stats scope"
+          layout="fill"
           value={scope}
           onChange={(val) => setScope(val as StatsScope)}
-          layout="fill"
         >
-          <SegmentedControlItem value="all" label="All" />
-          <SegmentedControlItem value="filtered" label="Filtered" />
+          <SegmentedControlItem label="All" value="all" />
+          <SegmentedControlItem label="Filtered" value="filtered" />
         </SegmentedControl>
 
         <Card variant="gray">
           <VStack gap={3}>
             <ProgressBar
-              label="Agents contacted"
-              variant="success"
-              value={stats.agents.percentage}
-              hasValueLabel
               formatValueLabel={() => `${stats.agents.notified}/${stats.agents.total}`}
+              hasValueLabel
+              label="Agents contacted"
+              value={stats.agents.percentage}
+              variant="success"
             />
 
             <ProgressBar
+              formatValueLabel={() => `${stats.claims.dispatched.total}/${stats.claims.total}`}
+              hasValueLabel
               label="Claims dispatched"
               value={stats.claims.percentage}
-              hasValueLabel
-              formatValueLabel={() => `${stats.claims.dispatched.total}/${stats.claims.total}`}
             />
           </VStack>
         </Card>
 
         <Grid columns={2} gap={2}>
-          <StatCard icon={Users} title="Matched Agents" count={`${stats.agents.total}`} unit="agents" />
-          <StatCard icon={Hourglass} title="Pending Agents" count={`${stats.agents.pending}`} unit="agents" />
-          <StatCard icon={CheckCircle2} title="Total Claims" count={`${stats.claims.total}`} unit="claims" />
-          <StatCard icon={Activity} title="Completion Rate" count={`${stats.claims.percentage}%`} />
-          <StatCard icon={Send} title="WhatsApp Sent" count={`${stats.claims.dispatched.wa}`} unit="claims" />
+          <StatCard count={`${stats.agents.total}`} icon={Users} title="Matched Agents" unit="agents" />
+          <StatCard count={`${stats.agents.pending}`} icon={Hourglass} title="Pending Agents" unit="agents" />
+          <StatCard count={`${stats.claims.total}`} icon={CheckCircle2} title="Total Claims" unit="claims" />
+          <StatCard count={`${stats.claims.percentage}%`} icon={Activity} title="Completion Rate" />
+          <StatCard count={`${stats.claims.dispatched.wa}`} icon={Send} title="WhatsApp Sent" unit="claims" />
           <StatCard
+            count={`${stats.claims.dispatched.sms}`}
             icon={MessageSquare}
             title="SMS Sent"
-            count={`${stats.claims.dispatched.sms}`}
             unit="claims"
           />
         </Grid>
@@ -112,12 +112,12 @@ export function DispatchStatsDialog() {
 
   return (
     <Dialog
-      isOpen={isOpen}
-      onOpenChange={(open) => !open && closeStats()}
-      purpose="info"
       aria-label="Stats Dialog"
+      isOpen={isOpen}
+      purpose="info"
+      onOpenChange={(open) => !open && closeStats()}
     >
-      <Layout header={layoutHeader} content={layoutContent} footer={layoutFooter} />
+      <Layout content={layoutContent} footer={layoutFooter} header={layoutHeader} />
     </Dialog>
   );
 }

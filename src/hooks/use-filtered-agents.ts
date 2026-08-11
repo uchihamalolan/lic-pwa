@@ -41,11 +41,15 @@ const filterClaims = ({ claims, dueFrom, dueTill, dispatchStatus }: FilterClaims
 export function useFilteredAgents() {
   const agents = useAgents();
   const claims = useClaims();
+
   const { searchQuery, dueFrom, dueTill, dispatchStatus, sortBy } = useAgentFilters();
 
   const filteredClaimsByAgent = useMemo(() => {
-    const map = new Map<string, Claim[]>();
+    if (claims === undefined) {
+      return undefined;
+    }
 
+    const map = new Map<string, Claim[]>();
     for (const claim of claims) {
       const list = map.get(claim.agent_code) ?? [];
       list.push(claim);
@@ -71,6 +75,10 @@ export function useFilteredAgents() {
   }, [claims, dueFrom, dueTill, dispatchStatus]);
 
   const filteredAgents = useMemo(() => {
+    if (agents === undefined || filteredClaimsByAgent === undefined) {
+      return undefined;
+    }
+
     return agents
       .filter((agent) => {
         // Search query filter

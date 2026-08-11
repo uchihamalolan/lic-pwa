@@ -3,11 +3,11 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "@/store/db.ts";
 
 export function useAgents() {
-  return useLiveQuery(() => db.agents.toArray(), []) ?? [];
+  return useLiveQuery(() => db.agents.toArray(), []);
 }
 
 export function useClaims() {
-  return useLiveQuery(() => db.claims.toArray(), []) ?? [];
+  return useLiveQuery(() => db.claims.toArray(), []);
 }
 
 export function useClaimsCount() {
@@ -15,5 +15,5 @@ export function useClaimsCount() {
 }
 
 export function useClaimsForAgent(agentCode: string) {
-  return useLiveQuery(() => db.claims.where("agent_code").equals(agentCode).toArray(), [agentCode]) ?? [];
+  return useLiveQuery(() => db.claims.where("agent_code").equals(agentCode).toArray(), [agentCode]);
 }

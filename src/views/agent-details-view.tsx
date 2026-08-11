@@ -1,4 +1,4 @@
-import { Badge, IconButton } from "@astryxdesign/core";
+import { Badge, IconButton, Skeleton } from "@astryxdesign/core";
 import { Heading } from "@astryxdesign/core/Heading";
 import { HStack } from "@astryxdesign/core/HStack";
 import { Icon } from "@astryxdesign/core/Icon";
@@ -10,19 +10,34 @@ import { ArrowLeft } from "lucide-react";
 import { ClaimsTable } from "@/components/claims-table.tsx";
 import { useAgents, useClaimsForAgent } from "@/hooks/use-db.ts";
 import { useNavigate } from "@/hooks/use-navigate.ts";
+import type { Agent, Claim } from "@/types/schema";
 
-interface AgentDetailsViewProps {
-  agentCode?: string;
-}
-
-export function AgentDetailsView({ agentCode }: AgentDetailsViewProps) {
-  const navigate = useNavigate();
+export function AgentDetailsView({ agentCode }: { agentCode?: string }) {
   const agents = useAgents();
-
-  const agent = agents.find((a) => a.agent_code === agentCode);
+  const agent = agents?.find((a) => a.agent_code === agentCode);
   const claims = useClaimsForAgent(agentCode ?? "");
 
-  if (!agent) return null;
+  const isLoading = agent === undefined || claims === undefined;
+
+  if (isLoading) {
+    return (
+      <VStack gap={4}>
+        <Skeleton height={140} width="100%" />
+        <Skeleton height={300} width="100%" />
+      </VStack>
+    );
+  }
+
+  return <AgentDetailsViewInner agent={agent} claims={claims} />;
+}
+
+interface AgentDetailsViewInnerProps {
+  agent: Agent;
+  claims: Claim[];
+}
+
+export function AgentDetailsViewInner({ agent, claims }: AgentDetailsViewInnerProps) {
+  const navigate = useNavigate();
 
   const notifiedCount = claims.filter((c) => c.notified_via !== null).length;
 

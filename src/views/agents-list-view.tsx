@@ -1,4 +1,5 @@
 import { Layout, LayoutContent, LayoutHeader } from "@astryxdesign/core/Layout";
+import { Skeleton } from "@astryxdesign/core/Skeleton";
 import { colorVars } from "@astryxdesign/core/theme/tokens.stylex";
 import { VStack } from "@astryxdesign/core/VStack";
 import * as stylex from "@stylexjs/stylex";
@@ -18,6 +19,8 @@ const styles = stylex.create({
 export function AgentsListView() {
   const { filteredAgents, claimsByAgent } = useFilteredAgents();
 
+  const isLoading = filteredAgents === undefined || claimsByAgent === undefined;
+
   const layoutHeader = (
     <LayoutHeader hasDivider={true} padding={3} xstyle={styles.header}>
       <VStack gap={3}>
@@ -27,9 +30,19 @@ export function AgentsListView() {
     </LayoutHeader>
   );
 
+  const loadingContent = (
+    <VStack gap={3}>
+      <Skeleton height={140} width="100%" />
+      <Skeleton height={140} width="100%" />
+      <Skeleton height={140} width="100%" />
+    </VStack>
+  );
+
   const layoutContent = (
     <LayoutContent isScrollable={true} padding={3}>
-      {filteredAgents.length === 0 ? (
+      {isLoading ? (
+        <>{loadingContent}</>
+      ) : filteredAgents.length === 0 ? (
         <AgentListEmpty />
       ) : (
         <VStack gap={3}>
