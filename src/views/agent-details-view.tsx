@@ -1,16 +1,13 @@
-import { Badge, IconButton, Skeleton } from "@astryxdesign/core";
-import { Heading } from "@astryxdesign/core/Heading";
+import { Badge, Skeleton } from "@astryxdesign/core";
 import { HStack } from "@astryxdesign/core/HStack";
-import { Icon } from "@astryxdesign/core/Icon";
-import { Layout, LayoutContent, LayoutHeader } from "@astryxdesign/core/Layout";
+import { Layout, LayoutContent } from "@astryxdesign/core/Layout";
 import { Token } from "@astryxdesign/core/Token";
 import { VStack } from "@astryxdesign/core/VStack";
-import { ArrowLeft } from "lucide-react";
 
+import { AppLayoutHeader } from "@/components/app-layout-header.tsx";
 import { ClaimsBulkActions } from "@/components/claims-bulk-actions.tsx";
 import { ClaimsTable } from "@/components/claims-table.tsx";
 import { useAgents, useClaimsForAgent } from "@/hooks/use-db.ts";
-import { useNavigate } from "@/hooks/use-navigate.ts";
 import type { Agent, Claim } from "@/types/schema";
 
 export function AgentDetailsView({ agentCode }: { agentCode?: string }) {
@@ -38,25 +35,18 @@ interface AgentDetailsViewInnerProps {
 }
 
 export function AgentDetailsViewInner({ agent, claims }: AgentDetailsViewInnerProps) {
-  const navigate = useNavigate();
-
   const notifiedCount = claims.filter((c) => c.notified_via !== null).length;
 
-  const handleBack = () => navigate("/agents", { direction: "backward" });
-
   const layoutHeader = (
-    <LayoutHeader hasDivider={true} padding={3}>
-      <HStack align="center" gap={3}>
-        <IconButton label="Back" icon={<Icon icon={ArrowLeft} />} variant="secondary" onClick={handleBack} />
-        <VStack gap={1}>
-          <Heading level={3}>{agent.name}</Heading>
-          <HStack align="center" gap={2} wrap="wrap">
-            <Token label={`Code: ${agent.agent_code}`} />
-            <Token label={`DO: ${agent.do_code}`} />
-          </HStack>
-        </VStack>
-      </HStack>
-    </LayoutHeader>
+    <AppLayoutHeader
+      heading={agent.name}
+      subheading={
+        <HStack align="center" gap={2} wrap="wrap">
+          <Token label={`Code: ${agent.agent_code}`} />
+          <Token label={`DO: ${agent.do_code}`} />
+        </HStack>
+      }
+    />
   );
 
   const layoutContent = (

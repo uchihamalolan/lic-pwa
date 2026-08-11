@@ -1,21 +1,15 @@
 import { Button } from "@astryxdesign/core/Button";
 import { CodeBlock } from "@astryxdesign/core/CodeBlock";
-import { Dialog } from "@astryxdesign/core/Dialog";
 import { HStack } from "@astryxdesign/core/HStack";
-import { Layout, LayoutContent, LayoutFooter, LayoutHeader, VStack } from "@astryxdesign/core/Layout";
+import { Layout, LayoutContent, LayoutFooter, VStack } from "@astryxdesign/core/Layout";
 import { TextArea } from "@astryxdesign/core/TextArea";
 import { useState } from "react";
 
-import {
-  closeTemplateEditor,
-  setMessageTemplate,
-  useIsTemplateEditorOpen,
-  useMessageTemplate,
-} from "@/store/app-state.ts";
+import { AppLayoutHeader } from "@/components/app-layout-header.tsx";
+import { useNavigate } from "@/hooks/use-navigate.ts";
+import { setMessageTemplate, useMessageTemplate } from "@/store/app-state.ts";
 import type { Claim } from "@/types/schema.ts";
 import { buildMessage, DEFAULT_TEMPLATE } from "@/utils/message-builder.ts";
-
-import { AppDialogHeader } from "./app-dialog-header";
 
 const SAMPLE_CLAIMS: Claim[] = [
   {
@@ -34,43 +28,41 @@ const SAMPLE_CLAIMS: Claim[] = [
   },
 ];
 
-export function TemplateEditorDialog() {
-  const isOpen = useIsTemplateEditorOpen();
+export function TemplateEditorView() {
+  const navigate = useNavigate();
   const savedTemplate = useMessageTemplate();
 
   const [draftTemplate, setDraftTemplate] = useState(savedTemplate);
 
   const sampleOutput = buildMessage(SAMPLE_CLAIMS, draftTemplate);
 
+  const handleBack = () => navigate("/agents", { direction: "backward" });
+
   const handleSave = () => {
     setMessageTemplate(draftTemplate);
-    closeTemplateEditor();
+    handleBack();
   };
 
   const handleResetDefault = () => {
     setDraftTemplate(DEFAULT_TEMPLATE);
   };
 
-  const layoutHeader = (
-    <LayoutHeader>
-      <AppDialogHeader title="Edit Message Template" onClose={closeTemplateEditor} />
-    </LayoutHeader>
-  );
+  const layoutHeader = <AppLayoutHeader heading="Edit Message Template" />;
 
   const layoutContent = (
-    <LayoutContent>
+    <LayoutContent isScrollable={true} padding={4}>
       <VStack gap={4}>
         <TextArea
           label="Template Editor"
           value={draftTemplate}
           onChange={(val) => setDraftTemplate(val)}
-          rows={5}
+          rows={6}
         />
         <CodeBlock
           code={sampleOutput}
           hasLanguageLabel={false}
           hasCopyButton={false}
-          maxHeight={200}
+          maxHeight={300}
           title="Preview"
           size="sm"
         />
@@ -79,25 +71,16 @@ export function TemplateEditorDialog() {
   );
 
   const layoutFooter = (
-    <LayoutFooter>
+    <LayoutFooter padding={3}>
       <HStack justify="between" align="center">
         <Button label="Reset" variant="ghost" onClick={handleResetDefault} />
         <HStack gap={2}>
-          <Button label="Cancel" variant="secondary" onClick={closeTemplateEditor} />
+          <Button label="Cancel" variant="secondary" onClick={handleBack} />
           <Button label="Save" variant="primary" onClick={handleSave} />
         </HStack>
       </HStack>
     </LayoutFooter>
   );
 
-  return (
-    <Dialog
-      isOpen={isOpen}
-      onOpenChange={(open) => !open && closeTemplateEditor()}
-      purpose="form"
-      aria-label="Edit Message Template"
-    >
-      <Layout header={layoutHeader} content={layoutContent} footer={layoutFooter} />
-    </Dialog>
-  );
+  return <Layout header={layoutHeader} content={layoutContent} footer={layoutFooter} />;
 }

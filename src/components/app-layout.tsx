@@ -3,30 +3,25 @@ import { Heading } from "@astryxdesign/core/Heading";
 import { HStack } from "@astryxdesign/core/HStack";
 import { IconButton } from "@astryxdesign/core/IconButton";
 import { TopNav } from "@astryxdesign/core/TopNav";
+import * as stylex from "@stylexjs/stylex";
 import { BarChart3, Database, FileText } from "lucide-react";
 import type { ReactNode } from "react";
 
-import { DataManagementDialog } from "@/components/data-management-dialog.tsx";
-import { DispatchStatsDialog } from "@/components/dispatch-stats-dialog.tsx";
-import { TemplateEditorDialog } from "@/components/template-editor-dialog.tsx";
 import { ThemeToggle } from "@/components/theme-toggle.tsx";
-import {
-  openDataManagement,
-  openStats,
-  openTemplateEditor,
-  useIsDataManagementOpen,
-  useIsStatsOpen,
-  useIsTemplateEditorOpen,
-} from "@/store/app-state.ts";
+import { useNavigate } from "@/hooks/use-navigate.ts";
 
 interface AppLayoutProps {
   children: ReactNode;
 }
 
+const styles = stylex.create({
+  topNavWrapper: {
+    viewTransitionName: "app-top-nav",
+  },
+});
+
 export function AppLayout({ children }: AppLayoutProps) {
-  const isTemplateEditorOpen = useIsTemplateEditorOpen();
-  const isStatsOpen = useIsStatsOpen();
-  const isDataManagementOpen = useIsDataManagementOpen();
+  const navigate = useNavigate();
 
   const navHeading = <Heading level={2}>LIC Dispatch</Heading>;
 
@@ -36,26 +31,26 @@ export function AppLayout({ children }: AppLayoutProps) {
         icon={<BarChart3 size={18} />}
         label="Analytics & Stats"
         tooltip="Analytics & Stats"
-        onClick={openStats}
+        onClick={() => navigate("/stats")}
       />
       <IconButton
         icon={<FileText size={18} />}
         label="Edit Message Template"
         tooltip="Edit Message Template"
-        onClick={openTemplateEditor}
+        onClick={() => navigate("/template")}
       />
       <IconButton
         icon={<Database size={18} />}
         label="Global Data & Support"
         tooltip="Global Data & Support"
-        onClick={openDataManagement}
+        onClick={() => navigate("/settings")}
       />
       <ThemeToggle />
     </HStack>
   );
 
   const topNav = (
-    <div className="app-top-nav" style={{ viewTransitionName: "app-top-nav" }}>
+    <div {...stylex.props(styles.topNavWrapper)}>
       <TopNav endContent={navEnd} heading={navHeading} />
     </div>
   );
@@ -63,9 +58,6 @@ export function AppLayout({ children }: AppLayoutProps) {
   return (
     <AppShell contentPadding={4} height="fill" topNav={topNav}>
       {children}
-      {isTemplateEditorOpen ? <TemplateEditorDialog /> : null}
-      {isStatsOpen ? <DispatchStatsDialog /> : null}
-      {isDataManagementOpen ? <DataManagementDialog /> : null}
     </AppShell>
   );
 }

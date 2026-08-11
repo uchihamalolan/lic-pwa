@@ -14,10 +14,7 @@ export function useNavigate() {
     (to: string, options?: NavigateOptions) => {
       if (to === currentLocation) return;
 
-      // Determine direction: explicit > inferred from route depth
-      const direction: "forward" | "backward" =
-        options?.direction ??
-        (to.startsWith(currentLocation) && to !== currentLocation ? "forward" : "backward");
+      const direction = options?.direction;
 
       const navOptions = {
         ...options,
@@ -37,6 +34,11 @@ export function useNavigate() {
       }
 
       const transition = document.startViewTransition(updateDOM);
+
+      // If direction is not explicitly specified, do not run custom slide WAAPI keyframes animation
+      if (!direction) {
+        return;
+      }
 
       const isForward = direction === "forward";
 

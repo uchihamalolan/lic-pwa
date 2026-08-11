@@ -13,30 +13,11 @@ export const $messageTemplate = persistentAtom<string>("lic-message-template", D
 export const useMessageTemplate = () => useStore($messageTemplate);
 export const setMessageTemplate = (template: string) => $messageTemplate.set(template);
 
-// Message Template editor state
-const $isTemplateEditorOpen = atom<boolean>(false);
-export const useIsTemplateEditorOpen = () => useStore($isTemplateEditorOpen);
-export const openTemplateEditor = () => $isTemplateEditorOpen.set(true);
-export const closeTemplateEditor = () => $isTemplateEditorOpen.set(false);
-
-// Dispatch Stats Dialog state
-const $isStatsOpen = atom<boolean>(false);
-export const useIsStatsOpen = () => useStore($isStatsOpen);
-export const openStats = () => $isStatsOpen.set(true);
-export const closeStats = () => $isStatsOpen.set(false);
-
-// Data Management Dialog state
-const $isDataManagementOpen = atom<boolean>(false);
-export const useIsDataManagementOpen = () => useStore($isDataManagementOpen);
-export const openDataManagement = () => $isDataManagementOpen.set(true);
-export const closeDataManagement = () => $isDataManagementOpen.set(false);
-
 // App Theme State
 const $themeMode = persistentAtom<ThemeMode>("lic-theme-mode", "system");
 export function useAppTheme() {
   const mode = useStore($themeMode);
   const setMode = useCallback((nextMode: ThemeMode) => $themeMode.set(nextMode), []);
-
   return { mode, setMode };
 }
 

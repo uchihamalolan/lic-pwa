@@ -1,22 +1,18 @@
 import { ProgressBar } from "@astryxdesign/core";
-import { Button } from "@astryxdesign/core/Button";
 import { Card } from "@astryxdesign/core/Card";
-import { Dialog } from "@astryxdesign/core/Dialog";
 import { Grid } from "@astryxdesign/core/Grid";
 import { Heading } from "@astryxdesign/core/Heading";
 import { HStack } from "@astryxdesign/core/HStack";
 import { Icon, type IconType } from "@astryxdesign/core/Icon";
-import { Layout, LayoutContent, LayoutFooter, LayoutHeader } from "@astryxdesign/core/Layout";
+import { Layout, LayoutContent } from "@astryxdesign/core/Layout";
 import { SegmentedControl, SegmentedControlItem } from "@astryxdesign/core/SegmentedControl";
 import { Text } from "@astryxdesign/core/Text";
 import { VStack } from "@astryxdesign/core/VStack";
 import { Activity, CheckCircle2, Hourglass, MessageSquare, Send, Users } from "lucide-react";
 import { useState } from "react";
 
+import { AppLayoutHeader } from "@/components/app-layout-header.tsx";
 import { useDispatchStats, type StatsScope } from "@/hooks/use-dispatch-stats.ts";
-import { closeStats, useIsStatsOpen } from "@/store/app-state.ts";
-
-import { AppDialogHeader } from "./app-dialog-header";
 
 type StatCardProps = {
   icon: IconType;
@@ -39,23 +35,18 @@ const StatCard = ({ icon, title, count, unit }: StatCardProps) => (
   </Card>
 );
 
-export function DispatchStatsDialog() {
-  const isOpen = useIsStatsOpen();
+export function StatsView() {
   const [scope, setScope] = useState<StatsScope>("all");
 
   const stats = useDispatchStats(scope);
 
-  if (!isOpen || !stats) return null;
+  if (!stats) return null;
 
-  const layoutHeader = (
-    <LayoutHeader>
-      <AppDialogHeader title="Stats" onClose={closeStats} />
-    </LayoutHeader>
-  );
+  const layoutHeader = <AppLayoutHeader heading="Analytics & Stats" />;
 
   const layoutContent = (
-    <LayoutContent>
-      <VStack gap={2}>
+    <LayoutContent isScrollable={true} padding={4}>
+      <VStack gap={3}>
         <SegmentedControl
           label="Stats scope"
           layout="fill"
@@ -102,22 +93,5 @@ export function DispatchStatsDialog() {
     </LayoutContent>
   );
 
-  const layoutFooter = (
-    <LayoutFooter>
-      <HStack justify="end">
-        <Button label="Close" variant="secondary" onClick={closeStats} />
-      </HStack>
-    </LayoutFooter>
-  );
-
-  return (
-    <Dialog
-      aria-label="Stats Dialog"
-      isOpen={isOpen}
-      purpose="info"
-      onOpenChange={(open) => !open && closeStats()}
-    >
-      <Layout content={layoutContent} footer={layoutFooter} header={layoutHeader} />
-    </Dialog>
-  );
+  return <Layout content={layoutContent} header={layoutHeader} />;
 }
