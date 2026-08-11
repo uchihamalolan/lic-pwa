@@ -2,8 +2,6 @@ import { DateInput } from "@astryxdesign/core/DateInput";
 import { Selector } from "@astryxdesign/core/Selector";
 import { HStack } from "@astryxdesign/core/Stack";
 import { TextInput } from "@astryxdesign/core/TextInput";
-import { spacingVars } from "@astryxdesign/core/theme/tokens.stylex";
-import * as stylex from "@stylexjs/stylex";
 
 import { useAgentFilters, type DispatchStatus, type SortBy } from "@/store/app-filters.ts";
 
@@ -20,12 +18,6 @@ const sortOptions: SortOption[] = [
   { value: "most_pending", label: "Most Pending" },
   { value: "name", label: "Name (A-Z)" },
 ];
-
-const styles = stylex.create({
-  filterStrip: {
-    paddingBlockEnd: spacingVars["--spacing-1-5"],
-  },
-});
 
 export function AgentSearch() {
   const { searchQuery, setSearchQuery } = useAgentFilters();
@@ -49,7 +41,7 @@ export function AgentFilterToolbar() {
     useAgentFilters();
 
   return (
-    <HStack gap={2} align="center" isScrollable={true} xstyle={styles.filterStrip}>
+    <HStack gap={2} align="center" isScrollable={true} className="hide-scrollbar">
       <Selector<DispatchStatusOption>
         label="Status filter"
         isLabelHidden={true}
