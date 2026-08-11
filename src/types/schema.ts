@@ -1,10 +1,9 @@
 import { z } from "zod";
 
-export const notificationChannelSchema = z.enum(["whatsapp", "sms"]).nullable();
+const notificationChannelSchema = z.enum(["whatsapp", "sms"]).nullable();
 export type NotificationChannel = z.infer<typeof notificationChannelSchema>;
 
-export const claimTypeSchema = z.union([z.enum(["M", "S"]), z.string().trim()]);
-export type ClaimType = z.infer<typeof claimTypeSchema>;
+const claimTypeSchema = z.union([z.enum(["M", "S"]), z.string().trim()]);
 
 export const agentSchema = z.object({
   agent_code: z.string().transform((val) => val.trim().padStart(8, "0")),

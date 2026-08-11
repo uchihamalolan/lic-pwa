@@ -1,6 +1,6 @@
 import type { Agent } from "@/types/schema.ts";
 
-export function generateVCard(agents: Agent[]): string {
+function generateVCard(agents: Agent[]): string {
   const validAgents = agents.filter((a) => a.phone !== null && a.phone !== "");
   const vcards = validAgents.map((a) => {
     const name = a.name.trim();

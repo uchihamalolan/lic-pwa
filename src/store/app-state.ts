@@ -8,7 +8,7 @@ import type { Agent, Claim } from "@/types/schema.ts";
 import { DEFAULT_TEMPLATE } from "@/utils/message-builder.ts";
 
 // Template persistent atom
-export const $messageTemplate = persistentAtom<string>("lic-message-template", DEFAULT_TEMPLATE);
+const $messageTemplate = persistentAtom<string>("lic-message-template", DEFAULT_TEMPLATE);
 export const useMessageTemplate = () => useStore($messageTemplate);
 export const setMessageTemplate = (template: string) => {
   startTransition(() => {

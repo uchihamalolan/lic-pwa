@@ -12,7 +12,7 @@ export type SortBy = "name" | "most_claims" | "most_pending";
 const sortBys = ["name", "most_claims", "most_pending"];
 const isSortBy = (val: string): val is SortBy => sortBys.includes(val);
 
-export type AgentFiltersState = {
+type AgentFiltersState = {
   dueFrom: ISODateString | null;
   dueTill: ISODateString | null;
   dispatchStatus: DispatchStatus;
@@ -28,7 +28,7 @@ const DEFAULT_FILTERS: AgentFiltersState = {
 
 const $searchQuery = atom<string>("");
 
-export const $agentFilters = persistentJSON<AgentFiltersState>("lic-agent-filters", DEFAULT_FILTERS);
+const $agentFilters = persistentJSON<AgentFiltersState>("lic-agent-filters", DEFAULT_FILTERS);
 
 export const $agentsListScrollOffset = atom<number>(0);
 export const $agentsListCache = atom<unknown>(undefined);

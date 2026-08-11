@@ -9,7 +9,7 @@ import {
   type NotificationChannel,
 } from "@/types/schema.ts";
 
-export class LicDatabase extends Dexie {
+class LicDatabase extends Dexie {
   agents!: Table<Agent, string>;
   claims!: Table<Claim, string>;
 

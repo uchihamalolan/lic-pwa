@@ -21,25 +21,6 @@ export function formatDisplayDate(isoDateStr: string): string {
   return `${day}/${month}/${year}`;
 }
 
-const readableDateFormatter = new Intl.DateTimeFormat("en-US", {
-  day: "2-digit",
-  month: "short",
-  year: "numeric",
-});
-
-export function formatReadableDate(isoDateStr: string): string {
-  if (!isoDateStr) return "";
-  const date = new Date(`${isoDateStr.trim()}T00:00:00`);
-  if (isNaN(date.getTime())) return isoDateStr;
-  return readableDateFormatter.format(date);
-}
-
-export function isWithinDateRange(isoDateStr: string, fromDateISO?: string, toDateISO?: string): boolean {
-  if (fromDateISO && isoDateStr < fromDateISO) return false;
-  if (toDateISO && isoDateStr > toDateISO) return false;
-  return true;
-}
-
 export type ClaimCountBucket = "green" | "yellow" | "orange" | "red";
 
 export function getClaimCountBucket(count: number): ClaimCountBucket {

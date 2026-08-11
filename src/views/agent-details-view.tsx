@@ -35,7 +35,7 @@ interface AgentDetailsViewInnerProps {
   claims: Claim[];
 }
 
-export function AgentDetailsViewInner({ agent, claims }: AgentDetailsViewInnerProps) {
+function AgentDetailsViewInner({ agent, claims }: AgentDetailsViewInnerProps) {
   const notifiedCount = claims.filter((c) => c.notified_via !== null).length;
 
   const layoutHeader = (
