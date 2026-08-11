@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from "wouter";
 import { AppProvider } from "@/app-provider.tsx";
 import { AppLayout } from "@/components/app-layout.tsx";
 import { useClaimsCount } from "@/hooks/use-db.ts";
+import { AgentDetailsView } from "@/views/agent-details-view.tsx";
 import { AgentsListView } from "@/views/agents-list-view.tsx";
 import { EmptyStateView } from "@/views/empty-state-view.tsx";
 
@@ -28,6 +29,7 @@ export function App() {
           <Route path="/" component={RootRedirect} />
           <Route path="/import" component={EmptyStateView} />
           <Route path="/agents" component={AgentsListView} />
+          <Route path="/agents/:code">{(params) => <AgentDetailsView agentCode={params.code} />}</Route>
         </Switch>
       </AppLayout>
     </AppProvider>

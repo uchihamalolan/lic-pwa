@@ -39,8 +39,14 @@ export function AppLayout({ children }: AppLayoutProps) {
     </HStack>
   );
 
+  const topNav = (
+    <div className="app-top-nav" style={{ viewTransitionName: "app-top-nav" }}>
+      <TopNav endContent={navEnd} heading={navHeading} />
+    </div>
+  );
+
   return (
-    <AppShell height="fill" contentPadding={4} topNav={<TopNav heading={navHeading} endContent={navEnd} />}>
+    <AppShell height="fill" contentPadding={4} topNav={topNav}>
       {children}
       {isTemplateEditorOpen ? <TemplateEditorDialog /> : null}
       {isStatsOpen ? <DispatchStatsDialog /> : null}

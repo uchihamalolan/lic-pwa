@@ -1,15 +1,13 @@
 import { EmptyState } from "@astryxdesign/core/EmptyState";
 import { VStack } from "@astryxdesign/core/VStack";
-import { useLocation } from "wouter";
 
 import { ImportForm } from "@/components/import-form.tsx";
+import { useNavigate } from "@/hooks/use-navigate";
 
 export function EmptyStateView() {
-  const [, setLocation] = useLocation();
+  const navigate = useNavigate();
 
-  const handleSuccess = () => {
-    setLocation("/agents");
-  };
+  const handleSuccess = () => navigate("/agents");
 
   return (
     <VStack gap={4}>

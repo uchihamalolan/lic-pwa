@@ -1,6 +1,6 @@
 import { Badge } from "@astryxdesign/core/Badge";
 import { Button } from "@astryxdesign/core/Button";
-import { Card } from "@astryxdesign/core/Card";
+import { ClickableCard } from "@astryxdesign/core/ClickableCard";
 import { Heading } from "@astryxdesign/core/Heading";
 import { Icon } from "@astryxdesign/core/Icon";
 import { IconButton } from "@astryxdesign/core/IconButton";
@@ -10,6 +10,7 @@ import { VStack } from "@astryxdesign/core/VStack";
 import { Eye, MessageSquareText } from "lucide-react";
 
 import { WhatsAppIcon } from "@/assets/icons";
+import { useNavigate } from "@/hooks/use-navigate.ts";
 import { openPreviewMessage, useMessageTemplate } from "@/store/app-state.ts";
 import { updateAgentClaimsStatus } from "@/store/db.ts";
 import type { Agent, Claim } from "@/types/schema.ts";
@@ -23,6 +24,7 @@ interface AgentCardProps {
 }
 
 export function AgentCard({ agent, claims, index }: AgentCardProps) {
+  const navigate = useNavigate();
   const hasPhone = Boolean(agent.phone && agent.phone.trim().length > 0);
   const template = useMessageTemplate();
 
@@ -46,6 +48,8 @@ export function AgentCard({ agent, claims, index }: AgentCardProps) {
   const claimBucket = getClaimCountBucket(totalClaims);
   const messageText = buildMessage(claims, template);
 
+  const navigateToDetails = () => navigate(`/agents/${agent.agent_code}`, { direction: "forward" });
+
   const handleDispatchWhatsApp = async () => {
     if (!hasPhone) return;
     await updateAgentClaimsStatus(agent.agent_code, "whatsapp");
@@ -62,8 +66,12 @@ export function AgentCard({ agent, claims, index }: AgentCardProps) {
     window.open(smsUrl, "_blank");
   };
 
+  const handlePreview = () => {
+    openPreviewMessage(agent, claims);
+  };
+
   return (
-    <Card>
+    <ClickableCard label={`View details for ${agent.name}`} onClick={navigateToDetails}>
       <VStack gap={3}>
         <HStack align="center" gap={2}>
           <Badge variant="neutral" label={`#${index}`} />
@@ -93,13 +101,9 @@ export function AgentCard({ agent, claims, index }: AgentCardProps) {
             width="100%"
             onClick={handleDispatchSms}
           />
-          <IconButton
-            label="Preview Message"
-            icon={<Icon icon={Eye} />}
-            onClick={() => openPreviewMessage(agent, claims)}
-          />
+          <IconButton label="Preview Message" icon={<Icon icon={Eye} />} onClick={handlePreview} />
         </HStack>
       </VStack>
-    </Card>
+    </ClickableCard>
   );
 }
