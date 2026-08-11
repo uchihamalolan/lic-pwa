@@ -1,10 +1,13 @@
 import { Button } from "@astryxdesign/core/Button";
 import { FileInput } from "@astryxdesign/core/FileInput";
+import { Icon } from "@astryxdesign/core/Icon";
 import { VStack } from "@astryxdesign/core/VStack";
+import { Sparkles } from "lucide-react";
 import { useState } from "react";
 
 import { importAgents, importClaims } from "@/store/db.ts";
 import { parseAgentCsv } from "@/utils/csv-agent-parser.ts";
+import { loadDummyData } from "@/utils/dummy-loader.ts";
 import { parseTxtReport } from "@/utils/txt-report-parser.ts";
 
 interface ImportFormProps {
@@ -16,6 +19,7 @@ export function ImportForm({ onSubmitSuccess, onSubmitError }: ImportFormProps) 
   const [txtFile, setTxtFile] = useState<File | null>(null);
   const [csvFile, setCsvFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isDemoLoading, setIsDemoLoading] = useState(false);
 
   const handleTxtChange = (file: File | File[] | null) => {
     const selected = Array.isArray(file) ? (file.at(0) ?? null) : file;
@@ -57,29 +61,49 @@ export function ImportForm({ onSubmitSuccess, onSubmitError }: ImportFormProps) 
     }
   };
 
+  const handleLoadDemoData = async () => {
+    setIsDemoLoading(true);
+    try {
+      await loadDummyData();
+      onSubmitSuccess?.();
+    } catch (err) {
+      const error = err instanceof Error ? err : new Error("Failed to load demo data");
+      onSubmitError?.(error);
+    } finally {
+      setIsDemoLoading(false);
+    }
+  };
+
   const isSubmitDisabled = !txtFile && !csvFile;
 
   return (
     <VStack gap={4}>
       <FileInput
+        accept=".txt"
         label="LIC Claim Due Report (.txt)"
         value={txtFile}
         onChange={handleTxtChange}
-        accept=".txt"
       />
       <FileInput
+        accept=".csv"
         label="Agent Contact Roster (.csv)"
         value={csvFile}
         onChange={handleCsvChange}
-        accept=".csv"
       />
       <Button
-        label="Import Data"
-        variant="primary"
-        size="lg"
-        isLoading={isLoading}
         isDisabled={isSubmitDisabled}
+        isLoading={isLoading}
+        label="Import Data"
+        size="lg"
+        variant="primary"
         onClick={handleImport}
+      />
+      <Button
+        icon={<Icon icon={Sparkles} />}
+        isLoading={isDemoLoading}
+        label="Load Sample Data"
+        variant="secondary"
+        onClick={handleLoadDemoData}
       />
     </VStack>
   );

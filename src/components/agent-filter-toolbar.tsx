@@ -64,8 +64,8 @@ export function AgentFilterToolbar() {
         placeholder="Due From"
         format="date"
         hasClear={true}
-        value={dueFrom}
-        onChange={(val) => setDueFrom(val)}
+        value={dueFrom ?? undefined}
+        onChange={(val) => setDueFrom(val ?? null)}
         width={200}
       />
 
@@ -75,8 +75,8 @@ export function AgentFilterToolbar() {
         placeholder="Due Till"
         format="date"
         hasClear={true}
-        value={dueTill}
-        onChange={(val) => setDueTill(val)}
+        value={dueTill ?? undefined}
+        onChange={(val) => setDueTill(val ?? null)}
         width={200}
       />
 
@@ -85,6 +85,7 @@ export function AgentFilterToolbar() {
         isLabelHidden={true}
         options={sortOptions}
         value={sortBy}
+        hasClear
         onChange={(val) => setSortBy(val)}
       />
     </HStack>

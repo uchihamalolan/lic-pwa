@@ -1,6 +1,6 @@
 import type { ThemeMode } from "@astryxdesign/core";
 import type { ISODateString } from "@astryxdesign/core/Calendar";
-import { persistentAtom } from "@nanostores/persistent";
+import { persistentAtom, persistentJSON } from "@nanostores/persistent";
 import { useStore } from "@nanostores/react";
 import { atom } from "nanostores";
 import { useCallback } from "react";
@@ -37,61 +37,70 @@ export type SortBy = "name" | "most_claims" | "most_pending";
 const sortBys = ["name", "most_claims", "most_pending"];
 const isSortBy = (val: string): val is SortBy => sortBys.includes(val);
 
-// Filter atoms (searchQuery remains transient atom, others use persistentAtom)
+export type AgentFiltersState = {
+  dueFrom: ISODateString | null;
+  dueTill: ISODateString | null;
+  dispatchStatus: DispatchStatus;
+  sortBy: SortBy | null;
+};
+
+const DEFAULT_FILTERS: AgentFiltersState = {
+  dueFrom: null,
+  dueTill: null,
+  dispatchStatus: "all",
+  sortBy: null,
+};
+
+// Filter atoms (searchQuery remains transient atom, others use persistentJSON)
 const $searchQuery = atom<string>("");
 
-const encodeDate = (val: ISODateString | undefined) => val ?? "";
-const decodeDate = (val: string): ISODateString | undefined => (val ? (val as ISODateString) : undefined);
-
-const $dueFrom = persistentAtom<ISODateString | undefined>("lic-filter-due-from", undefined, {
-  encode: encodeDate,
-  decode: decodeDate,
-});
-
-const $dueTill = persistentAtom<ISODateString | undefined>("lic-filter-due-till", undefined, {
-  encode: encodeDate,
-  decode: decodeDate,
-});
-
-const $dispatchStatus = persistentAtom<DispatchStatus>("lic-filter-dispatch-status", "all");
-const $sortBy = persistentAtom<SortBy>("lic-filter-sort-by", "most_claims");
+export const $agentFilters = persistentJSON<AgentFiltersState>("lic-agent-filters", DEFAULT_FILTERS);
 
 export const resetAgentFilters = () => {
   $searchQuery.set("");
-  $dueFrom.set(undefined);
-  $dueTill.set(undefined);
-  $dispatchStatus.set("all");
+  $agentFilters.set(DEFAULT_FILTERS);
 };
 
 export function useAgentFilters() {
   const searchQuery = useStore($searchQuery);
   const setSearchQuery = useCallback((query: string) => $searchQuery.set(query), []);
 
-  const dueFrom = useStore($dueFrom);
-  const setDueFrom = useCallback((val: ISODateString | undefined) => $dueFrom.set(val), []);
+  const filters = useStore($agentFilters);
 
-  const dueTill = useStore($dueTill);
-  const setDueTill = useCallback((val: ISODateString | undefined) => $dueTill.set(val), []);
-
-  const dispatchStatus = useStore($dispatchStatus);
-  const setDispatchStatus = useCallback(
-    (val: string) => isDispatchStatus(val) && $dispatchStatus.set(val),
+  const setDueFrom = useCallback(
+    (dueFrom: ISODateString | null) => $agentFilters.set({ ...$agentFilters.get(), dueFrom }),
     [],
   );
 
-  const sortBy = useStore($sortBy);
-  const setSortBy = useCallback((val: string) => isSortBy(val) && $sortBy.set(val), []);
+  const setDueTill = useCallback(
+    (dueTill: ISODateString | null) => $agentFilters.set({ ...$agentFilters.get(), dueTill }),
+    [],
+  );
+
+  const setDispatchStatus = useCallback((dispatchStatus: string) => {
+    if (isDispatchStatus(dispatchStatus)) {
+      $agentFilters.set({ ...$agentFilters.get(), dispatchStatus });
+    }
+  }, []);
+
+  const setSortBy = useCallback((sortBy: string | null) => {
+    if (sortBy === null) {
+      $agentFilters.set({ ...$agentFilters.get(), sortBy: null });
+    } else if (isSortBy(sortBy)) {
+      $agentFilters.set({ ...$agentFilters.get(), sortBy });
+    }
+  }, []);
 
   return {
     searchQuery,
     setSearchQuery,
-    dueFrom,
+    dueFrom: filters.dueFrom,
     setDueFrom,
-    dueTill,
+    dueTill: filters.dueTill,
     setDueTill,
-    dispatchStatus,
+    dispatchStatus: filters.dispatchStatus,
     setDispatchStatus,
-    sortBy,
+    sortBy: filters.sortBy,
     setSortBy,
     resetFilters: resetAgentFilters,
   };
