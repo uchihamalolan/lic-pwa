@@ -7,6 +7,7 @@ import { Token } from "@astryxdesign/core/Token";
 import { VStack } from "@astryxdesign/core/VStack";
 import { ArrowLeft } from "lucide-react";
 
+import { ClaimsBulkActions } from "@/components/claims-bulk-actions.tsx";
 import { ClaimsTable } from "@/components/claims-table.tsx";
 import { useAgents, useClaimsForAgent } from "@/hooks/use-db.ts";
 import { useNavigate } from "@/hooks/use-navigate.ts";
@@ -68,6 +69,10 @@ export function AgentDetailsViewInner({ agent, claims }: AgentDetailsViewInnerPr
             variant={notifiedCount === claims.length && claims.length > 0 ? "green" : "teal"}
           />
         </HStack>
+
+        {/* Bulk Claims Actions Bar */}
+        <ClaimsBulkActions agentCode={agent.agent_code} />
+
         {/* Claims Table Component */}
         <ClaimsTable agentPhone={agent.phone} claims={claims} />
       </VStack>

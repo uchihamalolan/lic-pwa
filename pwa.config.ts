@@ -3,6 +3,13 @@ import type { VitePWAOptions } from "vite-plugin-pwa";
 export const pwaOptions: Partial<VitePWAOptions> = {
   registerType: "autoUpdate",
   includeAssets: ["icons/favicon.ico", "icons/apple-touch-icon.png", "icons/logo.svg"],
+  workbox: {
+    navigateFallback: "/index.html",
+    globPatterns: ["**/*.{js,css,html,ico,png,svg,webmanifest}"],
+    cleanupOutdatedCaches: true,
+    clientsClaim: true,
+    skipWaiting: true,
+  },
   manifest: {
     name: "LIC Claims Dispatcher",
     short_name: "LIC Claims",
