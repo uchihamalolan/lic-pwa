@@ -2,6 +2,12 @@
 @import "@astryxdesign/core/astryx.css";
 @import "@astryxdesign/theme-y2k/theme.css";
 
+/* html,
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+} */
+
 /* Disable cross-fade animation on the persistent AppShell topNav so it stays completely static */
 ::view-transition-group(app-top-nav),
 ::view-transition-old(app-top-nav),

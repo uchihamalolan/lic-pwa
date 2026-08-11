@@ -49,11 +49,7 @@ export function AppLayout({ children }: AppLayoutProps) {
     </HStack>
   );
 
-  const topNav = (
-    <div {...stylex.props(styles.topNavWrapper)}>
-      <TopNav endContent={navEnd} heading={navHeading} />
-    </div>
-  );
+  const topNav = <TopNav endContent={navEnd} heading={navHeading} xstyle={styles.topNavWrapper} />;
 
   return (
     <AppShell contentPadding={4} height="fill" topNav={topNav}>
