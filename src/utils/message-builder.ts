@@ -5,9 +5,11 @@ function formatClaim(c: Claim, index: number): string {
   const displayDueDate = formatDisplayDate(c.due_date);
   const lines = [
     `${index + 1}. Policy No: ${c.policy_no} | ${c.holder_name} | Due: ${displayDueDate}`,
-    `   Claim Type: ${c.claim_type} | Plan: ${c.plan} | Amount: ${c.amt_payable}`,
-    `   Address: ${c.holder_address ?? ""}`,
+    `   Claim Type: ${c.claim_type} | Plan: ${c.plan} | Amount: ₹${c.amt_payable.toLocaleString("en-IN")}`,
   ];
+  if (c.holder_address) {
+    lines.push(`   Address: ${c.holder_address}`);
+  }
   if (c.holder_phone) {
     lines.push(`   Contact: ${c.holder_phone}`);
   }
@@ -29,4 +31,10 @@ export function buildMessage(claims: Claim[], template: string = DEFAULT_TEMPLAT
   const sortedClaims = claims.toSorted((a, b) => a.due_date.localeCompare(b.due_date));
   const claimLines = sortedClaims.map((c, i) => formatClaim(c, i)).join("\n\n");
   return `${header}\n\n${claimLines}`;
+}
+
+export function buildSingleClaimMessage(claim: Claim, template: string = DEFAULT_TEMPLATE): string {
+  const header = template.trim() || DEFAULT_TEMPLATE;
+  const claimLine = formatClaim(claim, 0);
+  return `${header}\n\n${claimLine}`;
 }
