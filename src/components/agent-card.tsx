@@ -72,15 +72,19 @@ export function AgentCard({ agent, claims: initialClaims, index, onNavigate }: A
     <ClickableCard label={`View details for ${agent.name}`} onClick={handleNavigate}>
       <VStack gap={3}>
         <HStack align="center" gap={2}>
-          <Badge variant="neutral" label={`#${index}`} />
+          <Badge variant="purple" label={`#${index}`} />
           <Heading level={4}>{agent.name}</Heading>
           <StackItem size="fill" />
           <Badge variant={statusVariant} label={statusLabel} />
         </HStack>
 
         <HStack gap={2} align="center" wrap="wrap">
-          <Token label={agent.agent_code} />
-          {hasPhone ? <Token label={agent.phone!} /> : <Token isDisabled label="No Mobile Number" />}
+          <Token color="gray" label={agent.agent_code} />
+          {hasPhone ? (
+            <Token color="gray" label={agent.phone!} />
+          ) : (
+            <Token isDisabled label="No Mobile Number" />
+          )}
           <Token color={claimBucket} label={`${totalClaims} claim${totalClaims === 1 ? "" : "s"}`} />
         </HStack>
 

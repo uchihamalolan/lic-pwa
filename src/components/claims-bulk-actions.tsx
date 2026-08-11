@@ -34,7 +34,7 @@ export function ClaimsBulkActions({ agentCode }: ClaimsBulkActionsProps) {
   };
 
   return (
-    <Card padding={3} variant="muted">
+    <Card padding={3}>
       <VStack gap={2}>
         <Text weight="semibold">Mark All</Text>
         <HStack align="center" gap={2} wrap="wrap">

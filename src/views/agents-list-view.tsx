@@ -24,6 +24,9 @@ const styles = stylex.create({
   content: {
     paddingBlock: 0,
   },
+  footer: {
+    borderRadius: 0,
+  },
 });
 
 interface AgentsListProps {
@@ -131,7 +134,14 @@ export function AgentsListView() {
     </LayoutContent>
   );
 
-  const layoutFooter = <Token size="sm" label={`Matched Agents: ${filteredAgents?.length}`} color="gray" />;
+  const layoutFooter = (
+    <Token
+      size="sm"
+      label={`Matched Agents: ${filteredAgents?.length}`}
+      color="green"
+      xstyle={styles.footer}
+    />
+  );
 
   return (
     <>

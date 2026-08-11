@@ -71,7 +71,12 @@ export function ExportVCardCard({ agents, updateBanner }: ExportVCardCardProps) 
         <Text size="sm" type="supporting">
           Download all agent phone contacts as a unified .vcf vCard file.
         </Text>
-        <Button icon={<Icon icon={Download} />} label="Download vCard" onClick={handleDownloadVCard} />
+        <Button
+          icon={<Icon icon={Download} />}
+          label="Download vCard"
+          variant="primary"
+          onClick={handleDownloadVCard}
+        />
       </Stack>
     </Card>
   );

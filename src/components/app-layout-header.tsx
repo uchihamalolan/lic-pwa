@@ -29,7 +29,7 @@ export function AppLayoutHeader({ heading, subheading, backTo = "/agents" }: App
   const handleBack = () => navigate(backTo, { direction: "backward" });
 
   return (
-    <LayoutHeader hasDivider={true} padding={3} xstyle={styles.header}>
+    <LayoutHeader hasDivider padding={3} xstyle={styles.header}>
       <HStack align="center" gap={3}>
         <IconButton label="Back" icon={<Icon icon={ArrowLeft} />} onClick={handleBack} />
         {subheading ? (

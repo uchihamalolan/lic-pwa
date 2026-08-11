@@ -157,29 +157,74 @@
         "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       --font-family-heading: "Playwrite US Trad", Georgia, "Times New Roman", Times, serif;
       --font-family-code: "JetBrains Mono", "SF Mono", Monaco, Consolas, monospace;
-      --color-syntax-keyword: light-dark(#5a6b2a, #a8bf6a);
-      --color-syntax-string: light-dark(#2e6b4a, #7bc49e);
-      --color-syntax-comment: light-dark(#707e46, #707e46);
-      --color-syntax-number: light-dark(#8c6b30, #d4b870);
-      --color-syntax-function: light-dark(#3a5e8c, #7ba8d4);
-      --color-syntax-type: light-dark(#6b4a8c, #b08ed4);
-      --color-syntax-variable: light-dark(#3e481d, #c0cba9);
-      --color-syntax-operator: light-dark(#707e46, #94a468);
-      --color-syntax-constant: light-dark(#8c6b30, #d4b870);
-      --color-syntax-tag: light-dark(#8c3a3a, #d47a7a);
-      --color-syntax-attribute: light-dark(#7c5e3a, #c4a882);
-      --color-syntax-property: light-dark(#3a7c6b, #70c4b0);
-      --color-syntax-punctuation: light-dark(#707e46, #5a6440);
-      --color-syntax-background: light-dark(#f0f0e0, #1a1c14);
+      --color-syntax-keyword: light-dark(
+        oklch(0.5546698483756871 0.25034607990295016 297.0156483500495),
+        oklch(0.7871462525760659 0.11867011135986587 304.7693043767238)
+      );
+      --color-syntax-string: light-dark(
+        oklch(0.6250443904295363 0.17715816108762134 140.44483759142634),
+        oklch(0.8577042231793516 0.109228579658491 142.71528901553893)
+      );
+      --color-syntax-comment: light-dark(
+        oklch(0.7076684584948777 0.02366986561429199 274.6008348717119),
+        oklch(0.549691183767789 0.03449390827002124 277.0950746058613)
+      );
+      --color-syntax-number: light-dark(
+        oklch(0.6919766433363157 0.20405156758527304 42.4292658007281),
+        oklch(0.8236782337309648 0.10146034154738652 52.62941686191107)
+      );
+      --color-syntax-function: light-dark(
+        oklch(0.5586168519157438 0.22550252265688878 262.08665056049813),
+        oklch(0.7664203616291358 0.11134426678812931 259.88497602028025)
+      );
+      --color-syntax-type: light-dark(
+        oklch(0.7139917309504697 0.14944164080684152 67.77665534753208),
+        oklch(0.9193028538212243 0.07041462719493903 86.52808223272405)
+      );
+      --color-syntax-variable: light-dark(
+        oklch(0.4354696280914242 0.043007957904862906 279.325020951234),
+        oklch(0.8786600793473718 0.04255199903517194 272.2767378415369)
+      );
+      --color-syntax-operator: light-dark(
+        oklch(0.6820196727415445 0.14481893950526162 235.38221876463177),
+        oklch(0.8467113913728485 0.08333608100880854 210.25454148097614)
+      );
+      --color-syntax-constant: light-dark(
+        oklch(0.6919766433363157 0.20405156758527304 42.4292658007281),
+        oklch(0.8236782337309648 0.10146034154738652 52.62941686191107)
+      );
+      --color-syntax-tag: light-dark(
+        oklch(0.5504744142539229 0.21551430760195764 19.809464044160393),
+        oklch(0.7555920111610426 0.12970214251394938 2.76416484470991)
+      );
+      --color-syntax-attribute: light-dark(
+        oklch(0.6022689684480229 0.09811495789237053 201.1047483772147),
+        oklch(0.8584890398993206 0.07920670052090036 182.74951302554985)
+      );
+      --color-syntax-property: light-dark(
+        oklch(0.6477443602548549 0.1067685254795326 212.88928055980793),
+        oklch(0.790649687529011 0.09649039960036986 228.65267891585813)
+      );
+      --color-syntax-punctuation: light-dark(
+        oklch(0.6535536290493023 0.026878770771298608 278.1208159631207),
+        oklch(0.6175671510185836 0.036669743168859285 276.0047079409003)
+      );
+      --color-syntax-background: light-dark(
+        oklch(0.9334593324109276 0.00871379906203183 264.52060223534073),
+        oklch(0.2155216079500624 0.02541687089919072 284.06469902193265)
+      );
       --color-accent: light-dark(
         oklch(0.5546698483756871 0.25034607990295016 297.0156483500495),
         oklch(0.7871462525760659 0.11867011135986587 304.7693043767238)
       );
       --color-accent-muted: light-dark(
-        oklch(0.8574770848204982 0.014479984436494493 268.47559171847894),
-        oklch(0.3240218874463015 0.03188455239399239 281.9784417412653)
+        oklch(0.5546698483756871 0.25034607990295016 297.0156483500495 / 0.12),
+        oklch(0.7871462525760659 0.11867011135986587 304.7693043767238 / 0.15)
       );
-      --color-neutral: light-dark(#3e481d0f, #c0cba91a);
+      --color-neutral: light-dark(
+        oklch(0.8083070110182754 0.01739330880861526 271.1981554317899),
+        oklch(0.4036914196944409 0.03195464132822365 280.1520036072935)
+      );
       --color-background-surface: light-dark(
         oklch(0.905964995559709 0.011716507677813338 264.50710516682375),
         oklch(0.18278246200466305 0.02037484440642812 284.2038483902186)
@@ -188,9 +233,18 @@
         oklch(0.9577608870760925 0.005766802410310334 264.532151644555),
         oklch(0.24286694183838442 0.03035736275944967 283.91097023641396)
       );
-      --color-overlay: light-dark(#3e481d80, #3e481dcc);
-      --color-overlay-hover: light-dark(#3e481d0d, #c0cba90d);
-      --color-overlay-pressed: light-dark(#3e481d1a, #c0cba91a);
+      --color-overlay: light-dark(
+        oklch(0.7076684584948777 0.02366986561429199 274.6008348717119 / 0.33),
+        oklch(0.549691183767789 0.03449390827002124 277.0950746058613 / 0.44)
+      );
+      --color-overlay-hover: light-dark(
+        oklch(0.4354696280914242 0.043007957904862906 279.325020951234 / 0.08),
+        oklch(0.8786600793473718 0.04255199903517194 272.2767378415369 / 0.1)
+      );
+      --color-overlay-pressed: light-dark(
+        oklch(0.6535536290493023 0.026878770771298608 278.1208159631207),
+        oklch(0.6175671510185836 0.036669743168859285 276.0047079409003)
+      );
       --color-background-muted: light-dark(
         oklch(0.8574770848204982 0.014479984436494493 268.47559171847894),
         oklch(0.3240218874463015 0.03188455239399239 281.9784417412653)
@@ -203,96 +257,264 @@
         oklch(0.5470776379676476 0.034342788375285344 279.0836971153176),
         oklch(0.7509605472605528 0.03956498596177885 273.9319903727045)
       );
-      --color-text-disabled: light-dark(#c0cba9, #5a6440);
+      --color-text-disabled: light-dark(
+        oklch(0.7076684584948777 0.02366986561429199 274.6008348717119),
+        oklch(0.549691183767789 0.03449390827002124 277.0950746058613)
+      );
       --color-text-accent: light-dark(
         oklch(0.5546698483756871 0.25034607990295016 297.0156483500495),
         oklch(0.7871462525760659 0.11867011135986587 304.7693043767238)
       );
-      --color-on-dark: #ffffff;
-      --color-on-light: #3e481d;
+      --color-on-dark: oklch(0.8786600793473718 0.04255199903517194 272.2767378415369);
+      --color-on-light: oklch(0.4354696280914242 0.043007957904862906 279.325020951234);
       --color-on-accent: light-dark(
         oklch(0.9577608870760925 0.005766802410310334 264.532151644555),
         oklch(0.24286694183838442 0.03035736275944967 283.91097023641396)
       );
-      --color-on-success: light-dark(#ffffff, #3e481d);
-      --color-on-error: light-dark(#ffffff, #3e481d);
-      --color-on-warning: light-dark(#3e481d, #3e481d);
-      --color-icon-accent: light-dark(#3e481d, #c0cba9);
-      --color-icon-primary: light-dark(#3e481d, #c0cba9);
-      --color-icon-secondary: light-dark(#707e46, #94a468);
-      --color-icon-disabled: light-dark(#c0cba9, #5a6440);
+      --color-on-success: light-dark(
+        oklch(0.9577608870760925 0.005766802410310334 264.532151644555),
+        oklch(0.24286694183838442 0.03035736275944967 283.91097023641396)
+      );
+      --color-on-error: light-dark(
+        oklch(0.9577608870760925 0.005766802410310334 264.532151644555),
+        oklch(0.24286694183838442 0.03035736275944967 283.91097023641396)
+      );
+      --color-on-warning: light-dark(
+        oklch(0.9577608870760925 0.005766802410310334 264.532151644555),
+        oklch(0.24286694183838442 0.03035736275944967 283.91097023641396)
+      );
+      --color-icon-accent: light-dark(
+        oklch(0.5546698483756871 0.25034607990295016 297.0156483500495),
+        oklch(0.7871462525760659 0.11867011135986587 304.7693043767238)
+      );
+      --color-icon-primary: light-dark(
+        oklch(0.4354696280914242 0.043007957904862906 279.325020951234),
+        oklch(0.8786600793473718 0.04255199903517194 272.2767378415369)
+      );
+      --color-icon-secondary: light-dark(
+        oklch(0.5470776379676476 0.034342788375285344 279.0836971153176),
+        oklch(0.7509605472605528 0.03956498596177885 273.9319903727045)
+      );
+      --color-icon-disabled: light-dark(
+        oklch(0.7076684584948777 0.02366986561429199 274.6008348717119),
+        oklch(0.549691183767789 0.03449390827002124 277.0950746058613)
+      );
       --color-background-card: light-dark(
         oklch(0.9334593324109276 0.00871379906203183 264.52060223534073),
         oklch(0.2155216079500624 0.02541687089919072 284.06469902193265)
       );
-      --color-background-popover: light-dark(#ffffff, #3e481d);
-      --color-background-inverted: light-dark(#3e481d, #c0cba9);
+      --color-background-popover: light-dark(
+        oklch(0.9334593324109276 0.00871379906203183 264.52060223534073),
+        oklch(0.2155216079500624 0.02541687089919072 284.06469902193265)
+      );
+      --color-background-inverted: light-dark(
+        oklch(0.4354696280914242 0.043007957904862906 279.325020951234),
+        oklch(0.8786600793473718 0.04255199903517194 272.2767378415369)
+      );
       --color-success: light-dark(
         oklch(0.6250443904295363 0.17715816108762134 140.44483759142634),
         oklch(0.8577042231793516 0.109228579658491 142.71528901553893)
       );
-      --color-success-muted: light-dark(#4d990020, #6dbf2a20);
+      --color-success-muted: light-dark(
+        oklch(0.6250443904295363 0.17715816108762134 140.44483759142634 / 0.12),
+        oklch(0.8577042231793516 0.109228579658491 142.71528901553893 / 0.15)
+      );
       --color-error: light-dark(
         oklch(0.5504744142539229 0.21551430760195764 19.809464044160393),
         oklch(0.7555920111610426 0.12970214251394938 2.76416484470991)
       );
-      --color-error-muted: light-dark(#fd000020, #ff5c5c20);
+      --color-error-muted: light-dark(
+        oklch(0.5504744142539229 0.21551430760195764 19.809464044160393 / 0.12),
+        oklch(0.7555920111610426 0.12970214251394938 2.76416484470991 / 0.15)
+      );
       --color-warning: light-dark(
         oklch(0.7139917309504697 0.14944164080684152 67.77665534753208),
         oklch(0.9193028538212243 0.07041462719493903 86.52808223272405)
       );
-      --color-warning-muted: light-dark(#ffb60020, #ffc94020);
+      --color-warning-muted: light-dark(
+        oklch(0.7139917309504697 0.14944164080684152 67.77665534753208 / 0.12),
+        oklch(0.9193028538212243 0.07041462719493903 86.52808223272405 / 0.15)
+      );
       --color-border: light-dark(
         oklch(0.8574770848204982 0.014479984436494493 268.47559171847894),
         oklch(0.3240218874463015 0.03188455239399239 281.9784417412653)
       );
       --color-border-emphasized: light-dark(
+        oklch(0.7076684584948777 0.02366986561429199 274.6008348717119),
+        oklch(0.549691183767789 0.03449390827002124 277.0950746058613)
+      );
+      --color-skeleton: light-dark(
         oklch(0.8083070110182754 0.01739330880861526 271.1981554317899),
         oklch(0.4036914196944409 0.03195464132822365 280.1520036072935)
       );
-      --color-skeleton: light-dark(#c0cba9, #5a6440);
-      --color-shadow: light-dark(#3e481d1a, #0000004d);
-      --color-tint-hover: light-dark(black, white);
-      --color-background-blue: light-dark(#3a5e8c33, #3a5e8c33);
-      --color-border-blue: light-dark(#3a5e8c, #7ba8d4);
-      --color-icon-blue: light-dark(#3a5e8c, #7ba8d4);
-      --color-text-blue: light-dark(#2e4a6e, #8dbce0);
-      --color-background-cyan: light-dark(#3a7c7c33, #3a7c7c33);
-      --color-border-cyan: light-dark(#3a7c7c, #70c4c4);
-      --color-icon-cyan: light-dark(#3a7c7c, #70c4c4);
-      --color-text-cyan: light-dark(#2e6060, #82d4d4);
-      --color-background-gray: light-dark(#707e4633, #5a644033);
-      --color-border-gray: light-dark(#707e46, #707e46);
-      --color-icon-gray: light-dark(#707e46, #94a468);
-      --color-text-gray: light-dark(#3e481d, #c0cba9);
-      --color-background-green: light-dark(#4d990033, #6dbf2a33);
-      --color-border-green: light-dark(#4d9900, #6dbf2a);
-      --color-icon-green: light-dark(#4d9900, #6dbf2a);
-      --color-text-green: light-dark(#3d7a00, #80d43a);
-      --color-background-orange: light-dark(#c4762033, #d4903a33);
-      --color-border-orange: light-dark(#c47620, #d4903a);
-      --color-icon-orange: light-dark(#c47620, #d4903a);
-      --color-text-orange: light-dark(#a06018, #e0a04a);
-      --color-background-pink: light-dark(#c44a7033, #e07a9a33);
-      --color-border-pink: light-dark(#c44a70, #e07a9a);
-      --color-icon-pink: light-dark(#c44a70, #e07a9a);
-      --color-text-pink: light-dark(#a03a5a, #f08aaa);
-      --color-background-purple: light-dark(#6b4a8c33, #b08ed433);
-      --color-border-purple: light-dark(#6b4a8c, #b08ed4);
-      --color-icon-purple: light-dark(#6b4a8c, #b08ed4);
-      --color-text-purple: light-dark(#553a70, #c0a0e0);
-      --color-background-red: light-dark(#fd000033, #ff5c5c33);
-      --color-border-red: light-dark(#fd0000, #ff5c5c);
-      --color-icon-red: light-dark(#fd0000, #ff5c5c);
-      --color-text-red: light-dark(#cc0000, #ff7a7a);
-      --color-background-teal: light-dark(#2e6b5a33, #5ab89833);
-      --color-border-teal: light-dark(#2e6b5a, #5ab898);
-      --color-icon-teal: light-dark(#2e6b5a, #5ab898);
-      --color-text-teal: light-dark(#245546, #6ccaaa);
-      --color-background-yellow: light-dark(#ffb60033, #ffc94033);
-      --color-border-yellow: light-dark(#ffb600, #ffc940);
-      --color-icon-yellow: light-dark(#ffb600, #ffc940);
-      --color-text-yellow: light-dark(#cc9200, #ffd960);
+      --color-shadow: light-dark(
+        oklch(0.905964995559709 0.011716507677813338 264.50710516682375 / 0.25),
+        oklch(0 0 0 / 0.5)
+      );
+      --color-tint-hover: light-dark(
+        oklch(0.4354696280914242 0.043007957904862906 279.325020951234 / 0.06),
+        oklch(0.8786600793473718 0.04255199903517194 272.2767378415369 / 0.08)
+      );
+      --color-background-blue: light-dark(
+        oklch(0.5586168519157438 0.22550252265688878 262.08665056049813 / 0.12),
+        oklch(0.7664203616291358 0.11134426678812931 259.88497602028025 / 0.15)
+      );
+      --color-border-blue: light-dark(
+        oklch(0.5586168519157438 0.22550252265688878 262.08665056049813),
+        oklch(0.7664203616291358 0.11134426678812931 259.88497602028025)
+      );
+      --color-icon-blue: light-dark(
+        oklch(0.5586168519157438 0.22550252265688878 262.08665056049813),
+        oklch(0.7664203616291358 0.11134426678812931 259.88497602028025)
+      );
+      --color-text-blue: light-dark(
+        oklch(0.5586168519157438 0.22550252265688878 262.08665056049813),
+        oklch(0.7664203616291358 0.11134426678812931 259.88497602028025)
+      );
+      --color-background-cyan: light-dark(
+        oklch(0.6820196727415445 0.14481893950526162 235.38221876463177 / 0.12),
+        oklch(0.8467113913728485 0.08333608100880854 210.25454148097614 / 0.15)
+      );
+      --color-border-cyan: light-dark(
+        oklch(0.6820196727415445 0.14481893950526162 235.38221876463177),
+        oklch(0.8467113913728485 0.08333608100880854 210.25454148097614)
+      );
+      --color-icon-cyan: light-dark(
+        oklch(0.6820196727415445 0.14481893950526162 235.38221876463177),
+        oklch(0.8467113913728485 0.08333608100880854 210.25454148097614)
+      );
+      --color-text-cyan: light-dark(
+        oklch(0.6820196727415445 0.14481893950526162 235.38221876463177),
+        oklch(0.8467113913728485 0.08333608100880854 210.25454148097614)
+      );
+      --color-background-gray: light-dark(
+        oklch(0.5470776379676476 0.034342788375285344 279.0836971153176 / 0.12),
+        oklch(0.7509605472605528 0.03956498596177885 273.9319903727045 / 0.15)
+      );
+      --color-border-gray: light-dark(
+        oklch(0.5470776379676476 0.034342788375285344 279.0836971153176),
+        oklch(0.7509605472605528 0.03956498596177885 273.9319903727045)
+      );
+      --color-icon-gray: light-dark(
+        oklch(0.5470776379676476 0.034342788375285344 279.0836971153176),
+        oklch(0.7509605472605528 0.03956498596177885 273.9319903727045)
+      );
+      --color-text-gray: light-dark(
+        oklch(0.4354696280914242 0.043007957904862906 279.325020951234),
+        oklch(0.8786600793473718 0.04255199903517194 272.2767378415369)
+      );
+      --color-background-green: light-dark(
+        oklch(0.6250443904295363 0.17715816108762134 140.44483759142634 / 0.12),
+        oklch(0.8577042231793516 0.109228579658491 142.71528901553893 / 0.15)
+      );
+      --color-border-green: light-dark(
+        oklch(0.6250443904295363 0.17715816108762134 140.44483759142634),
+        oklch(0.8577042231793516 0.109228579658491 142.71528901553893)
+      );
+      --color-icon-green: light-dark(
+        oklch(0.6250443904295363 0.17715816108762134 140.44483759142634),
+        oklch(0.8577042231793516 0.109228579658491 142.71528901553893)
+      );
+      --color-text-green: light-dark(
+        oklch(0.6250443904295363 0.17715816108762134 140.44483759142634),
+        oklch(0.8577042231793516 0.109228579658491 142.71528901553893)
+      );
+      --color-background-orange: light-dark(
+        oklch(0.6919766433363157 0.20405156758527304 42.4292658007281 / 0.12),
+        oklch(0.8236782337309648 0.10146034154738652 52.62941686191107 / 0.15)
+      );
+      --color-border-orange: light-dark(
+        oklch(0.6919766433363157 0.20405156758527304 42.4292658007281),
+        oklch(0.8236782337309648 0.10146034154738652 52.62941686191107)
+      );
+      --color-icon-orange: light-dark(
+        oklch(0.6919766433363157 0.20405156758527304 42.4292658007281),
+        oklch(0.8236782337309648 0.10146034154738652 52.62941686191107)
+      );
+      --color-text-orange: light-dark(
+        oklch(0.6919766433363157 0.20405156758527304 42.4292658007281),
+        oklch(0.8236782337309648 0.10146034154738652 52.62941686191107)
+      );
+      --color-background-pink: light-dark(
+        oklch(0.7255597313429507 0.17393264562602528 338.4333428586893 / 0.12),
+        oklch(0.8700326070585575 0.0751577539668794 336.30408455199915 / 0.15)
+      );
+      --color-border-pink: light-dark(
+        oklch(0.7255597313429507 0.17393264562602528 338.4333428586893),
+        oklch(0.8700326070585575 0.0751577539668794 336.30408455199915)
+      );
+      --color-icon-pink: light-dark(
+        oklch(0.7255597313429507 0.17393264562602528 338.4333428586893),
+        oklch(0.8700326070585575 0.0751577539668794 336.30408455199915)
+      );
+      --color-text-pink: light-dark(
+        oklch(0.7255597313429507 0.17393264562602528 338.4333428586893),
+        oklch(0.8700326070585575 0.0751577539668794 336.30408455199915)
+      );
+      --color-background-purple: light-dark(
+        oklch(0.5546698483756871 0.25034607990295016 297.0156483500495 / 0.12),
+        oklch(0.7871462525760659 0.11867011135986587 304.7693043767238 / 0.15)
+      );
+      --color-border-purple: light-dark(
+        oklch(0.5546698483756871 0.25034607990295016 297.0156483500495),
+        oklch(0.7871462525760659 0.11867011135986587 304.7693043767238)
+      );
+      --color-icon-purple: light-dark(
+        oklch(0.5546698483756871 0.25034607990295016 297.0156483500495),
+        oklch(0.7871462525760659 0.11867011135986587 304.7693043767238)
+      );
+      --color-text-purple: light-dark(
+        oklch(0.5546698483756871 0.25034607990295016 297.0156483500495),
+        oklch(0.7871462525760659 0.11867011135986587 304.7693043767238)
+      );
+      --color-background-red: light-dark(
+        oklch(0.5504744142539229 0.21551430760195764 19.809464044160393 / 0.12),
+        oklch(0.7555920111610426 0.12970214251394938 2.76416484470991 / 0.15)
+      );
+      --color-border-red: light-dark(
+        oklch(0.5504744142539229 0.21551430760195764 19.809464044160393),
+        oklch(0.7555920111610426 0.12970214251394938 2.76416484470991)
+      );
+      --color-icon-red: light-dark(
+        oklch(0.5504744142539229 0.21551430760195764 19.809464044160393),
+        oklch(0.7555920111610426 0.12970214251394938 2.76416484470991)
+      );
+      --color-text-red: light-dark(
+        oklch(0.5504744142539229 0.21551430760195764 19.809464044160393),
+        oklch(0.7555920111610426 0.12970214251394938 2.76416484470991)
+      );
+      --color-background-teal: light-dark(
+        oklch(0.6022689684480229 0.09811495789237053 201.1047483772147 / 0.12),
+        oklch(0.8584890398993206 0.07920670052090036 182.74951302554985 / 0.15)
+      );
+      --color-border-teal: light-dark(
+        oklch(0.6022689684480229 0.09811495789237053 201.1047483772147),
+        oklch(0.8584890398993206 0.07920670052090036 182.74951302554985)
+      );
+      --color-icon-teal: light-dark(
+        oklch(0.6022689684480229 0.09811495789237053 201.1047483772147),
+        oklch(0.8584890398993206 0.07920670052090036 182.74951302554985)
+      );
+      --color-text-teal: light-dark(
+        oklch(0.6022689684480229 0.09811495789237053 201.1047483772147),
+        oklch(0.8584890398993206 0.07920670052090036 182.74951302554985)
+      );
+      --color-background-yellow: light-dark(
+        oklch(0.7139917309504697 0.14944164080684152 67.77665534753208 / 0.12),
+        oklch(0.9193028538212243 0.07041462719493903 86.52808223272405 / 0.15)
+      );
+      --color-border-yellow: light-dark(
+        oklch(0.7139917309504697 0.14944164080684152 67.77665534753208),
+        oklch(0.9193028538212243 0.07041462719493903 86.52808223272405)
+      );
+      --color-icon-yellow: light-dark(
+        oklch(0.7139917309504697 0.14944164080684152 67.77665534753208),
+        oklch(0.9193028538212243 0.07041462719493903 86.52808223272405)
+      );
+      --color-text-yellow: light-dark(
+        oklch(0.7139917309504697 0.14944164080684152 67.77665534753208),
+        oklch(0.9193028538212243 0.07041462719493903 86.52808223272405)
+      );
       --spacing-0-5: 3px;
       --spacing-1: 6px;
       --spacing-1-5: 9px;
@@ -307,10 +529,10 @@
       --spacing-10: 60px;
       --spacing-11: 66px;
       --spacing-12: 72px;
-      --radius-inner: 6px;
+      --radius-inner: 4px;
       --radius-element: 8px;
-      --radius-container: 10px;
-      --radius-page: 42px;
+      --radius-container: 12px;
+      --radius-page: 28px;
       --size-element-sm: 36px;
       --size-element-md: 40px;
       --size-element-lg: 44px;
@@ -322,6 +544,9 @@
       --shadow-inset-success: inset 0px 0px 0px 2px #4d990050;
       --shadow-inset-warning: inset 0px 0px 0px 2px #ffb60050;
       --shadow-inset-error: inset 0px 0px 0px 2px #fd000050;
+      --radius-none: 0px;
+      --radius-chat: 28px;
+      --radius-full: 9999px;
     }
 
     .astryx-heading.level-1 {

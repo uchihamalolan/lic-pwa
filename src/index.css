@@ -30,11 +30,10 @@ html,
 }
 
 .brand-top-nav {
-  background-color: light-dark(#dc8a78, #dc8a78);
+  background-color: light-dark(#e78284, #e78284);
 
-  & h2,
-  button {
-    color: light-dark(#313244, #11111b);
+  & h2 {
+    color: light-dark(#1e1e2e, #313244);
   }
 }
 
