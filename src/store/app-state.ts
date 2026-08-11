@@ -25,6 +25,12 @@ export const useIsStatsOpen = () => useStore($isStatsOpen);
 export const openStats = () => $isStatsOpen.set(true);
 export const closeStats = () => $isStatsOpen.set(false);
 
+// Data Management Dialog state
+const $isDataManagementOpen = atom<boolean>(false);
+export const useIsDataManagementOpen = () => useStore($isDataManagementOpen);
+export const openDataManagement = () => $isDataManagementOpen.set(true);
+export const closeDataManagement = () => $isDataManagementOpen.set(false);
+
 // App Theme State
 const $themeMode = persistentAtom<ThemeMode>("lic-theme-mode", "system");
 export function useAppTheme() {

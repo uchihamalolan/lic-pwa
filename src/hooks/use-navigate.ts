@@ -19,9 +19,14 @@ export function useNavigate() {
         options?.direction ??
         (to.startsWith(currentLocation) && to !== currentLocation ? "forward" : "backward");
 
+      const navOptions = {
+        ...options,
+        transition: true,
+      };
+
       const updateDOM = () => {
         flushSync(() => {
-          setLocation(to, options);
+          setLocation(to, navOptions);
         });
       };
 

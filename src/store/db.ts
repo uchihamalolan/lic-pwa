@@ -79,3 +79,10 @@ export async function updateAgentClaimsStatus(agentCode: string, via: Notificati
     }
   });
 }
+
+export async function clearDatabase(): Promise<void> {
+  await db.transaction("rw", [db.agents, db.claims], async () => {
+    await db.agents.clear();
+    await db.claims.clear();
+  });
+}
