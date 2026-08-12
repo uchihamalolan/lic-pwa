@@ -7,6 +7,9 @@ import { buildMessage } from "@/utils/message-builder.ts";
 
 import { AppDialogHeader } from "./app-dialog-header";
 
+// dialog(75vh) - padding(24*2) - appHeader(40) - gap(18) - editorHeader(52 + 2border)
+const maxHeight = `calc(75vh - 48px - 18px - 40px - 54px)`;
+
 export function PreviewMessageDialog() {
   const previewPayload = usePreviewPayload();
   const template = useMessageTemplate();
@@ -31,7 +34,7 @@ export function PreviewMessageDialog() {
           code={messageText}
           hasLanguageLabel={false}
           hasCopyButton={true}
-          maxHeight={480}
+          maxHeight={maxHeight}
           title={agent.name}
           size="sm"
         />

@@ -5,5 +5,5 @@ export default defineConfig({
   printWidth: 110,
   sortImports: true,
   sortTailwindcss: true,
-  ignorePatterns: [],
+  ignorePatterns: ["src/themes/*"],
 });

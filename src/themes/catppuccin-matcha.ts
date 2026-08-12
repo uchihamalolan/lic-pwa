@@ -56,7 +56,7 @@ export const catppuccinMatchaTheme = defineTheme({
     // Overlays & Tints (OKLCH with Alpha)
     "--color-overlay": [formatOklchAlpha(light.overlay0, 0.33), formatOklchAlpha(dark.overlay0, 0.44)],
     "--color-overlay-hover": [formatOklchAlpha(light.text, 0.08), formatOklchAlpha(dark.text, 0.1)],
-    "--color-overlay-pressed": [formatOklch(light.overlay1), formatOklch(dark.overlay1)],
+    "--color-overlay-pressed": [formatOklchAlpha(light.text, 0.16), formatOklchAlpha(dark.text, 0.2)],
 
     // Typography Tokens
     "--color-text-primary": [formatOklch(light.text), formatOklch(dark.text)],

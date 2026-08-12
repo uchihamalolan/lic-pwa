@@ -72,7 +72,7 @@ export function TemplateEditorView() {
   const layoutFooter = (
     <LayoutFooter padding={3}>
       <HStack justify="between" align="center">
-        <Button label="Reset" variant="ghost" onClick={handleResetDefault} />
+        <Button label="Reset" variant="destructive" onClick={handleResetDefault} />
         <HStack gap={2}>
           <Button label="Cancel" variant="secondary" onClick={handleBack} />
           <Button label="Save" variant="primary" onClick={handleSave} />

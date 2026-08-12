@@ -2,6 +2,7 @@ import { DateInput } from "@astryxdesign/core/DateInput";
 import { Selector } from "@astryxdesign/core/Selector";
 import { HStack } from "@astryxdesign/core/Stack";
 import { TextInput } from "@astryxdesign/core/TextInput";
+import { useEffect, useRef } from "react";
 
 import { useAgentFilters, type DispatchStatus, type SortBy } from "@/store/app-filters.ts";
 
@@ -39,9 +40,19 @@ export function AgentSearch() {
 export function AgentFilterToolbar() {
   const { dispatchStatus, setDispatchStatus, dueFrom, setDueFrom, dueTill, setDueTill, sortBy, setSortBy } =
     useAgentFilters();
+  const toolbarRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (toolbarRef.current) {
+      const inputs = toolbarRef.current.querySelectorAll<HTMLInputElement>(".astryx-date-input input");
+      inputs.forEach((input) => {
+        input.setAttribute("inputmode", "none");
+      });
+    }
+  }, []);
 
   return (
-    <HStack gap={2} align="center" isScrollable={true} className="hide-scrollbar">
+    <HStack ref={toolbarRef} gap={2} align="center" isScrollable={true} className="hide-scrollbar">
       <Selector<DispatchStatusOption>
         label="Status filter"
         isLabelHidden={true}

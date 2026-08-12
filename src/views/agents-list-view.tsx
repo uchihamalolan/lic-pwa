@@ -26,6 +26,7 @@ const styles = stylex.create({
   },
   footer: {
     borderRadius: 0,
+    justifyContent: "center",
   },
 });
 

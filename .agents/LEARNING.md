@@ -93,3 +93,11 @@ This file is an open chronological log recording past mistakes, missteps, correc
 - **Mistake**: Blindly agreeing to use `MetadataList` for dashboard KPI statistics.
 - **Why it was wrong**: `MetadataList` is designed for low-emphasis key-value details in record inspectors (e.g. `Created Date`, `File Size`). Using it for KPI metrics renders high-priority numbers (`₹4,50,000`, `142 Claims`) as quiet plain text rows lacking visual hierarchy.
 - **Correct Behavior**: Use KPI Stat Cards (`<Card variant="muted">` with `<Heading level={2}>`) or `<ProgressBar>` for dashboard statistics and metric overlays. Reserve `MetadataList` strictly for secondary key-value inspector panels.
+
+---
+
+### [2026-08-12] CLI invocation for `astryx`
+
+- **Mistake**: Ran `astryx search "truncate"` directly.
+- **Why it was wrong**: `astryx` is a local project package CLI, not installed globally in system PATH.
+- **Correct Behavior**: Always run Astryx CLI commands using `pnpm astryx <cmd>` (e.g., `pnpm astryx search "truncate"` or `pnpm astryx component Text`).

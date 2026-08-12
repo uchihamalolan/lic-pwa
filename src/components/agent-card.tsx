@@ -7,7 +7,7 @@ import { IconButton } from "@astryxdesign/core/IconButton";
 import { HStack, StackItem } from "@astryxdesign/core/Stack";
 import { Token } from "@astryxdesign/core/Token";
 import { VStack } from "@astryxdesign/core/VStack";
-import { Eye, MessageSquareText } from "lucide-react";
+import { Eye, MessageSquareText, Phone, User } from "lucide-react";
 
 import { WhatsAppIcon } from "@/assets/icons";
 import { useOptimisticClaims } from "@/hooks/use-optimistic-claims.ts";
@@ -69,21 +69,24 @@ export function AgentCard({ agent, claims: initialClaims, index, onNavigate }: A
   const handleNavigate = () => onNavigate(agent.agent_code);
 
   return (
-    <ClickableCard label={`View details for ${agent.name}`} onClick={handleNavigate}>
+    <ClickableCard label={`View details for ${agent.name}`} onClick={handleNavigate} elevation="low">
       <VStack gap={3}>
         <HStack align="center" gap={2}>
           <Badge variant="purple" label={`#${index}`} />
-          <Heading level={4}>{agent.name}</Heading>
-          <StackItem size="fill" />
+          <StackItem size="fill">
+            <Heading level={4} maxLines={1}>
+              {agent.name}
+            </Heading>
+          </StackItem>
           <Badge variant={statusVariant} label={statusLabel} />
         </HStack>
 
         <HStack gap={2} align="center" wrap="wrap">
-          <Token color="gray" label={agent.agent_code} />
+          <Token icon={<Icon size="sm" icon={User} />} color="gray" label={agent.agent_code} />
           {hasPhone ? (
-            <Token color="gray" label={agent.phone!} />
+            <Token icon={<Icon size="sm" icon={Phone} />} color="gray" label={agent.phone!} />
           ) : (
-            <Token isDisabled label="No Mobile Number" />
+            <Token icon={<Icon size="sm" icon={Phone} />} isDisabled label="unavailable" />
           )}
           <Token color={claimBucket} label={`${totalClaims} claim${totalClaims === 1 ? "" : "s"}`} />
         </HStack>
