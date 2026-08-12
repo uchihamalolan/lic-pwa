@@ -24,14 +24,32 @@ class LicDatabase extends Dexie {
 
 export const db = new LicDatabase();
 
-export async function importAgents(rawAgents: unknown[]): Promise<number> {
+export async function importAgents(rawAgents: unknown[]) {
   const validatedAgents = z.array(agentSchema).parse(rawAgents);
+  const codes = validatedAgents.map((a) => a.agent_code);
+
+  const existing = await db.agents.where("agent_code").anyOf(codes).toArray();
+  const existingSet = new Set(existing.map((a) => a.agent_code));
+
+  let added = 0;
+  let updated = 0;
+  let total = validatedAgents.length;
+
+  for (const agent of validatedAgents) {
+    if (existingSet.has(agent.agent_code)) updated++;
+    else added++;
+  }
+
   await db.agents.bulkPut(validatedAgents);
-  return validatedAgents.length;
+  return { added, updated, total };
 }
 
-export async function importClaims(rawClaims: unknown[]): Promise<number> {
+export async function importClaims(rawClaims: unknown[]) {
   const validatedClaims = z.array(claimSchema).parse(rawClaims);
+
+  let added = 0;
+  let updated = 0;
+  let total = validatedClaims.length;
 
   await db.transaction("rw", db.claims, async () => {
     const existingClaims = await db.claims
@@ -45,6 +63,10 @@ export async function importClaims(rawClaims: unknown[]): Promise<number> {
 
     const mergedClaims = validatedClaims.map((claim) => {
       const existing = statusMap.get(claim.policy_no);
+
+      if (existing) updated++;
+      else added++;
+
       return {
         ...claim,
         notified_via: existing?.notified_via ?? claim.notified_via,
@@ -55,7 +77,7 @@ export async function importClaims(rawClaims: unknown[]): Promise<number> {
     await db.claims.bulkPut(mergedClaims);
   });
 
-  return validatedClaims.length;
+  return { added, updated, total };
 }
 
 export async function markClaimNotified(policyNo: string, via: NotificationChannel): Promise<void> {

@@ -1,10 +1,6 @@
-import { Button } from "@astryxdesign/core/Button";
-import { Card } from "@astryxdesign/core/Card";
-import { HStack } from "@astryxdesign/core/HStack";
+import { DropdownMenu } from "@astryxdesign/core/DropdownMenu";
 import { Icon } from "@astryxdesign/core/Icon";
-import { Text } from "@astryxdesign/core/Text";
-import { VStack } from "@astryxdesign/core/VStack";
-import { MessageSquareText, RotateCcw } from "lucide-react";
+import { MessageSquareText, RotateCcw, Zap } from "lucide-react";
 import { startTransition } from "react";
 
 import { WhatsAppIcon } from "@/assets/icons.tsx";
@@ -34,15 +30,32 @@ export function ClaimsBulkActions({ agentCode }: ClaimsBulkActionsProps) {
   };
 
   return (
-    <Card padding={3}>
-      <VStack gap={2}>
-        <Text weight="semibold">Mark All</Text>
-        <HStack align="center" gap={2} wrap="wrap">
-          <Button icon={<Icon icon={WhatsAppIcon} />} label="WA" size="sm" onClick={handleMarkAllWa} />
-          <Button icon={<Icon icon={MessageSquareText} />} label="SMS" size="sm" onClick={handleMarkAllSms} />
-          <Button icon={<Icon icon={RotateCcw} />} label="Reset" size="sm" onClick={handleResetAll} />
-        </HStack>
-      </VStack>
-    </Card>
+    <DropdownMenu
+      alignment="end"
+      button={{
+        label: "Bulk Actions",
+        icon: <Icon icon={Zap} />,
+        variant: "ghost",
+        size: "sm",
+      }}
+      items={[
+        {
+          label: "Mark all as WA",
+          icon: <Icon icon={WhatsAppIcon} />,
+          onClick: handleMarkAllWa,
+        },
+        {
+          label: "Mark all as SMS",
+          icon: <Icon icon={MessageSquareText} />,
+          onClick: handleMarkAllSms,
+        },
+        { type: "divider" },
+        {
+          label: "Reset dispatched",
+          icon: <Icon icon={RotateCcw} />,
+          onClick: handleResetAll,
+        },
+      ]}
+    />
   );
 }

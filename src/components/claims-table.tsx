@@ -6,14 +6,15 @@ import { Selector } from "@astryxdesign/core/Selector";
 import { Table, proportional, type TableColumn } from "@astryxdesign/core/Table";
 import { Text } from "@astryxdesign/core/Text";
 import { MessageSquareText } from "lucide-react";
-import { useCallback, useMemo } from "react";
+import { startTransition, useCallback, useMemo } from "react";
 
 import { WhatsAppIcon } from "@/assets/icons.tsx";
-import { useOptimisticClaims } from "@/hooks/use-optimistic-claims.ts";
+import { useDispatchConfirm } from "@/hooks/use-dispatch-confirm.ts";
 import { useMessageTemplate } from "@/store/app-state.ts";
+import { markClaimNotified } from "@/store/db";
 import type { Claim } from "@/types/schema.ts";
 import { formatDisplayDate } from "@/utils/format-utils.ts";
-import { buildSingleClaimMessage } from "@/utils/message-builder.ts";
+import { buildSingleClaimMessage, getSmsUrl, getWAUrl } from "@/utils/message-builder.ts";
 
 interface ClaimsTableProps {
   claims: Claim[];
@@ -22,39 +23,31 @@ interface ClaimsTableProps {
 
 const DISPATCH_OPTIONS = ["NA", "WA", "SMS"];
 
-export function ClaimsTable({ claims: initialClaims, agentPhone }: ClaimsTableProps) {
-  const { claims, dispatchClaimNotified } = useOptimisticClaims(initialClaims);
+export function ClaimsTable({ claims, agentPhone }: ClaimsTableProps) {
   const template = useMessageTemplate();
+  const { confirmDispatch, alertDialogElement } = useDispatchConfirm();
+
   const hasPhone = Boolean(agentPhone && agentPhone.trim().length > 0);
 
-  const handleStatusChange = useCallback(
-    (policyNo: string, value: string) => {
-      const channel = value === "WA" ? "whatsapp" : value === "SMS" ? "sms" : null;
-      dispatchClaimNotified(policyNo, channel);
-    },
-    [dispatchClaimNotified],
-  );
+  const handleStatusChange = useCallback((policyNo: string, value: string) => {
+    const channel = value === "WA" ? "whatsapp" : value === "SMS" ? "sms" : null;
+    startTransition(async () => await markClaimNotified(policyNo, channel));
+  }, []);
 
-  const handleSendClaimWhatsApp = useCallback(
-    (claim: Claim) => {
-      if (!hasPhone) return;
-      dispatchClaimNotified(claim.policy_no, "whatsapp");
-      const cleanPhone = agentPhone?.replace(/\D/g, "");
+  const handleSendClaim = useCallback(
+    (claim: Claim, mode: "WA" | "SMS") => {
+      if (!agentPhone?.trim().length) return;
       const msg = buildSingleClaimMessage(claim, template);
-      window.open(`https://wa.me/91${cleanPhone}?text=${encodeURIComponent(msg)}`, "_blank");
-    },
-    [agentPhone, dispatchClaimNotified, hasPhone, template],
-  );
+      const url = mode === "WA" ? getWAUrl(agentPhone, msg) : getSmsUrl(agentPhone, msg);
 
-  const handleSendClaimSms = useCallback(
-    (claim: Claim) => {
-      if (!hasPhone) return;
-      dispatchClaimNotified(claim.policy_no, "sms");
-      const cleanPhone = agentPhone?.replace(/\D/g, "");
-      const msg = buildSingleClaimMessage(claim, template);
-      window.open(`sms:+91${cleanPhone}?body=${encodeURIComponent(msg)}`, "_blank");
+      confirmDispatch({
+        targetName: `Claim #${claim.policy_no}`,
+        channelName: mode === "WA" ? "WhatsApp" : "SMS",
+        deepLinkUrl: url,
+        onConfirm: () => markClaimNotified(claim.policy_no, mode === "WA" ? "whatsapp" : "sms"),
+      });
     },
-    [agentPhone, dispatchClaimNotified, hasPhone, template],
+    [template, agentPhone, confirmDispatch],
   );
 
   const columns: TableColumn<Claim>[] = useMemo(
@@ -110,25 +103,28 @@ export function ClaimsTable({ claims: initialClaims, agentPhone }: ClaimsTablePr
                 isDisabled={!hasPhone}
                 icon={<Icon icon={WhatsAppIcon} />}
                 label="Send via WhatsApp"
-                onClick={() => handleSendClaimWhatsApp(claim)}
+                onClick={() => handleSendClaim(claim, "WA")}
               />
               <IconButton
                 isDisabled={!hasPhone}
                 icon={<Icon icon={MessageSquareText} />}
                 label="Send via SMS"
-                onClick={() => handleSendClaimSms(claim)}
+                onClick={() => handleSendClaim(claim, "SMS")}
               />
             </HStack>
           );
         },
       },
     ],
-    [handleSendClaimSms, handleSendClaimWhatsApp, handleStatusChange, hasPhone],
+    [handleSendClaim, handleStatusChange, hasPhone],
   );
 
   return (
-    <Card padding={3} variant="default">
-      <Table columns={columns} data={claims} density="balanced" dividers="rows" hasHover />
-    </Card>
+    <>
+      <Card padding={3} variant="default">
+        <Table columns={columns} data={claims} density="balanced" dividers="rows" hasHover />
+      </Card>
+      {alertDialogElement}
+    </>
   );
 }

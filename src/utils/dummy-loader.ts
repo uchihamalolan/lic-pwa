@@ -7,8 +7,8 @@ export async function loadDummyData(): Promise<{ agentsCount: number; claimsCoun
   }
   const data = (await response.json()) as { agents: unknown[]; claims: unknown[] };
 
-  const agentsCount = await importAgents(data.agents);
-  const claimsCount = await importClaims(data.claims);
+  const { total: agentsCount } = await importAgents(data.agents);
+  const { total: claimsCount } = await importClaims(data.claims);
 
   return { agentsCount, claimsCount };
 }

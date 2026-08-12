@@ -11,7 +11,7 @@ import { VStack } from "@astryxdesign/core/VStack";
 import { Activity, CheckCircle2, Hourglass, MessageSquare, Send, Users } from "lucide-react";
 import { useState } from "react";
 
-import { AppLayoutHeader } from "@/components/app-layout-header.tsx";
+import { AppPageHeader } from "@/components/app-headers";
 import { useDispatchStats, type StatsScope } from "@/hooks/use-dispatch-stats.ts";
 
 type StatCardProps = {
@@ -19,6 +19,9 @@ type StatCardProps = {
   title: string;
   count: string;
 };
+
+type T = (v: string) => void;
+
 const StatCard = ({ icon, title, count }: StatCardProps) => (
   <Card variant="muted">
     <VStack gap={2}>
@@ -38,17 +41,12 @@ export function StatsView() {
 
   if (!stats) return null;
 
-  const layoutHeader = <AppLayoutHeader heading="Analytics & Stats" />;
+  const layoutHeader = <AppPageHeader heading="Analytics & Stats" />;
 
   const layoutContent = (
     <LayoutContent isScrollable={true} padding={4}>
       <VStack gap={3}>
-        <SegmentedControl
-          label="Stats scope"
-          layout="fill"
-          value={scope}
-          onChange={(val) => setScope(val as StatsScope)}
-        >
+        <SegmentedControl label="Stats scope" layout="fill" value={scope} onChange={setScope as T}>
           <SegmentedControlItem label="All" value="all" />
           <SegmentedControlItem label="Filtered" value="filtered" />
         </SegmentedControl>

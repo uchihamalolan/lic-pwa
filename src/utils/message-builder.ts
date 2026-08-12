@@ -1,6 +1,12 @@
 import type { Claim } from "@/types/schema.ts";
 import { formatDisplayDate } from "@/utils/format-utils.ts";
 
+export const DEFAULT_TEMPLATE =
+  "We're sending outstanding claims under your agency.\n" +
+  "Kindly collect claim requirements and submit the same immediately to our LIC Office.\n" +
+  "Otherwise ask the policy holders to come and give the requirements directly.\n" +
+  "Kindly acknowledge receipt of message with 👍";
+
 function formatClaim(c: Claim, index: number): string {
   const displayDueDate = formatDisplayDate(c.due_date);
   const lines = [
@@ -16,15 +22,8 @@ function formatClaim(c: Claim, index: number): string {
   return lines.join("\n");
 }
 
-export const DEFAULT_TEMPLATE =
-  "We're sending outstanding claims under your agency.\n" +
-  "Kindly collect claim requirements and submit the same immediately to our LIC Office.\n" +
-  "Otherwise ask the policy holders to come and give the requirements directly.\n" +
-  "Kindly acknowledge receipt of message with 👍 \n" +
-  "- S Balaji ADM LIC-740 (Ph: 9444358028)";
-
 export function buildMessage(claims: Claim[], template: string = DEFAULT_TEMPLATE): string {
-  const header = template.trim() || DEFAULT_TEMPLATE;
+  const header = template.trim() ?? DEFAULT_TEMPLATE;
   if (claims.length === 0) {
     return `${header}\n\nNo due claims found for selected criteria.`;
   }
@@ -34,7 +33,19 @@ export function buildMessage(claims: Claim[], template: string = DEFAULT_TEMPLAT
 }
 
 export function buildSingleClaimMessage(claim: Claim, template: string = DEFAULT_TEMPLATE): string {
-  const header = template.trim() || DEFAULT_TEMPLATE;
+  const header = template.trim() ?? DEFAULT_TEMPLATE;
   const claimLine = formatClaim(claim, 0);
   return `${header}\n\n${claimLine}`;
 }
+
+export const getWAUrl = (phone: string, msg: string) => {
+  const cleanPhone = phone.replace(/\D/g, "");
+
+  return `https://wa.me/91${cleanPhone}?text=${encodeURIComponent(msg)}`;
+};
+
+export const getSmsUrl = (phone: string, msg: string) => {
+  const cleanPhone = phone.replace(/\D/g, "");
+
+  return `sms:+91${cleanPhone}?body=${encodeURIComponent(msg)}`;
+};

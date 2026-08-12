@@ -1,5 +1,6 @@
 import { InternationalizationProvider } from "@astryxdesign/core/i18n";
 import { Theme } from "@astryxdesign/core/theme";
+import { ToastViewport } from "@astryxdesign/core/Toast";
 import type { ReactNode } from "react";
 
 import { useAppTheme } from "@/store/app-state.ts";
@@ -15,7 +16,7 @@ export function AppProvider({ children }: AppProviderProps) {
   return (
     <InternationalizationProvider locale="en">
       <Theme theme={catppuccinMatchaTheme} mode={mode}>
-        {children}
+        <ToastViewport>{children}</ToastViewport>
       </Theme>
     </InternationalizationProvider>
   );

@@ -42,6 +42,7 @@ export function AgentFilterToolbar() {
     useAgentFilters();
   const toolbarRef = useRef<HTMLDivElement>(null);
 
+  // disables annoying keyboard opening when trying to select date
   useEffect(() => {
     if (toolbarRef.current) {
       const inputs = toolbarRef.current.querySelectorAll<HTMLInputElement>(".astryx-date-input input");

@@ -7,6 +7,12 @@ export type NavigateOptions = {
   direction?: "forward" | "backward";
 };
 
+const animationOptions: KeyframeAnimationOptions = {
+  duration: 310,
+  easing: "cubic-bezier(0.24, 1, 0.4, 1)",
+  fill: "both",
+};
+
 export function useNavigate() {
   const [currentLocation, setLocation] = useLocation();
 
@@ -51,12 +57,6 @@ export function useNavigate() {
         { transform: isForward ? "translateX(100%)" : "translateX(-100%)" },
         { transform: "translateX(0%)" },
       ];
-
-      const animationOptions: KeyframeAnimationOptions = {
-        duration: 310,
-        easing: "cubic-bezier(0.24, 1, 0.4, 1)",
-        fill: "both",
-      };
 
       // Execute WAAPI inside transition.ready with error guard
       void (async () => {

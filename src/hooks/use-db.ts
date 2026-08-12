@@ -6,6 +6,10 @@ export function useAgents() {
   return useLiveQuery(() => db.agents.toArray(), []);
 }
 
+export function useAgent(agentCode: string) {
+  return useLiveQuery(() => db.agents.get(agentCode));
+}
+
 export function useClaims() {
   return useLiveQuery(() => db.claims.toArray(), []);
 }

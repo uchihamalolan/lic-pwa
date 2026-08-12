@@ -10,7 +10,7 @@ const isDispatchStatus = (val: string): val is DispatchStatus => dispatchStatuse
 
 export type SortBy = "name" | "most_claims" | "most_pending";
 const sortBys = ["name", "most_claims", "most_pending"];
-const isSortBy = (val: string): val is SortBy => sortBys.includes(val);
+const isSortBy = (val: string | null): val is SortBy | null => val === null || sortBys.includes(val);
 
 type AgentFiltersState = {
   dueFrom: ISODateString | null;
@@ -79,16 +79,18 @@ export function useAgentFilters() {
   }, []);
 
   const setSortBy = useCallback((sortBy: string | null) => {
-    if (sortBy === null) {
-      startTransition(() => {
-        $agentFilters.set({ ...$agentFilters.get(), sortBy: null });
-      });
-    } else if (isSortBy(sortBy)) {
+    if (isSortBy(sortBy)) {
       startTransition(() => {
         $agentFilters.set({ ...$agentFilters.get(), sortBy });
       });
     }
   }, []);
+
+  const hasActiveFilters =
+    Boolean(searchQuery) ||
+    filters.dueFrom !== null ||
+    filters.dueTill !== null ||
+    filters.dispatchStatus !== "all";
 
   return {
     searchQuery,
@@ -102,5 +104,6 @@ export function useAgentFilters() {
     sortBy: filters.sortBy,
     setSortBy,
     resetFilters: resetAgentFilters,
+    hasActiveFilters,
   };
 }

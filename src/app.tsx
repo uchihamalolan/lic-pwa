@@ -1,7 +1,8 @@
+import { AppShell } from "@astryxdesign/core/AppShell";
 import { Redirect, Route, Switch } from "wouter";
 
 import { AppProvider } from "@/app-provider.tsx";
-import { AppLayout } from "@/components/app-layout.tsx";
+import { AppHeader } from "@/components/app-headers";
 import { useClaimsCount } from "@/hooks/use-db.ts";
 import { AgentDetailsView } from "@/views/agent-details-view.tsx";
 import { AgentsListView } from "@/views/agents-list-view.tsx";
@@ -27,7 +28,7 @@ function RootRedirect() {
 export function App() {
   return (
     <AppProvider>
-      <AppLayout>
+      <AppShell contentPadding={4} height="fill" topNav={<AppHeader />}>
         <Switch>
           <Route path="/" component={RootRedirect} />
           <Route path="/import" component={EmptyStateView} />
@@ -37,7 +38,7 @@ export function App() {
           <Route path="/template" component={TemplateEditorView} />
           <Route path="/settings" component={DataManagementView} />
         </Switch>
-      </AppLayout>
+      </AppShell>
     </AppProvider>
   );
 }

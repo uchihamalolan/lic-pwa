@@ -1,44 +1,36 @@
 import { CodeBlock } from "@astryxdesign/core/CodeBlock";
-import { Dialog } from "@astryxdesign/core/Dialog";
 import { VStack } from "@astryxdesign/core/VStack";
 
-import { closePreviewMessage, useMessageTemplate, usePreviewPayload } from "@/store/app-state.ts";
+import { useMessageTemplate } from "@/store/app-state.ts";
+import type { Agent, Claim } from "@/types/schema";
 import { buildMessage } from "@/utils/message-builder.ts";
 
-import { AppDialogHeader } from "./app-dialog-header";
+import { AppDialogHeader } from "./app-headers";
 
 // dialog(75vh) - padding(24*2) - appHeader(40) - gap(18) - editorHeader(52 + 2border)
 const maxHeight = `calc(75vh - 48px - 18px - 40px - 54px)`;
 
-export function PreviewMessageDialog() {
-  const previewPayload = usePreviewPayload();
+interface PreviewMessageProps {
+  agent: Agent;
+  claims: Claim[];
+  onClose: () => void;
+}
+
+export function MessagePreview({ agent, claims, onClose }: PreviewMessageProps) {
   const template = useMessageTemplate();
-
-  if (!previewPayload) return null;
-
-  const { agent, claims } = previewPayload;
   const messageText = buildMessage(claims, template);
 
-  const handleClose = () => closePreviewMessage();
-
   return (
-    <Dialog
-      isOpen={previewPayload !== null}
-      onOpenChange={(isOpen) => !isOpen && handleClose()}
-      purpose="info"
-      aria-label="Message Preview"
-    >
-      <VStack gap={3}>
-        <AppDialogHeader title="Message Preview" onClose={handleClose} />
-        <CodeBlock
-          code={messageText}
-          hasLanguageLabel={false}
-          hasCopyButton={true}
-          maxHeight={maxHeight}
-          title={agent.name}
-          size="sm"
-        />
-      </VStack>
-    </Dialog>
+    <VStack gap={3}>
+      <AppDialogHeader title="Message Preview" onClose={onClose} />
+      <CodeBlock
+        code={messageText}
+        hasLanguageLabel={false}
+        hasCopyButton={true}
+        maxHeight={maxHeight}
+        title={agent.name}
+        size="sm"
+      />
+    </VStack>
   );
 }

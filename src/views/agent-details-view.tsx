@@ -1,20 +1,81 @@
+import { Heading, Icon, IconButton } from "@astryxdesign/core";
 import { Badge } from "@astryxdesign/core/Badge";
 import { HStack } from "@astryxdesign/core/HStack";
 import { Layout, LayoutContent } from "@astryxdesign/core/Layout";
 import { Skeleton } from "@astryxdesign/core/Skeleton";
 import { Token } from "@astryxdesign/core/Token";
 import { VStack } from "@astryxdesign/core/VStack";
+import { Phone } from "lucide-react";
 
-import { AppLayoutHeader } from "@/components/app-layout-header.tsx";
+import { AppPageHeader } from "@/components/app-headers";
 import { ClaimsBulkActions } from "@/components/claims-bulk-actions.tsx";
 import { ClaimsTable } from "@/components/claims-table.tsx";
-import { useAgents, useClaimsForAgent } from "@/hooks/use-db.ts";
+import { useAgent, useClaimsForAgent } from "@/hooks/use-db.ts";
 import type { Agent, Claim } from "@/types/schema";
 
-export function AgentDetailsView({ agentCode }: { agentCode?: string }) {
-  const agents = useAgents();
-  const agent = agents?.find((a) => a.agent_code === agentCode);
-  const claims = useClaimsForAgent(agentCode ?? "");
+function AgentDetailsViewInner({ agent, claims }: { agent: Agent; claims: Claim[] }) {
+  const notifiedCount = claims.filter((c) => c.notified_via !== null).length;
+
+  const hasPhone = (agent.phone ?? "").trim().length > 0;
+
+  const handleCall = () => {
+    if (!hasPhone) return;
+
+    const cleanPhone = agent.phone?.replace(/\D/g, "");
+    window.open(`tel:+91${cleanPhone}`, "_blank");
+  };
+
+  const layoutHeader = (
+    <AppPageHeader
+      heading={agent.name}
+      subheading={
+        <HStack align="center" gap={2} wrap="wrap">
+          <Token size="sm" label={`Code: ${agent.agent_code}`} />
+          <Token size="sm" label={`DO: ${agent.do_code}`} />
+        </HStack>
+      }
+      endContent={
+        hasPhone ? (
+          <IconButton
+            variant="primary"
+            icon={<Icon icon={Phone} />}
+            label={`Call ${agent.name}`}
+            tooltip={`Call ${agent.phone}`}
+            onClick={handleCall}
+          />
+        ) : null
+      }
+    />
+  );
+
+  const layoutContent = (
+    <LayoutContent isScrollable={true} padding={4}>
+      <VStack gap={2}>
+        <HStack justify="between" align="center">
+          <Heading level={3}>Claims List</Heading>
+          <ClaimsBulkActions agentCode={agent.agent_code} />
+        </HStack>
+
+        {/* Claims Table Component */}
+        <ClaimsTable agentPhone={agent.phone} claims={claims} />
+
+        <HStack align="center" gap={2} wrap="wrap">
+          <Badge label={`Total Claims: ${claims.length}`} variant="neutral" />
+          <Badge
+            label={`Notified: ${notifiedCount}/${claims.length}`}
+            variant={notifiedCount === claims.length && claims.length > 0 ? "green" : "teal"}
+          />
+        </HStack>
+      </VStack>
+    </LayoutContent>
+  );
+
+  return <Layout content={layoutContent} header={layoutHeader} />;
+}
+
+export function AgentDetailsView({ agentCode }: { agentCode: string }) {
+  const agent = useAgent(agentCode);
+  const claims = useClaimsForAgent(agentCode);
 
   const isLoading = agent === undefined || claims === undefined;
 
@@ -28,47 +89,4 @@ export function AgentDetailsView({ agentCode }: { agentCode?: string }) {
   }
 
   return <AgentDetailsViewInner agent={agent} claims={claims} />;
-}
-
-interface AgentDetailsViewInnerProps {
-  agent: Agent;
-  claims: Claim[];
-}
-
-function AgentDetailsViewInner({ agent, claims }: AgentDetailsViewInnerProps) {
-  const notifiedCount = claims.filter((c) => c.notified_via !== null).length;
-
-  const layoutHeader = (
-    <AppLayoutHeader
-      heading={agent.name}
-      subheading={
-        <HStack align="center" gap={2} wrap="wrap">
-          <Token label={`Code: ${agent.agent_code}`} />
-          <Token label={`DO: ${agent.do_code}`} />
-        </HStack>
-      }
-    />
-  );
-
-  const layoutContent = (
-    <LayoutContent isScrollable={true} padding={4}>
-      <VStack gap={4}>
-        <HStack align="center" gap={3} wrap="wrap">
-          <Badge label={`Total Claims: ${claims.length}`} variant="neutral" />
-          <Badge
-            label={`Notified: ${notifiedCount}/${claims.length}`}
-            variant={notifiedCount === claims.length && claims.length > 0 ? "green" : "teal"}
-          />
-        </HStack>
-
-        {/* Bulk Claims Actions Bar */}
-        <ClaimsBulkActions agentCode={agent.agent_code} />
-
-        {/* Claims Table Component */}
-        <ClaimsTable agentPhone={agent.phone} claims={claims} />
-      </VStack>
-    </LayoutContent>
-  );
-
-  return <Layout content={layoutContent} header={layoutHeader} />;
 }

@@ -1,4 +1,4 @@
-import { AlertDialog } from "@astryxdesign/core/AlertDialog";
+import { useImperativeAlertDialog } from "@astryxdesign/core/AlertDialog";
 import { Button } from "@astryxdesign/core/Button";
 import { Card } from "@astryxdesign/core/Card";
 import { FileInput } from "@astryxdesign/core/FileInput";
@@ -9,7 +9,6 @@ import { Stack } from "@astryxdesign/core/Layout";
 import { Text } from "@astryxdesign/core/Text";
 import { useToast } from "@astryxdesign/core/Toast";
 import { AlertTriangle, Download, FileSpreadsheet, FileText, Trash2 } from "lucide-react";
-import { useState } from "react";
 
 import { useNavigate } from "@/hooks/use-navigate.ts";
 import { clearDatabase, importAgents, importClaims } from "@/store/db.ts";
@@ -18,47 +17,23 @@ import { parseAgentCsv } from "@/utils/csv-agent-parser.ts";
 import { parseTxtReport } from "@/utils/txt-report-parser.ts";
 import { downloadVCard } from "@/utils/vcard-builder.ts";
 
-export type BannerFeedback = {
-  status: "info" | "warning" | "error" | "success";
-  title: string;
-  description?: string;
-} | null;
-
-interface ExportVCardCardProps {
-  agents: Agent[];
-  updateBanner: (banner: BannerFeedback) => void;
-}
-
-export function ExportVCardCard({ agents, updateBanner }: ExportVCardCardProps) {
+export function ExportVCardCard({ agents }: { agents: Agent[] }) {
   const toast = useToast();
 
   const handleDownloadVCard = () => {
     if (agents.length === 0) {
       toast({ body: "No agents available to export.", type: "error" });
-      updateBanner({
-        status: "warning",
-        title: "No Agents Available",
-        description: "Please import agents first.",
-      });
       return;
     }
+
     const withPhone = agents.filter((a) => a.phone && a.phone.trim().length > 0);
     if (withPhone.length === 0) {
       toast({ body: "No agents with phone numbers available to export.", type: "error" });
-      updateBanner({
-        status: "warning",
-        title: "No Contacts Available",
-        description: "None of the agents have valid mobile phone numbers.",
-      });
       return;
     }
+
     downloadVCard(agents, "lic_agents.vcf");
     toast({ body: `Downloaded vCard for ${withPhone.length} agent(s).`, type: "info" });
-    updateBanner({
-      status: "success",
-      title: "vCard Exported Successfully",
-      description: `Exported ${withPhone.length} agent contact(s) to lic_agents.vcf.`,
-    });
   };
 
   return (
@@ -82,45 +57,29 @@ export function ExportVCardCard({ agents, updateBanner }: ExportVCardCardProps) 
   );
 }
 
-interface UploadAgentsCsvCardProps {
-  updateBanner: (banner: BannerFeedback) => void;
-}
-
-export function UploadAgentsCsvCard({ updateBanner }: UploadAgentsCsvCardProps) {
+export function UploadAgentsCsvCard() {
   const toast = useToast();
 
-  const handleCsvChange = (files: File | File[] | null) => {
+  const handleCsvChange = async (files: File | File[] | null) => {
     const file = Array.isArray(files) ? (files.at(0) ?? null) : files;
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = async (evt) => {
-      try {
-        const text = evt.target?.result as string;
-        const parsed = parseAgentCsv(text);
-        if (parsed.length === 0) {
-          toast({ body: "No valid agents found in CSV file.", type: "error" });
-          updateBanner({
-            status: "error",
-            title: "CSV Parsing Failed",
-            description: "No valid agent rows found in the CSV file.",
-          });
-          return;
-        }
-        const count = await importAgents(parsed);
-        toast({ body: `Successfully imported ${count} agent(s) from CSV.`, type: "info" });
-        updateBanner({
-          status: "success",
-          title: "Agents CSV Imported",
-          description: `Successfully imported ${count} agent(s).`,
-        });
-      } catch (err) {
-        const msg = err instanceof Error ? err.message : String(err);
-        toast({ body: `CSV import failed: ${msg}`, type: "error" });
-        updateBanner({ status: "error", title: "Import Error", description: msg });
+    try {
+      const text = await file.text();
+      const parsed = parseAgentCsv(text);
+      if (parsed.length === 0) {
+        toast({ body: "No valid agents found in CSV file.", type: "error" });
+        return;
       }
-    };
-    reader.readAsText(file);
+      const { added, updated, total } = await importAgents(parsed);
+      toast({
+        body: `Successfully imported ${total} agent(s) from CSV. (Added: ${added} / Updated: ${updated})`,
+        type: "info",
+      });
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      toast({ body: `CSV import failed: ${msg}`, type: "error" });
+    }
   };
 
   return (
@@ -138,52 +97,37 @@ export function UploadAgentsCsvCard({ updateBanner }: UploadAgentsCsvCardProps) 
           isLabelHidden
           label="Upload Agents CSV"
           value={null}
-          onChange={handleCsvChange}
+          onChange={() => {}}
+          changeAction={handleCsvChange}
         />
       </Stack>
     </Card>
   );
 }
 
-interface UploadClaimsTxtCardProps {
-  updateBanner: (banner: BannerFeedback) => void;
-}
-
-export function UploadClaimsTxtCard({ updateBanner }: UploadClaimsTxtCardProps) {
+export function UploadClaimsTxtCard() {
   const toast = useToast();
 
-  const handleTxtChange = (files: File | File[] | null) => {
+  const handleTxtChange = async (files: File | File[] | null) => {
     const file = Array.isArray(files) ? (files.at(0) ?? null) : files;
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = async (evt) => {
-      try {
-        const text = evt.target?.result as string;
-        const parsed = parseTxtReport(text);
-        if (parsed.length === 0) {
-          toast({ body: "No valid claims found in TXT file.", type: "error" });
-          updateBanner({
-            status: "error",
-            title: "TXT Parsing Failed",
-            description: "No valid claims rows found in TXT report.",
-          });
-          return;
-        }
-        const count = await importClaims(parsed);
-        toast({ body: `Successfully imported ${count} claim(s) from TXT.`, type: "info" });
-        updateBanner({
-          status: "success",
-          title: "Claims TXT Imported",
-          description: `Successfully imported ${count} claim(s).`,
-        });
-      } catch (err) {
-        const msg = err instanceof Error ? err.message : String(err);
-        toast({ body: `TXT import failed: ${msg}`, type: "error" });
-        updateBanner({ status: "error", title: "Import Error", description: msg });
+    try {
+      const text = await file.text();
+      const parsed = parseTxtReport(text);
+      if (parsed.length === 0) {
+        toast({ body: "No valid claims found in TXT file.", type: "error" });
+        return;
       }
-    };
-    reader.readAsText(file);
+      const { added, updated, total } = await importClaims(parsed);
+      toast({
+        body: `Successfully imported ${total} claim(s) from TXT. (Added: ${added} / Updated: ${updated})`,
+        type: "info",
+      });
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      toast({ body: `TXT import failed: ${msg}`, type: "error" });
+    }
   };
 
   return (
@@ -201,7 +145,8 @@ export function UploadClaimsTxtCard({ updateBanner }: UploadClaimsTxtCardProps) 
           isLabelHidden
           label="Upload Claims TXT"
           value={null}
-          onChange={handleTxtChange}
+          onChange={() => {}}
+          changeAction={handleTxtChange}
         />
       </Stack>
     </Card>
@@ -210,12 +155,22 @@ export function UploadClaimsTxtCard({ updateBanner }: UploadClaimsTxtCardProps) 
 
 export function DestroyDataCard() {
   const navigate = useNavigate();
-  const [confirmDestroy, setConfirmDestroy] = useState(false);
+  const alertDialog = useImperativeAlertDialog();
 
-  const handleDestroyAll = async () => {
-    await clearDatabase();
-    localStorage.clear();
-    navigate("/import");
+  const handleConfirmDestroy = async () => {
+    alertDialog.show({
+      title: "Destroy All Data?",
+      description:
+        "Wipe all stored agents, claims, notification records, and preferences. This action cannot be undone.",
+      actionLabel: "Yes, Destroy All Data",
+      actionVariant: "destructive",
+      onAction: async () => {
+        await clearDatabase();
+        localStorage.clear();
+        alertDialog.hide();
+        navigate("/import");
+      },
+    });
   };
 
   return (
@@ -232,19 +187,10 @@ export function DestroyDataCard() {
           icon={<Icon icon={Trash2} />}
           label="Destroy All Data"
           variant="destructive"
-          onClick={() => setConfirmDestroy(true)}
+          onClick={handleConfirmDestroy}
         />
       </Stack>
-
-      <AlertDialog
-        actionLabel="Yes, Destroy All Data"
-        actionVariant="destructive"
-        description="Wipe all stored agents, claims, notification records, and cached preferences from local storage. This action cannot be undone."
-        isOpen={confirmDestroy}
-        title="Destroy All Data?"
-        onAction={() => void handleDestroyAll()}
-        onOpenChange={setConfirmDestroy}
-      />
+      {alertDialog.element}
     </Card>
   );
 }

@@ -21,7 +21,7 @@ export function formatDisplayDate(isoDateStr: string): string {
   return `${day}/${month}/${year}`;
 }
 
-export type ClaimCountBucket = "green" | "yellow" | "orange" | "red";
+type ClaimCountBucket = "green" | "yellow" | "orange" | "red";
 
 export function getClaimCountBucket(count: number): ClaimCountBucket {
   if (count <= 3) return "green";

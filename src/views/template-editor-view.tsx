@@ -3,9 +3,9 @@ import { CodeBlock } from "@astryxdesign/core/CodeBlock";
 import { HStack } from "@astryxdesign/core/HStack";
 import { Layout, LayoutContent, LayoutFooter, VStack } from "@astryxdesign/core/Layout";
 import { TextArea } from "@astryxdesign/core/TextArea";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
-import { AppLayoutHeader } from "@/components/app-layout-header.tsx";
+import { AppPageHeader } from "@/components/app-headers";
 import { useNavigate } from "@/hooks/use-navigate.ts";
 import { setMessageTemplate, useMessageTemplate } from "@/store/app-state.ts";
 import type { Claim } from "@/types/schema.ts";
@@ -30,34 +30,28 @@ const SAMPLE_CLAIMS: Claim[] = [
 
 export function TemplateEditorView() {
   const navigate = useNavigate();
+
   const savedTemplate = useMessageTemplate();
 
   const [draftTemplate, setDraftTemplate] = useState(savedTemplate);
 
-  const sampleOutput = buildMessage(SAMPLE_CLAIMS, draftTemplate);
+  const sampleOutput = useMemo(() => buildMessage(SAMPLE_CLAIMS, draftTemplate), [draftTemplate]);
 
   const handleBack = () => navigate("/agents", { direction: "backward" });
+
+  const handleResetDefault = () => setDraftTemplate(DEFAULT_TEMPLATE);
 
   const handleSave = () => {
     setMessageTemplate(draftTemplate);
     handleBack();
   };
 
-  const handleResetDefault = () => {
-    setDraftTemplate(DEFAULT_TEMPLATE);
-  };
-
-  const layoutHeader = <AppLayoutHeader heading="Edit Message Template" />;
+  const layoutHeader = <AppPageHeader heading="Edit Message Template" />;
 
   const layoutContent = (
     <LayoutContent isScrollable={true} padding={4}>
       <VStack gap={4}>
-        <TextArea
-          label="Template Editor"
-          value={draftTemplate}
-          onChange={(val) => setDraftTemplate(val)}
-          rows={6}
-        />
+        <TextArea label="Template Editor" value={draftTemplate} onChange={setDraftTemplate} rows={6} />
         <CodeBlock
           code={sampleOutput}
           hasLanguageLabel={false}
