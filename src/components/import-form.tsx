@@ -1,9 +1,11 @@
+import { useState } from "react";
+
+import { Sparkles } from "lucide-react";
+
 import { Button } from "@astryxdesign/core/Button";
 import { FileInput } from "@astryxdesign/core/FileInput";
 import { Icon } from "@astryxdesign/core/Icon";
 import { VStack } from "@astryxdesign/core/VStack";
-import { Sparkles } from "lucide-react";
-import { useState } from "react";
 
 import { importAgents, importClaims } from "@/store/db.ts";
 import { parseAgentCsv } from "@/utils/csv-agent-parser.ts";

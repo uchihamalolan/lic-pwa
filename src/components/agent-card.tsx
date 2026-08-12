@@ -1,3 +1,5 @@
+import { Eye, MessageSquareText, Phone } from "lucide-react";
+
 import { Badge } from "@astryxdesign/core/Badge";
 import { Button } from "@astryxdesign/core/Button";
 import { ClickableCard } from "@astryxdesign/core/ClickableCard";
@@ -7,12 +9,11 @@ import { IconButton } from "@astryxdesign/core/IconButton";
 import { HStack, StackItem } from "@astryxdesign/core/Stack";
 import { Token } from "@astryxdesign/core/Token";
 import { VStack } from "@astryxdesign/core/VStack";
-import { Eye, MessageSquareText, Phone } from "lucide-react";
 
-import { WhatsAppIcon } from "@/assets/icons";
+import { WhatsAppIcon } from "@/assets/icons.ts";
 import { useDispatchConfirm } from "@/hooks/use-dispatch-confirm.ts";
 import { useMessageTemplate } from "@/store/app-state.ts";
-import { updateAgentClaimsStatus } from "@/store/db";
+import { updateAgentClaimsStatus } from "@/store/db.ts";
 import type { Agent, Claim } from "@/types/schema.ts";
 import { getClaimCountBucket } from "@/utils/format-utils.ts";
 import { buildMessage, getSmsUrl, getWAUrl } from "@/utils/message-builder.ts";

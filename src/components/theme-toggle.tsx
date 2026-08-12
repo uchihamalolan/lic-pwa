@@ -1,7 +1,9 @@
+import { useMemo } from "react";
+
+import { Laptop, Moon, Sun } from "lucide-react";
+
 import { Icon } from "@astryxdesign/core/Icon";
 import { IconButton } from "@astryxdesign/core/IconButton";
-import { Laptop, Moon, Sun } from "lucide-react";
-import { useMemo } from "react";
 
 import { useAppTheme } from "@/store/app-state";
 

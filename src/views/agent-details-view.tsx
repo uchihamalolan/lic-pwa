@@ -1,11 +1,14 @@
-import { Heading, Icon, IconButton } from "@astryxdesign/core";
+import { Phone } from "lucide-react";
+
 import { Badge } from "@astryxdesign/core/Badge";
+import { Heading } from "@astryxdesign/core/Heading";
 import { HStack } from "@astryxdesign/core/HStack";
+import { Icon } from "@astryxdesign/core/Icon";
+import { IconButton } from "@astryxdesign/core/IconButton";
 import { Layout, LayoutContent } from "@astryxdesign/core/Layout";
 import { Skeleton } from "@astryxdesign/core/Skeleton";
 import { Token } from "@astryxdesign/core/Token";
 import { VStack } from "@astryxdesign/core/VStack";
-import { Phone } from "lucide-react";
 
 import { AppPageHeader } from "@/components/app-headers";
 import { ClaimsBulkActions } from "@/components/claims-bulk-actions.tsx";

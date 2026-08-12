@@ -1,3 +1,7 @@
+import { startTransition, useCallback, useMemo } from "react";
+
+import { MessageSquareText } from "lucide-react";
+
 import { Card } from "@astryxdesign/core/Card";
 import { HStack } from "@astryxdesign/core/HStack";
 import { Icon } from "@astryxdesign/core/Icon";
@@ -5,8 +9,6 @@ import { IconButton } from "@astryxdesign/core/IconButton";
 import { Selector } from "@astryxdesign/core/Selector";
 import { Table, proportional, type TableColumn } from "@astryxdesign/core/Table";
 import { Text } from "@astryxdesign/core/Text";
-import { MessageSquareText } from "lucide-react";
-import { startTransition, useCallback, useMemo } from "react";
 
 import { WhatsAppIcon } from "@/assets/icons.tsx";
 import { useDispatchConfirm } from "@/hooks/use-dispatch-confirm.ts";

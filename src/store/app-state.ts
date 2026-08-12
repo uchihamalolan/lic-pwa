@@ -1,7 +1,9 @@
-import type { ThemeMode } from "@astryxdesign/core/theme";
+import { startTransition, useCallback } from "react";
+
 import { persistentAtom } from "@nanostores/persistent";
 import { useStore } from "@nanostores/react";
-import { startTransition, useCallback } from "react";
+
+import type { ThemeMode } from "@astryxdesign/core/theme";
 
 import { DEFAULT_TEMPLATE } from "@/utils/message-builder.ts";
 

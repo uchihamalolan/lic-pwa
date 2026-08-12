@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { flushSync } from "react-dom";
+
 import { useLocation } from "wouter";
 
 export type NavigateOptions = {

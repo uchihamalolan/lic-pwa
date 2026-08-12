@@ -1,5 +1,6 @@
-import { useImperativeDialog } from "@astryxdesign/core/Dialog";
 import { useCallback } from "react";
+
+import { useImperativeDialog } from "@astryxdesign/core/Dialog";
 
 import { MessagePreview } from "@/components/preview-message-dialog";
 import type { Agent, Claim } from "@/types/schema";

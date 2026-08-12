@@ -1,3 +1,8 @@
+import type { ReactNode } from "react";
+
+import * as stylex from "@stylexjs/stylex";
+import { ArrowLeft, BarChart3, FileText, Settings } from "lucide-react";
+
 import { Heading } from "@astryxdesign/core/Heading";
 import { HStack } from "@astryxdesign/core/HStack";
 import { Icon } from "@astryxdesign/core/Icon";
@@ -6,9 +11,6 @@ import { LayoutHeader, StackItem } from "@astryxdesign/core/Layout";
 import { colorVars } from "@astryxdesign/core/theme/tokens.stylex";
 import { TopNav } from "@astryxdesign/core/TopNav";
 import { VStack } from "@astryxdesign/core/VStack";
-import * as stylex from "@stylexjs/stylex";
-import { ArrowLeft, BarChart3, FileText, Settings } from "lucide-react";
-import type { ReactNode } from "react";
 
 import { ThemeToggle } from "@/components/theme-toggle";
 import { useNavigate } from "@/hooks/use-navigate";

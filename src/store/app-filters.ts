@@ -1,8 +1,10 @@
-import type { ISODateString } from "@astryxdesign/core/Calendar";
+import { startTransition, useCallback } from "react";
+
 import { persistentJSON } from "@nanostores/persistent";
 import { useStore } from "@nanostores/react";
 import { atom } from "nanostores";
-import { startTransition, useCallback } from "react";
+
+import type { ISODateString } from "@astryxdesign/core/Calendar";
 
 export type DispatchStatus = "all" | "pending" | "notified";
 const dispatchStatuses = ["all", "pending", "notified"];

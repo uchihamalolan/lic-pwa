@@ -1,5 +1,6 @@
-import type { ISODateString } from "@astryxdesign/core/Calendar";
 import { useDeferredValue, useMemo } from "react";
+
+import type { ISODateString } from "@astryxdesign/core/Calendar";
 
 import { useAgents, useClaims } from "@/hooks/use-db.ts";
 import { useAgentFilters, type DispatchStatus } from "@/store/app-filters.ts";

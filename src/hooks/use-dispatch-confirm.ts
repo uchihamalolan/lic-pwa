@@ -1,5 +1,6 @@
-import { useImperativeAlertDialog } from "@astryxdesign/core/AlertDialog";
 import { useCallback } from "react";
+
+import { useImperativeAlertDialog } from "@astryxdesign/core/AlertDialog";
 
 interface DispatchConfirmOptions {
   targetName: string;
@@ -18,9 +19,9 @@ export function useDispatchConfirm() {
       alertDialog.show({
         title: "Confirm Message Delivery",
         description: `Did you send the message to ${targetName} via ${channelName}?`,
-        actionLabel: "Yes, Mark as Sent",
+        actionLabel: "Yes",
         actionVariant: "primary",
-        cancelLabel: "No, Keep Pending",
+        cancelLabel: "No",
         onAction: () => {
           onConfirm();
           alertDialog.hide();

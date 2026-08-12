@@ -1,3 +1,7 @@
+import { useState } from "react";
+
+import { Activity, CheckCircle2, Hourglass, MessageSquare, Send, Users } from "lucide-react";
+
 import { Card } from "@astryxdesign/core/Card";
 import { Grid } from "@astryxdesign/core/Grid";
 import { Heading } from "@astryxdesign/core/Heading";
@@ -8,8 +12,6 @@ import { ProgressBar } from "@astryxdesign/core/ProgressBar";
 import { SegmentedControl, SegmentedControlItem } from "@astryxdesign/core/SegmentedControl";
 import { Text } from "@astryxdesign/core/Text";
 import { VStack } from "@astryxdesign/core/VStack";
-import { Activity, CheckCircle2, Hourglass, MessageSquare, Send, Users } from "lucide-react";
-import { useState } from "react";
 
 import { AppPageHeader } from "@/components/app-headers";
 import { useDispatchStats, type StatsScope } from "@/hooks/use-dispatch-stats.ts";

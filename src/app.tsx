@@ -1,5 +1,6 @@
-import { AppShell } from "@astryxdesign/core/AppShell";
 import { Redirect, Route, Switch } from "wouter";
+
+import { AppShell } from "@astryxdesign/core/AppShell";
 
 import { AppProvider } from "@/app-provider.tsx";
 import { AppHeader } from "@/components/app-headers";

@@ -1,7 +1,9 @@
+import { startTransition } from "react";
+
+import { MessageSquareText, RotateCcw, Zap } from "lucide-react";
+
 import { DropdownMenu } from "@astryxdesign/core/DropdownMenu";
 import { Icon } from "@astryxdesign/core/Icon";
-import { MessageSquareText, RotateCcw, Zap } from "lucide-react";
-import { startTransition } from "react";
 
 import { WhatsAppIcon } from "@/assets/icons.tsx";
 import { updateAgentClaimsStatus } from "@/store/db.ts";
