@@ -10,7 +10,7 @@ import { HStack, StackItem } from "@astryxdesign/core/Stack";
 import { Token } from "@astryxdesign/core/Token";
 import { VStack } from "@astryxdesign/core/VStack";
 
-import { WhatsAppIcon } from "@/assets/icons.ts";
+import { WhatsAppIcon } from "@/assets/icons.tsx";
 import { useDispatchConfirm } from "@/hooks/use-dispatch-confirm.ts";
 import { useMessageTemplate } from "@/store/app-state.ts";
 import { updateAgentClaimsStatus } from "@/store/db.ts";
